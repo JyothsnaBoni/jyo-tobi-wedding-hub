@@ -3,52 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jyo & Tobi Wedding</title>
+    <title>Wedding Celebration</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Poppins', sans-serif; }
-        h1, h2 { font-family: 'Playfair Display', serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400&display=swap');
+        
+        body { background-color: #0a0a0a; color: #e5e7eb; font-family: 'Inter', sans-serif; }
+        h1, h2, .gold-text { font-family: 'Cinzel', serif; color: #d4af37; }
+        .motif-gold { fill: #d4af37; }
     </style>
 </head>
-<body class="bg-stone-50 text-stone-800">
+<body class="min-h-screen">
 
-    <!-- Hero Section -->
-    <header class="h-screen flex flex-col items-center justify-center bg-stone-200 text-center px-4">
-        <h1 class="text-6xl md:text-8xl mb-4">Jyo & Tobi</h1>
-        <p class="text-xl md:text-2xl uppercase tracking-widest">We are getting married!</p>
-        <p class="mt-8 text-lg">October 12, 2026 | Berlin, Germany</p>
-    </header>
+    <div class="fixed top-4 right-4 opacity-30">
+        <svg width="60" height="60" viewBox="0 0 24 24" class="motif-gold"><path d="M21,11c0-4.4-3.6-8-8-8s-8,3.6-8,8v6c0,1.1,0.9,2,2,2h2v-4h-2v-4c0-3.3,2.7-6,6-6s6,2.7,6,6v4h-2v4h2c1.1,0,2-0.9,2-2V11z M19,17c0,0.6-0.4,1-1,1h-1v-4h2V17z M7,17c0,0.6-0.4,1-1,1H5v-4h2V17z"/></svg>
+    </div>
 
-    <!-- Details Section -->
-    <section class="py-20 px-6 max-w-4xl mx-auto text-center">
-        <h2 class="text-4xl mb-8">The Celebration</h2>
-        <div class="grid md:grid-cols-2 gap-12">
-            <div class="p-6 border border-stone-200 rounded-lg">
-                <h3 class="text-2xl mb-4">Ceremony</h3>
-                <p>Location: St. Mary's Church</p>
-                <p>Time: 2:00 PM</p>
+    <main class="max-w-xl mx-auto p-8 md:p-12">
+        <header class="text-center mb-12">
+            <h1 class="text-5xl mb-4 tracking-wider">Tobias & Jyothsna</h1>
+            <div class="h-px bg-[#d4af37] w-24 mx-auto mb-4"></div>
+            <p class="text-sm uppercase tracking-[0.3em] opacity-70">Wedding Celebration</p>
+        </header>
+
+        <!-- Countdown Section -->
+        <div id="countdown" class="grid grid-cols-4 gap-2 mb-12 text-center">
+            <div class="bg-[#151515] border border-[#d4af37]/30 p-3 rounded">
+                <div id="days" class="text-2xl font-bold text-[#d4af37]">00</div>
+                <div class="text-[10px] uppercase tracking-widest">Days</div>
             </div>
-            <div class="p-6 border border-stone-200 rounded-lg">
-                <h3 class="text-2xl mb-4">Reception</h3>
-                <p>Location: The Grand Hall</p>
-                <p>Time: 6:00 PM</p>
+            <div class="bg-[#151515] border border-[#d4af37]/30 p-3 rounded">
+                <div id="hours" class="text-2xl font-bold text-[#d4af37]">00</div>
+                <div class="text-[10px] uppercase tracking-widest">Hrs</div>
+            </div>
+            <div class="bg-[#151515] border border-[#d4af37]/30 p-3 rounded">
+                <div id="minutes" class="text-2xl font-bold text-[#d4af37]">00</div>
+                <div class="text-[10px] uppercase tracking-widest">Min</div>
+            </div>
+            <div class="bg-[#151515] border border-[#d4af37]/30 p-3 rounded">
+                <div id="seconds" class="text-2xl font-bold text-[#d4af37]">00</div>
+                <div class="text-[10px] uppercase tracking-widest">Sec</div>
             </div>
         </div>
-    </section>
 
-    <!-- RSVP Section -->
-    <section class="py-20 bg-stone-100 px-6 text-center">
-        <h2 class="text-4xl mb-6">RSVP</h2>
-        <p class="mb-8">Please let us know if you can make it by September 1st.</p>
-        <a href="mailto:your-email@example.com" class="bg-stone-800 text-white px-8 py-3 rounded hover:bg-stone-600 transition">
-            Send RSVP via Email
-        </a>
-    </section>
+        <section class="space-y-12">
+            <div class="border border-[#d4af37]/30 p-8 bg-[#151515] rounded-sm">
+                <h2 class="text-2xl mb-6 text-center">Celebrations</h2>
+                <div class="space-y-6 text-center">
+                    <div>
+                        <p class="text-[#d4af37] font-bold">Friday, 13th Nov, 2026</p>
+                        <p class="text-sm">Sai Priya Resort, Vishakapatnam</p>
+                    </div>
+                </div>
+            </div>
 
-    <footer class="py-10 text-center text-sm text-stone-500">
-        © 2026 Jyo & Tobi Wedding
-    </footer>
+            <div class="text-center space-y-6">
+                <div class="bg-[#1f1f1f] p-8">
+                    <p class="text-xl mb-4 font-bold text-[#d4af37]">Sunday, 15th Nov, 2026</p>
+                    <p class="text-sm mb-6">Simba Resort, Vishakapatnam</p>
+                    <div class="text-sm space-y-2 opacity-80">
+                        <p>07:00 PM | Reception</p>
+                        <p class="font-bold text-[#d4af37]">10:12 PM | Muhurtham</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
+    <script>
+        const targetDate = new Date("Nov 15, 2026 22:12:00").getTime();
+        
+        function updateTimer() {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
+
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = d.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+    </script>
 </body>
 </html>
