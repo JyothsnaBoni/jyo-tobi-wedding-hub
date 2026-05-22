@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Traditional Celebration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap');
+        body { font-family: 'Poppins', sans-serif; background-color: #fdfaf6; }
+        .gold-text { color: #b8860b; }
+        .maroon-bg { background-color: #800020; }
+        .section-hidden { display: none; }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Navigation -->
+    <nav class="maroon-bg p-6 text-white text-center shadow-lg">
+        <h1 class="text-3xl font-bold font-['Playfair_Display']">Wedding Celebration</h1>
+        <div class="mt-4 space-x-6">
+            <button onclick="showSection('home')" class="hover:text-gold-300 transition">Home</button>
+            <button onclick="showSection('events')" class="hover:text-gold-300 transition">Events</button>
+            <button onclick="showSection('rsvp')" class="hover:text-gold-300 transition">RSVP</button>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="max-w-4xl mx-auto p-6 mt-8">
+        
+        <!-- Home Section -->
+        <section id="home" class="text-center">
+            <h2 class="text-4xl gold-text font-bold mb-4 font-['Playfair_Display']">Together with our families</h2>
+            <p class="text-lg mb-6 italic">We invite you to join us in celebrating our union.</p>
+            <div class="border-2 border-gold-600 rounded-lg p-8 bg-white shadow-md">
+                <p class="text-xl font-semibold">Join us for a beautiful celebration of love, culture, and new beginnings.</p>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section id="events" class="section-hidden">
+            <h2 class="text-3xl text-center gold-text mb-8 font-bold">Event Schedule</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-gold-600">
+                    <h3 class="text-2xl font-bold mb-2">Haldi Ceremony</h3>
+                    <p class="text-sm italic mb-2">Yellow hues and joyful traditions</p>
+                    <p><strong>Dress Code:</strong> Traditional Yellow</p>
+                    <p><strong>When:</strong> Morning, 24th June</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-gold-600">
+                    <h3 class="text-2xl font-bold mb-2">Sangeeth</h3>
+                    <p class="text-sm italic mb-2">Music, dance, and laughter</p>
+                    <p><strong>Dress Code:</strong> Festive Fusion</p>
+                    <p><strong>When:</strong> Evening, 24th June</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-gold-600 md:col-span-2">
+                    <h3 class="text-2xl font-bold mb-2">Wedding Ceremony</h3>
+                    <p class="text-sm italic mb-2">The sacred union</p>
+                    <p><strong>Dress Code:</strong> Ethnic Traditional</p>
+                    <p><strong>Location:</strong> Royal Banquet Hall, City Center</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP Section -->
+        <section id="rsvp" class="section-hidden">
+            <h2 class="text-3xl text-center gold-text mb-8 font-bold">RSVP</h2>
+            <form id="rsvpForm" class="bg-white p-8 rounded-xl shadow-lg max-w-lg mx-auto">
+                <input type="text" id="guestName" placeholder="Your Name" class="w-full mb-4 p-3 border rounded" required>
+                <input type="email" id="guestEmail" placeholder="Your Email" class="w-full mb-4 p-3 border rounded" required>
+                <textarea id="message" placeholder="Message for the couple" class="w-full mb-4 p-3 border rounded"></textarea>
+                <button type="submit" class="w-full maroon-bg text-white p-3 rounded font-bold hover:bg-red-900 transition">Confirm Attendance</button>
+            </form>
+        </section>
+
+    </main>
+
+    <script>
+        function showSection(id) {
+            document.querySelectorAll('main > section').forEach(s => s.classList.add('section-hidden'));
+            document.getElementById(id).classList.remove('section-hidden');
+        }
+
+        document.getElementById('rsvpForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert("Thank you for your RSVP! We look forward to celebrating with you.");
+        });
+    </script>
+</body>
+</html>
