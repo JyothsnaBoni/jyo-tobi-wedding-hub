@@ -1,0 +1,428 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.5">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 13.0px 'Helvetica Neue'; min-height: 15.0px}
+  </style>
+</head>
+<body>
+<p class="p1">&lt;!DOCTYPE html&gt;</p>
+<p class="p1">&lt;html lang="en"&gt;</p>
+<p class="p1">&lt;head&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Tobias &amp; Jyothsna - Wedding Celebrations&lt;/title&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Tailwind CSS --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Google Fonts --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&amp;family=Montserrat:wght@300;400;500;600&amp;family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- FontAwesome Icons --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- QRCode.js Library --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"&gt;&lt;/script&gt;</p>
+<p class="p2"><span class="Apple-converted-space">    </span></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Firebase SDKs --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script type="module"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>import { getFirestore } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Your exact live configuration keys integrated perfectly</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const firebaseConfig = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>apiKey: "AIzaSyADwhGqoTdb8KKbLE-IFObaPVLE1E9FK9g",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>authDomain: "tobias-jyothsna-wedding.firebaseapp.com",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>projectId: "tobias-jyothsna-wedding",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>storageBucket: "tobias-jyothsna-wedding.firebasestorage.app",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>messagingSenderId: "1023627013509",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>appId: "1:1023627013509:web:7c1fe1abd785906a1768ec",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>measurementId: "G-CQ11JR3BL1"</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const appId = 'wedding-hub-live';</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const app = initializeApp(firebaseConfig);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.auth = getAuth(app);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.db = getFirestore(app);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>window.appId = appId;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>tailwind.config = {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>theme: {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>extend: {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>colors: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>weddingPeach: '#FDF5F1',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>weddingRose: '#8D3B4C',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>weddingGold: '#D4AF37',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>weddingTeal: '#0C3C4A',</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>weddingBlush: '#F3D1C9',</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>},</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>fontFamily: {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>cinzel: ['"Cinzel Decorative"', 'serif'],</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>playfair: ['"Playfair Display"', 'serif'],</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>sans: ['"Montserrat"', 'sans-serif'],</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>.hero-bg {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-color: #FDF5F1;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-image: radial-gradient(#8d3b4c10 1px, transparent 1px), radial-gradient(#8d3b4c10 1px, #FDF5F1 1px);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-size: 40px 40px;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>background-position: 0 0, 20px 20px;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
+<p class="p1">&lt;/head&gt;</p>
+<p class="p1">&lt;body class="bg-weddingPeach font-sans text-slate-800 selection:bg-weddingBlush selection:text-weddingRose"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Hero Section --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;section class="min-h-screen flex flex-col items-center justify-center px-4 relative hero-bg overflow-hidden border-b-8 border-weddingGold"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="absolute inset-4 md:inset-8 border-2 border-weddingGold/30 rounded-2xl pointer-events-none flex items-center justify-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="w-full h-full max-w-4xl border border-weddingGold/10 rounded-xl"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="text-center max-w-2xl z-10 px-4 py-12 relative"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-weddingGold text-2xl mb-4 font-serif"&gt;|| OM NAMAH SHIVAYA ||&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="flex justify-center space-x-4 mb-6 text-weddingTeal opacity-80"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;i class="fa-solid fa-feather-pointed text-2xl transform -rotate-45"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;i class="fa-solid fa-dove text-3xl"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;i class="fa-solid fa-feather-pointed text-2xl transform rotate-45"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h2 class="font-cinzel text-sm tracking-widest text-weddingGold uppercase mb-2"&gt;Celebrating the Marriage of&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h1 class="font-playfair text-5xl md:text-7xl font-bold text-weddingRose my-4"&gt;Tobias &amp; Jyothsna&lt;/h1&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-sm md:text-base italic text-slate-600 max-w-lg mx-auto leading-relaxed my-6 font-playfair"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>"Just as marriage brings celebration to life, music adds life to celebration. Celebrating love and happiness."</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/p&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="w-24 h-0.5 bg-weddingGold mx-auto my-6"&gt;&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="font-cinzel text-lg tracking-wider text-weddingTeal font-semibold"&gt;13th &amp; 15th November 2026&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-xs uppercase tracking-widest text-slate-500 mt-1"&gt;Visakhapatnam, Andhra Pradesh, India&lt;/p&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;!-- Countdown --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="countdown" class="grid grid-cols-4 gap-2 md:gap-4 max-w-md mx-auto mt-8 bg-white/60 p-4 rounded-xl shadow-md border border-weddingBlush"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span id="days" class="block font-playfair text-2xl md:text-3xl font-bold text-weddingRose"&gt;00&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="text-[10px] uppercase tracking-wider text-slate-500"&gt;Days&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span id="hours" class="block font-playfair text-2xl md:text-3xl font-bold text-weddingRose"&gt;00&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="text-[10px] uppercase tracking-wider text-slate-500"&gt;Hours&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span id="minutes" class="block font-playfair text-2xl md:text-3xl font-bold text-weddingRose"&gt;00&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="text-[10px] uppercase tracking-wider text-slate-500"&gt;Mins&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span id="seconds" class="block font-playfair text-2xl md:text-3xl font-bold text-weddingRose"&gt;00&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="text-[10px] uppercase tracking-wider text-slate-500"&gt;Secs&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="mt-8 flex flex-wrap justify-center gap-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#rsvp" class="bg-weddingRose hover:bg-weddingRose/90 text-white font-medium px-8 py-3 rounded-full shadow-lg transition-all transform hover:-translate-y-0.5 text-sm uppercase tracking-wider"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>RSVP to the Wedding</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="#updates" class="bg-weddingTeal hover:bg-weddingTeal/90 text-white font-medium px-8 py-3 rounded-full shadow-lg transition-all transform hover:-translate-y-0.5 text-sm uppercase tracking-wider"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;i class="fa-solid fa-bell mr-2"&gt;&lt;/i&gt; Live Updates</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Content Sections --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="max-w-4xl mx-auto px-4 py-16 space-y-20"&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Welcoming Introduction --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="text-center max-w-xl mx-auto space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;span class="text-weddingGold text-2xl font-serif block"&gt;Smt. Demudamma Lekkala&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-slate-600 leading-relaxed font-playfair italic"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>graciously invites you to a night full of music, love, and celebration as we mark the union of her daughter &lt;strong&gt;Jyothsna&lt;/strong&gt; (D/o Smt. Demudamma Lekkala) with &lt;strong&gt;Tobias&lt;/strong&gt; (S/o Roland &amp; Claudia Scholtes).</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- LIVE ANNOUNCEMENTS FEED --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="updates" class="bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-weddingBlush space-y-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span class="text-xs uppercase tracking-widest text-weddingRose font-bold"&gt;Stay Notified&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="font-cinzel text-2xl md:text-3xl text-weddingTeal font-bold mt-1"&gt;Live Wedding Updates&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="w-16 h-0.5 bg-weddingGold mx-auto mt-2"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="updatesTimeline" class="space-y-4 max-h-96 overflow-y-auto pr-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="text-center text-slate-400 py-6 text-sm italic"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;i class="fa-solid fa-spinner animate-spin mr-2"&gt;&lt;/i&gt; Loading updates...</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- Schedule --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="space-y-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="font-cinzel text-2xl md:text-3xl text-weddingRose font-bold"&gt;The Celebration Schedule&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="w-16 h-1 bg-weddingGold mx-auto mt-2"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="grid md:grid-cols-2 gap-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Day 1 Card --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white rounded-2xl shadow-xl border border-weddingBlush overflow-hidden flex flex-col justify-between"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-weddingRose p-6 text-center text-white"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="text-xs uppercase tracking-widest text-weddingBlush"&gt;Day One&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="font-playfair text-2xl font-bold mt-1"&gt;Friday, 13th November 2026&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-sm italic opacity-90 mt-1"&gt;Sai Priya Resort, Visakhapatnam&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="p-6 md:p-8 space-y-6 flex-grow"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- Haldi --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex space-x-4 border-b border-slate-100 pb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="text-center min-w-[70px]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="block font-playfair text-xl font-bold text-weddingGold"&gt;11:00&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-[10px] uppercase text-slate-400"&gt;AM&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;h4 class="font-bold text-weddingTeal text-lg"&gt;HALDI&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;p class="text-xs text-slate-500 mt-1"&gt;A joyous, vibrant morning of traditional turmeric applications and blessings.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- Sangeet --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex space-x-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="text-center min-w-[70px]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="block font-playfair text-xl font-bold text-weddingGold"&gt;18:00&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-[10px] uppercase text-slate-400"&gt;PM&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;h4 class="font-bold text-weddingTeal text-lg"&gt;SANGEET&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;p class="text-xs text-slate-500 mt-1"&gt;An unforgettable night full of mehendi, energetic music, and family dance performances.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Day 2 Card --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="bg-white rounded-2xl shadow-xl border border-weddingBlush overflow-hidden flex flex-col justify-between"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="bg-weddingTeal p-6 text-center text-white"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;span class="text-xs uppercase tracking-widest text-weddingBlush"&gt;Day Two&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;h3 class="font-playfair text-2xl font-bold mt-1"&gt;Sunday, 15th November 2026&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;p class="text-sm italic opacity-90 mt-1"&gt;Simba Resort, Visakhapatnam&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="p-6 md:p-8 space-y-6 flex-grow"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- Reception --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex space-x-4 border-b border-slate-100 pb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="text-center min-w-[70px]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="block font-playfair text-xl font-bold text-weddingGold"&gt;19:00&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-[10px] uppercase text-slate-400"&gt;PM&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;h4 class="font-bold text-weddingTeal text-lg"&gt;RECEPTION&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;p class="text-xs text-slate-500 mt-1"&gt;A warm welcome with drinks, formal greetings, family portraits, and dinner.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;!-- Wedding Ceremony &amp; Muhurtham --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div class="flex space-x-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div class="text-center min-w-[70px]"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="block font-playfair text-xl font-bold text-weddingGold"&gt;21:00&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;span class="text-[10px] uppercase text-slate-400"&gt;PM&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;h4 class="font-bold text-weddingTeal text-lg"&gt;WEDDING &amp; MUHURTHAM&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;p class="text-xs text-slate-500 mt-1"&gt;The traditional Hindu rituals start at 09:00 PM. The auspicious &lt;strong&gt;Muhurtham is at 10:12 PM&lt;/strong&gt;.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- RSVP Form Section --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="rsvp" class="bg-white rounded-3xl p-6 md:p-12 shadow-xl border border-weddingBlush relative overflow-hidden"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-center max-w-md mx-auto space-y-2 mb-8"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="font-cinzel text-3xl font-bold text-weddingRose"&gt;Will You Celebrate With Us?&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="w-12 h-0.5 bg-weddingGold mx-auto mt-2"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;form id="rsvpForm" class="max-w-xl mx-auto space-y-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="grid md:grid-cols-2 gap-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label class="block text-xs font-bold uppercase text-slate-600 mb-1" for="guestName"&gt;Your Full Name&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;input class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:border-weddingRose transition-all" type="text" id="guestName" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label class="block text-xs font-bold uppercase text-slate-600 mb-1" for="guestEmail"&gt;Email Address&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;input class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:border-weddingRose transition-all" type="email" id="guestEmail" required&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="grid md:grid-cols-2 gap-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label class="block text-xs font-bold uppercase text-slate-600 mb-1" for="attendanceDay1"&gt;Attending Day 1? (Haldi/Sangeet)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;select class="w-full px-4 py-3 rounded-lg border border-slate-200 bg-white focus:outline-none focus:border-weddingRose transition-all" id="attendanceDay1"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;option value="Yes"&gt;Yes, gladly attending&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;option value="No"&gt;Regretfully declining&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;label class="block text-xs font-bold uppercase text-slate-600 mb-1" for="attendanceDay2"&gt;Attending Day 2? (Wedding/Reception)&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;select class="w-full px-4 py-3 rounded-lg border border-slate-200 bg-white focus:outline-none focus:border-weddingRose transition-all" id="attendanceDay2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;option value="Yes"&gt;Yes, gladly attending&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;option value="No"&gt;Regretfully declining&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/select&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;label class="block text-xs font-bold uppercase text-slate-600 mb-1" for="message"&gt;Wishes or Special Notes for Tobias &amp; Jyothsna&lt;/label&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;textarea class="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:border-weddingRose transition-all" id="message" rows="3"&gt;&lt;/textarea&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;button type="submit" class="w-full bg-weddingRose hover:bg-weddingRose/90 text-white font-bold py-3.5 px-6 rounded-lg transition-all shadow-md"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>Submit RSVP Response</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/form&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div id="rsvpSuccess" class="hidden mt-6 p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;i class="fa-solid fa-circle-check text-2xl mb-1 block"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span class="font-bold text-sm"&gt;Thank you, your RSVP has been submitted and saved securely!&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;!-- SHARED COOPERATIVE MEMORIES SECTION (Google Drive Integration) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;section id="photowall" class="bg-white rounded-3xl p-6 md:p-12 shadow-xl border border-weddingBlush space-y-8 text-center relative overflow-hidden"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="absolute -top-12 -left-12 text-weddingPeach opacity-40 text-9xl pointer-events-none"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;i class="fa-solid fa-images"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><span class="Apple-converted-space">            </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="max-w-md mx-auto space-y-2 relative z-10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span class="text-xs uppercase tracking-widest text-weddingRose font-bold"&gt;Share Your Moments&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;h2 class="font-cinzel text-3xl text-weddingTeal font-bold"&gt;Capture &amp; Upload&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;div class="w-16 h-0.5 bg-weddingGold mx-auto mt-2"&gt;&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;p class="text-xs text-slate-500 leading-relaxed mt-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>Help us preserve every angle of our wedding! Tap below to directly upload your photos and videos into our Shared Wedding Album, or view the memories shared by others.</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="grid sm:grid-cols-2 gap-4 max-w-lg mx-auto relative z-10"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Action 1: Upload --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="YOUR_GOOGLE_DRIVE_FOLDER_UPLOAD_LINK" target="_blank" class="flex flex-col items-center justify-center p-6 bg-weddingPeach border border-weddingBlush rounded-2xl hover:border-weddingGold transition-all transform hover:-translate-y-1 group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="w-12 h-12 rounded-full bg-weddingRose text-white flex items-center justify-center text-lg mb-3 shadow-md group-hover:scale-110 transition-transform"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;i class="fa-solid fa-cloud-arrow-up"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="font-bold text-sm text-weddingTeal"&gt;Upload Photos &amp; Videos&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="text-[10px] text-slate-400 mt-1"&gt;Directly from your phone camera&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/a&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;!-- Action 2: View Gallery --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;a href="YOUR_GOOGLE_DRIVE_FOLDER_VIEW_LINK" target="_blank" class="flex flex-col items-center justify-center p-6 bg-weddingPeach border border-weddingBlush rounded-2xl hover:border-weddingGold transition-all transform hover:-translate-y-1 group"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;div class="w-12 h-12 rounded-full bg-weddingTeal text-white flex items-center justify-center text-lg mb-3 shadow-md group-hover:scale-110 transition-transform"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;i class="fa-solid fa-eye"&gt;&lt;/i&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="font-bold text-sm text-weddingTeal"&gt;View Photo Gallery&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;span class="text-[10px] text-slate-400 mt-1"&gt;See everyone's uploaded memories&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;/a&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-[10px] text-slate-400 italic"&gt;No app installation or registration required. Supports full-resolution files &amp; videos.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/section&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Footer --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;footer class="bg-weddingTeal text-slate-300 py-12 text-center border-t-4 border-weddingGold"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;div class="max-w-md mx-auto space-y-4 px-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;h4 class="font-cinzel text-weddingGold font-bold text-lg"&gt;Tobias &amp; Jyothsna&lt;/h4&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;p class="text-xs tracking-wider"&gt;Designed with love for our dear German &amp; Indian families.&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div class="text-xs text-slate-500"&gt;&amp;copy; 2026. All rights reserved.&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/footer&gt;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script type="module"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>import { collection, doc, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";</p>
+<p class="p1"><span class="Apple-converted-space">        </span>import { signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// Countdown setup (November 13, 2026)</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const targetDate = new Date("November 13, 2026 11:00:00").getTime();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>function updateCountdown() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const now = new Date().getTime();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const difference = targetDate - now;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (difference &lt; 0) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>document.getElementById('countdown').innerHTML = "&lt;div class='col-span-4 text-center font-bold text-weddingRose'&gt;The Celebrations Have Begun!&lt;/div&gt;";</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const days = Math.floor(difference / (1000 * 60 * 60 * 24));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const seconds = Math.floor((difference % (1000 * 60)) / 1000);</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('days').innerText = String(days).padStart(2, '0');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('hours').innerText = String(hours).padStart(2, '0');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p1"><span class="Apple-converted-space">        </span>setInterval(updateCountdown, 1000);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>updateCountdown();</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>async function initializeHub() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>await signInAnonymously(window.auth);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>} catch (err) { console.warn("Fallback dynamic mode enabled", err); }</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>onAuthStateChanged(window.auth, (user) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (user) { bindRealtimeData(); }</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>function bindRealtimeData() {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const db = window.db;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const appId = window.appId;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const updatesRef = collection(db, 'artifacts', appId, 'public', 'data', 'updates');</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>onSnapshot(updatesRef, (snapshot) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const timeline = document.getElementById('updatesTimeline');</p>
+<p class="p1"><span class="Apple-converted-space">                </span>timeline.innerHTML = '';</p>
+<p class="p1"><span class="Apple-converted-space">                </span>let updates = [];</p>
+<p class="p1"><span class="Apple-converted-space">                </span>snapshot.forEach(doc =&gt; updates.push(doc.data()));</p>
+<p class="p1"><span class="Apple-converted-space">                </span>updates.sort((a,b) =&gt; new Date(b.timestamp) - new Date(a.timestamp));</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if(updates.length === 0) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>timeline.innerHTML = `&lt;div class='text-center text-slate-400 py-4 text-xs italic'&gt;No updates posted yet.&lt;/div&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>updates.forEach(item =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const block = document.createElement('div');</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>block.className = 'p-4 rounded-xl border-l-4 border-weddingRose bg-weddingPeach/30 space-y-1';</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>block.innerHTML = `&lt;h4 class='font-bold text-weddingTeal text-sm'&gt;${item.title}&lt;/h4&gt;&lt;p class='text-xs text-slate-600'&gt;${item.text}&lt;/p&gt;`;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>timeline.appendChild(block);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>document.getElementById('rsvpForm').onsubmit = async function(e) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>e.preventDefault();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const name = document.getElementById('guestName').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const email = document.getElementById('guestEmail').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const day1 = document.getElementById('attendanceDay1').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const day2 = document.getElementById('attendanceDay2').value;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const message = document.getElementById('message').value;</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>await addDoc(collection(window.db, 'artifacts', window.appId, 'public', 'data', 'rsvps'), {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>name, email, day1, day2, message, timestamp: new Date().toISOString()</p>
+<p class="p1"><span class="Apple-converted-space">            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('rsvpForm').reset();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>document.getElementById('rsvpSuccess').classList.remove('hidden');</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>initializeHub();</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;/script&gt;</p>
+<p class="p1">&lt;/body&gt;</p>
+<p class="p1">&lt;/html&gt;</p>
+</body>
+</html>
