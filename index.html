@@ -1,82 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Wedding Celebration</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Lato', sans-serif; }
-        h1, h2, h3 { font-family: 'Playfair Display', serif; }
-        .hero-gradient { background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=2070'); background-size: cover; background-position: center; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jyothsna & Tobias Wedding Hub</title>
+  <meta name="description" content="Private wedding guest portal for Jyothsna and Tobias in Visakhapatnam, India." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
-<body class="bg-stone-50 text-stone-800">
+<body>
+  <div id="login-screen" class="login-screen">
+    <div class="login-card glass-card">
+      <p class="eyebrow" data-i18n="login.private">Private Wedding Guest Portal</p>
+      <h1>Jyothsna <span>&</span> Tobias</h1>
+      <p class="login-copy" data-i18n="login.copy">Please enter your invitation code to access the wedding hub.</p>
+      <form id="login-form" class="stack-form">
+        <label for="invite-code" data-i18n="login.code">Invitation Code</label>
+        <input id="invite-code" name="code" type="text" autocomplete="one-time-code" placeholder="Example: BER001" required />
+        <button type="submit" class="btn primary" data-i18n="login.enter">Enter Wedding Hub</button>
+        <p id="login-message" class="form-message"></p>
+      </form>
+      <p class="tiny" data-i18n="login.note">This portal is for invited guests only.</p>
+    </div>
+  </div>
 
-    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-sm p-4 flex justify-between items-center shadow-sm">
-        <span class="font-bold text-xl tracking-widest text-stone-700 uppercase">Celebration</span>
-        <div class="space-x-6 text-sm uppercase tracking-wider">
-            <a href="#events" class="hover:text-stone-500">Events</a>
-            <a href="#rsvp" class="hover:text-stone-500">RSVP</a>
+  <div id="app" class="app locked" aria-hidden="true">
+    <header class="site-header" id="top">
+      <nav class="nav">
+        <a href="#top" class="brand">J<span>&</span>T</a>
+        <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Open menu">☰</button>
+        <div class="nav-links" id="nav-links">
+          <a href="#story" data-i18n="nav.story">Story</a>
+          <a href="#guide" data-i18n="nav.guide">Wedding Guide</a>
+          <a href="#schedule" data-i18n="nav.schedule">Schedule</a>
+          <a href="#travel" data-i18n="nav.travel">Travel</a>
+          <a href="#stay" data-i18n="nav.stay">Stay</a>
+          <a href="#outfits" data-i18n="nav.outfits">Outfits</a>
+          <a href="#gallery" data-i18n="nav.gallery">Gallery</a>
+          <a href="#contact" data-i18n="nav.contact">Contact</a>
         </div>
-    </nav>
-
-    <header class="hero-gradient h-screen flex flex-col items-center justify-center text-white text-center px-4">
-        <h1 class="text-5xl md:text-7xl mb-4">Our Wedding</h1>
-        <p class="text-xl italic">November 13th - 15th, 2026</p>
+        <select id="language-select" class="language-select" aria-label="Language selector">
+          <option value="en">🇬🇧 English</option>
+          <option value="de">🇩🇪 Deutsch</option>
+        </select>
+      </nav>
     </header>
 
-    <main class="max-w-4xl mx-auto p-6 md:py-16">
-        <section id="events" class="mb-16">
-            <h2 class="text-4xl text-center mb-12">The Schedule</h2>
-            
-            <div class="grid md:grid-cols-2 gap-8">
-                <!-- Day 1 -->
-                <div class="bg-white p-6 shadow-md border-t-4 border-amber-600">
-                    <h3 class="text-2xl mb-2">November 13th</h3>
-                    <p class="text-sm text-stone-500 mb-6 uppercase tracking-widest">Venue: <a href="https://maps.app.goo.gl/DgkkXHAhyNjvHmAdA" target="_blank" class="text-amber-700 underline">View Map</a></p>
-                    
-                    <div class="space-y-4">
-                        <div><p class="font-bold">Haldi (Morning)</p><p class="text-sm">Dress Code: Yellow Traditional</p></div>
-                        <div><p class="font-bold">Mehandi (Afternoon)</p><p class="text-sm">Dress Code: Vibrant Ethnic</p></div>
-                        <div><p class="font-bold">Sangeeth (6:00 PM)</p><p class="text-sm">Dress Code: Festive Fusion/Glamour</p></div>
-                    </div>
-                    <p class="mt-6 text-xs text-stone-400 italic">Lunch, snacks, and dinner provided.</p>
-                </div>
+    <main>
+      <section class="hero section-pad">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <p class="eyebrow" data-i18n="hero.eyebrow">13–15 November 2026 · Visakhapatnam, India</p>
+          <h1>Jyothsna <span>&</span> Tobias</h1>
+          <p class="hero-subtitle" data-i18n="hero.subtitle">A motorcycle trip, a Bumble coincidence, and a Telugu wedding by the coast.</p>
+          <div class="countdown" id="countdown">
+            <div><strong id="days">0</strong><span data-i18n="count.days">Days</span></div>
+            <div><strong id="hours">0</strong><span data-i18n="count.hours">Hours</span></div>
+            <div><strong id="minutes">0</strong><span data-i18n="count.minutes">Minutes</span></div>
+            <div><strong id="seconds">0</strong><span data-i18n="count.seconds">Seconds</span></div>
+          </div>
+          <div class="hero-actions">
+            <a href="#rsvp" class="btn primary" data-i18n="hero.rsvp">Submit RSVP</a>
+            <a href="#travel" class="btn secondary" data-i18n="hero.travel">Share Travel Plans</a>
+          </div>
+        </div>
+      </section>
 
-                <!-- Day 2 -->
-                <div class="bg-white p-6 shadow-md border-t-4 border-teal-700">
-                    <h3 class="text-2xl mb-2">November 15th</h3>
-                    <p class="text-sm text-stone-500 mb-6 uppercase tracking-widest">Venue: <a href="https://maps.app.goo.gl/gP17WdZvfH23Yuma6" target="_blank" class="text-teal-700 underline">View Map</a></p>
-                    
-                    <div class="space-y-4">
-                        <div><p class="font-bold">Wedding Ceremony</p><p class="text-sm">Formal Attire</p></div>
-                        <div><p class="font-bold">Pool Party & Rain Dance</p><p class="text-sm">Casual/Resort Chic</p></div>
-                    </div>
-                    <p class="mt-6 text-xs text-stone-400 italic">Breakfast, lunch, dinner, snacks & full mocktail bar.</p>
-                </div>
-            </div>
-        </section>
+      <section id="story" class="section section-pad">
+        <div class="section-title">
+          <p class="eyebrow" data-i18n="story.eyebrow">Our Story</p>
+          <h2 data-i18n="story.title">The Swipe That Almost Never Happened</h2>
+        </div>
+        <div class="timeline">
+          <article class="timeline-card">
+            <span>01</span><h3 data-i18n="story.leipzig.title">Leipzig</h3>
+            <p data-i18n="story.leipzig.text">Jyothsna set Bumble to Leipzig only. Tobias lived in Berlin, but came to Leipzig on a motorcycle tour. Otherwise, they may never have seen each other.</p>
+          </article>
+          <article class="timeline-card">
+            <span>02</span><h3 data-i18n="story.berlin.title">Berlin</h3>
+            <p data-i18n="story.berlin.text">After two weeks of phone calls, they met in Berlin. The plan was a motorcycle ride if they vibed. Instead, they spent the whole weekend together.</p>
+          </article>
+          <article class="timeline-card">
+            <span>03</span><h3 data-i18n="story.bike.title">Motorcycle Adventures</h3>
+            <p data-i18n="story.bike.text">The first motorcycle trip came the following summer, turning a shared love for the road into one of their favourite memories.</p>
+          </article>
+          <article class="timeline-card">
+            <span>04</span><h3 data-i18n="story.budapest.title">Budapest</h3>
+            <p data-i18n="story.budapest.text">On an island in the Danube, Tobias proposed with a diamond ring. When Jyothsna asked about their “diamonds are overrated” conversation, he said, “I think you are worth the diamonds.”</p>
+          </article>
+        </div>
+      </section>
 
-        <section id="rsvp" class="bg-stone-100 p-8 rounded-lg">
-            <h2 class="text-3xl text-center mb-8">RSVP</h2>
-            <form class="space-y-4">
-                <input type="text" placeholder="Full Name" class="w-full p-3 border border-stone-300 rounded" required>
-                <input type="email" placeholder="Email Address" class="w-full p-3 border border-stone-300 rounded" required>
-                <select class="w-full p-3 border border-stone-300 rounded">
-                    <option>Attending All Days</option>
-                    <option>Nov 13th Only</option>
-                    <option>Nov 15th Only</option>
-                </select>
-                <button type="submit" class="w-full bg-stone-800 text-white p-3 uppercase tracking-widest hover:bg-stone-700 transition">Confirm Attendance</button>
-            </form>
-        </section>
+      <section id="guide" class="section section-pad soft-bg">
+        <div class="section-title">
+          <p class="eyebrow" data-i18n="guide.eyebrow">For Our German Guests</p>
+          <h2 data-i18n="guide.title">First Time at an Indian Wedding?</h2>
+          <p data-i18n="guide.copy">Here is a gentle introduction to what you will experience during our Telugu wedding celebrations.</p>
+        </div>
+        <div class="card-grid four">
+          <article class="info-card yellow"><h3 data-i18n="guide.haldi.title">Haldi</h3><p data-i18n="guide.haldi.text">A joyful turmeric ceremony full of laughter, blessings, music and yellow clothes.</p><b data-i18n="guide.haldi.dress">Dress code: Yellow / Gold</b></article>
+          <article class="info-card rose"><h3 data-i18n="guide.sangeeth.title">Sangeeth</h3><p data-i18n="guide.sangeeth.text">A festive evening with music, dancing, performances, food and celebration.</p><b data-i18n="guide.sangeeth.dress">Dress code: Festive Indian / Glam</b></article>
+          <article class="info-card green"><h3 data-i18n="guide.wedding.title">Telugu Wedding</h3><p data-i18n="guide.wedding.text">A South Indian ceremony with rituals, blessings and the sacred tying of the knot.</p><b data-i18n="guide.wedding.dress">Dress code: Elegant traditional / formal</b></article>
+          <article class="info-card blue"><h3 data-i18n="guide.muhurtham.title">Muhurtham</h3><p data-i18n="guide.muhurtham.text">The exact auspicious moment for tying the knot is 10:12 PM on 15 November 2026.</p><b>10:12 PM</b></article>
+        </div>
+      </section>
+
+      <section id="schedule" class="section section-pad">
+        <div class="section-title"><p class="eyebrow" data-i18n="schedule.eyebrow">Three Days in Vizag</p><h2 data-i18n="schedule.title">Wedding Schedule</h2></div>
+        <div class="schedule-list">
+          <article class="schedule-day"><div class="date-box"><strong>13</strong><span>NOV</span></div><div><h3 data-i18n="schedule.day1.title">Haldi & Sangeeth · Sai Priya Resort</h3><p><b>1:00 PM</b> — <span data-i18n="schedule.day1.haldi">Haldi starts</span></p><p><b>6:00 PM</b> — <span data-i18n="schedule.day1.sangeeth">Sangeeth evening</span></p><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/Yy9JUMp68j5KTy168" data-i18n="common.map">Open map</a></div></article>
+          <article class="schedule-day"><div class="date-box"><strong>14</strong><span>NOV</span></div><div><h3 data-i18n="schedule.day2.title">Preparation Day</h3><p data-i18n="schedule.day2.text">A smaller ceremony for getting the bride and groom ready in their respective places. Tobias' ceremony will be at Sai Priya Resort.</p></div></article>
+          <article class="schedule-day"><div class="date-box"><strong>15</strong><span>NOV</span></div><div><h3 data-i18n="schedule.day3.title">Wedding · Simba Resort</h3><p><b>7:00 PM</b> — <span data-i18n="schedule.day3.reception">Reception starts</span></p><p><b>8:30–9:00 PM</b> — <span data-i18n="schedule.day3.rituals">Wedding rituals begin</span></p><p><b>10:12 PM</b> — <span data-i18n="schedule.day3.muhurtham">Muhurtham / tying the knot</span></p><a target="_blank" rel="noopener" href="https://maps.app.goo.gl/w5ynK7D8EfTR8NUX8" data-i18n="common.map">Open map</a></div></article>
+        </div>
+      </section>
+
+      <section id="rsvp" class="section section-pad soft-bg">
+        <div class="section-title"><p class="eyebrow">RSVP</p><h2 data-i18n="rsvp.title">Confirm Your Attendance</h2></div>
+        <form class="wedding-form" data-form="rsvp">
+          <input name="guestName" data-label="Full name" placeholder="Full name" required>
+          <input name="email" type="email" placeholder="Email" required>
+          <input name="phone" placeholder="Phone / WhatsApp">
+          <select name="attendance" required><option value="">Attendance</option><option>Attending all days</option><option>13 Nov only</option><option>15 Nov only</option><option>Not attending</option></select>
+          <textarea name="message" placeholder="Anything we should know?"></textarea>
+          <button class="btn primary" type="submit" data-i18n="common.submit">Submit</button><p class="form-message"></p>
+        </form>
+      </section>
+
+      <section id="travel" class="section section-pad">
+        <div class="section-title"><p class="eyebrow" data-i18n="travel.eyebrow">Airport Pickup Planning</p><h2 data-i18n="travel.title">Share Your Travel Plans</h2><p data-i18n="travel.notice">Vizag's new Bhogapuram airport is expected to open before the wedding. We will update recommendations once flights are clearer.</p></div>
+        <form class="wedding-form two-col" data-form="travel">
+          <input name="guestName" placeholder="Full name" required><input name="email" type="email" placeholder="Email" required>
+          <input name="fromCity" placeholder="Travelling from city"><input name="country" placeholder="Country">
+          <input name="arrivalAirport" placeholder="Arrival airport"><input name="arrivalFlight" placeholder="Arrival flight number">
+          <input name="arrivalDate" type="date"><input name="arrivalTime" type="time">
+          <input name="departureAirport" placeholder="Departure airport"><input name="departureFlight" placeholder="Departure flight number">
+          <input name="departureDate" type="date"><input name="departureTime" type="time">
+          <select name="pickup"><option value="">Need airport pickup?</option><option>Yes</option><option>No</option><option>Not sure yet</option></select>
+          <input name="daysInIndia" type="number" min="1" placeholder="Number of days in India">
+          <textarea name="notes" placeholder="Dietary restrictions, mobility needs, or notes"></textarea>
+          <button class="btn primary" type="submit" data-i18n="common.submit">Submit</button><p class="form-message"></p>
+        </form>
+      </section>
+
+      <section id="stay" class="section section-pad soft-bg">
+        <div class="section-title"><p class="eyebrow" data-i18n="stay.eyebrow">Rooms & Logistics</p><h2 data-i18n="stay.title">Where Should I Stay?</h2></div>
+        <div class="card-grid three hotel-grid">
+          <article class="hotel-card"><h3>Sai Priya Resort</h3><p data-i18n="stay.saipriya">Recommended for Haldi and Sangeeth. Tell us if you want us to book rooms together.</p><a href="https://maps.app.goo.gl/Yy9JUMp68j5KTy168" target="_blank">Map</a></article>
+          <article class="hotel-card"><h3>Simba Resort</h3><p data-i18n="stay.simba">All 16 rooms are reserved for wedding day relaxing and getting ready between ceremonies.</p><a href="https://maps.app.goo.gl/w5ynK7D8EfTR8NUX8" target="_blank">Map</a></article>
+          <article class="hotel-card"><h3>Alternative Hotels</h3><p>Marriott, Novotel, Palm Beach, Radisson Blu.</p><a href="https://www.google.com/maps/search/hotels+near+Visakhapatnam" target="_blank">Search hotels</a></article>
+        </div>
+        <form class="wedding-form two-col" data-form="accommodation">
+          <input name="guestName" placeholder="Full name" required><input name="email" type="email" placeholder="Email" required>
+          <select name="saiPriyaRoom"><option value="">Want Sai Priya room booking?</option><option>Yes</option><option>No</option><option>Maybe</option></select>
+          <input name="numberOfGuests" type="number" min="1" placeholder="Number of guests">
+          <input name="checkIn" type="date"><input name="checkOut" type="date">
+          <textarea name="notes" placeholder="Room preferences or notes"></textarea>
+          <button class="btn primary" type="submit" data-i18n="common.submit">Submit</button><p class="form-message"></p>
+        </form>
+      </section>
+
+      <section id="outfits" class="section section-pad">
+        <div class="section-title"><p class="eyebrow" data-i18n="outfits.eyebrow">Sarees, Lehengas & Measurements</p><h2 data-i18n="outfits.title">Outfit Selection</h2><p data-i18n="outfits.copy">Choose your preferred outfit style and share measurements so Jyothsna can coordinate stitching in India.</p></div>
+        <div id="outfit-grid" class="card-grid three"></div>
+        <form class="wedding-form two-col" data-form="outfit">
+          <input name="guestName" placeholder="Full name" required><input name="email" type="email" placeholder="Email" required>
+          <select name="event"><option>Haldi</option><option>Sangeeth</option><option>Wedding</option></select><input name="preferredOutfit" placeholder="Preferred outfit ID / description">
+          <select name="size"><option value="">Ready size</option><option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select><select name="customStitching"><option>Need custom stitching?</option><option>Yes</option><option>No</option></select>
+          <input name="height" placeholder="Height"><input name="bust" placeholder="Bust">
+          <input name="waist" placeholder="Waist"><input name="hip" placeholder="Hip">
+          <input name="shoulder" placeholder="Shoulder"><input name="sleeve" placeholder="Sleeve length">
+          <textarea name="notes" placeholder="Colour preferences, comfort notes, blouse notes"></textarea>
+          <button class="btn primary" type="submit" data-i18n="common.submit">Submit</button><p class="form-message"></p>
+        </form>
+      </section>
+
+      <section id="gallery" class="section section-pad soft-bg">
+        <div class="section-title"><p class="eyebrow" data-i18n="gallery.eyebrow">Memories</p><h2 data-i18n="gallery.title">Gallery</h2><p data-i18n="gallery.copy">Photo uploads will save to Google Drive after Apps Script setup.</p></div>
+        <form class="wedding-form" data-form="photoUpload" enctype="multipart/form-data">
+          <input name="caption" placeholder="Photo caption">
+          <input name="category" placeholder="Category: story, proposal, motorcycle, family">
+          <input name="photo" type="file" accept="image/*">
+          <button class="btn primary" type="submit" data-i18n="gallery.upload">Upload Photo</button><p class="form-message"></p>
+        </form>
+        <div id="gallery-grid" class="gallery-grid"></div>
+      </section>
+
+      <section id="faq" class="section section-pad">
+        <div class="section-title"><p class="eyebrow">FAQ</p><h2 data-i18n="faq.title">Helpful Notes</h2></div>
+        <div class="faq-list">
+          <details><summary data-i18n="faq.spicy.q">Will the food be spicy?</summary><p data-i18n="faq.spicy.a">There will be both mild and spicy options.</p></details>
+          <details><summary data-i18n="faq.cash.q">Do I need cash?</summary><p data-i18n="faq.cash.a">Some cash in Indian Rupees is useful for small purchases and tips.</p></details>
+          <details><summary data-i18n="faq.clothes.q">Can I wear Western clothes?</summary><p data-i18n="faq.clothes.a">Yes, but festive Indian clothes are warmly encouraged for the celebrations.</p></details>
+        </div>
+      </section>
+
+      <section id="contact" class="section section-pad contact-section">
+        <div class="section-title"><p class="eyebrow" data-i18n="contact.eyebrow">Need Help?</p><h2 data-i18n="contact.title">Contact Us</h2></div>
+        <div class="contact-cards">
+          <a class="contact-card" href="https://wa.me/491794391642" target="_blank"><strong>Jyothsna Boni</strong><span>WhatsApp</span></a>
+          <a class="contact-card" href="https://wa.me/491626393495" target="_blank"><strong>Tobias Scholtes</strong><span>WhatsApp</span></a>
+        </div>
+      </section>
     </main>
 
-    <footer class="text-center py-12 text-stone-500 text-sm">
-        We cannot wait to celebrate with you!
-    </footer>
+    <footer class="footer">Jyothsna & Tobias · Visakhapatnam · November 2026</footer>
+  </div>
 
+  <script src="assets/js/app.js"></script>
 </body>
 </html>
