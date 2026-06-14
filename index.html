@@ -1,1 +1,82 @@
-<!DOCTYPE html><html><head><title>Jyothsna & Tobias Wedding Hub</title></head><body><h1>Step 1 Starter File</h1><p>Wedding Hub Skeleton</p></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Wedding Celebration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Lato', sans-serif; }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; }
+        .hero-gradient { background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=2070'); background-size: cover; background-position: center; }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800">
+
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-sm p-4 flex justify-between items-center shadow-sm">
+        <span class="font-bold text-xl tracking-widest text-stone-700 uppercase">Celebration</span>
+        <div class="space-x-6 text-sm uppercase tracking-wider">
+            <a href="#events" class="hover:text-stone-500">Events</a>
+            <a href="#rsvp" class="hover:text-stone-500">RSVP</a>
+        </div>
+    </nav>
+
+    <header class="hero-gradient h-screen flex flex-col items-center justify-center text-white text-center px-4">
+        <h1 class="text-5xl md:text-7xl mb-4">Our Wedding</h1>
+        <p class="text-xl italic">November 13th - 15th, 2026</p>
+    </header>
+
+    <main class="max-w-4xl mx-auto p-6 md:py-16">
+        <section id="events" class="mb-16">
+            <h2 class="text-4xl text-center mb-12">The Schedule</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Day 1 -->
+                <div class="bg-white p-6 shadow-md border-t-4 border-amber-600">
+                    <h3 class="text-2xl mb-2">November 13th</h3>
+                    <p class="text-sm text-stone-500 mb-6 uppercase tracking-widest">Venue: <a href="https://maps.app.goo.gl/DgkkXHAhyNjvHmAdA" target="_blank" class="text-amber-700 underline">View Map</a></p>
+                    
+                    <div class="space-y-4">
+                        <div><p class="font-bold">Haldi (Morning)</p><p class="text-sm">Dress Code: Yellow Traditional</p></div>
+                        <div><p class="font-bold">Mehandi (Afternoon)</p><p class="text-sm">Dress Code: Vibrant Ethnic</p></div>
+                        <div><p class="font-bold">Sangeeth (6:00 PM)</p><p class="text-sm">Dress Code: Festive Fusion/Glamour</p></div>
+                    </div>
+                    <p class="mt-6 text-xs text-stone-400 italic">Lunch, snacks, and dinner provided.</p>
+                </div>
+
+                <!-- Day 2 -->
+                <div class="bg-white p-6 shadow-md border-t-4 border-teal-700">
+                    <h3 class="text-2xl mb-2">November 15th</h3>
+                    <p class="text-sm text-stone-500 mb-6 uppercase tracking-widest">Venue: <a href="https://maps.app.goo.gl/gP17WdZvfH23Yuma6" target="_blank" class="text-teal-700 underline">View Map</a></p>
+                    
+                    <div class="space-y-4">
+                        <div><p class="font-bold">Wedding Ceremony</p><p class="text-sm">Formal Attire</p></div>
+                        <div><p class="font-bold">Pool Party & Rain Dance</p><p class="text-sm">Casual/Resort Chic</p></div>
+                    </div>
+                    <p class="mt-6 text-xs text-stone-400 italic">Breakfast, lunch, dinner, snacks & full mocktail bar.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="rsvp" class="bg-stone-100 p-8 rounded-lg">
+            <h2 class="text-3xl text-center mb-8">RSVP</h2>
+            <form class="space-y-4">
+                <input type="text" placeholder="Full Name" class="w-full p-3 border border-stone-300 rounded" required>
+                <input type="email" placeholder="Email Address" class="w-full p-3 border border-stone-300 rounded" required>
+                <select class="w-full p-3 border border-stone-300 rounded">
+                    <option>Attending All Days</option>
+                    <option>Nov 13th Only</option>
+                    <option>Nov 15th Only</option>
+                </select>
+                <button type="submit" class="w-full bg-stone-800 text-white p-3 uppercase tracking-widest hover:bg-stone-700 transition">Confirm Attendance</button>
+            </form>
+        </section>
+    </main>
+
+    <footer class="text-center py-12 text-stone-500 text-sm">
+        We cannot wait to celebrate with you!
+    </footer>
+
+</body>
+</html>
