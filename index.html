@@ -5,10 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Jyothsna & Tobias | Wedding Hub</title>
-  <meta
-    name="description"
-    content="Private wedding hub for Jyothsna and Tobias — Visakhapatnam, India, 13–15 November 2026."
-  />
+  <meta name="description" content="Private wedding hub for Jyothsna and Tobias — Visakhapatnam, India, 13–15 November 2026." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -63,6 +60,7 @@
         <a href="#outfits" data-i18n="nav_outfits">Outfits</a>
         <a href="#gallery" data-i18n="nav_gallery">Gallery</a>
         <a href="#rsvp" data-i18n="nav_rsvp">RSVP</a>
+        <a href="#contact">Contact</a>
 
         <select id="languageSelect" aria-label="Language switcher">
           <option value="en">🇬🇧 English</option>
@@ -109,7 +107,7 @@
         <div class="story-grid">
           <div class="story-image reveal">
             <img src="assets/images/couple-09.jpg" alt="Jyothsna and Tobias motorcycle story" />
-            <div class="ornament-card">replace with something later</div>
+            <div class="ornament-card">Berlin · Budapest · Vizag</div>
           </div>
 
           <div class="timeline reveal">
@@ -157,13 +155,6 @@
               </div>
             </article>
           </div>
-        </div>
-      </section>
-
-      <section class="section motif-band">
-        <div class="motif-track" aria-hidden="true">
-          <span>🪷</span><span>🐘</span><span>🦚</span><span>🌺</span>
-          <span>🪷</span><span>🐘</span><span>🦚</span><span>🌺</span>
         </div>
       </section>
 
@@ -276,36 +267,40 @@
           </div>
 
           <div class="form-row">
+            <input name="InvitationCode" placeholder="Invitation code" />
             <input name="Phone" placeholder="WhatsApp number" />
+          </div>
+
+          <div class="form-row">
             <input name="TravellingFrom" placeholder="Travelling from city/country" />
-          </div>
-
-          <div class="form-row">
             <input name="ArrivalAirport" placeholder="Arrival airport" />
+          </div>
+
+          <div class="form-row">
             <input name="ArrivalFlightNumber" placeholder="Arrival flight number" />
-          </div>
-
-          <div class="form-row">
             <input name="ArrivalDate" type="date" />
+          </div>
+
+          <div class="form-row">
             <input name="ArrivalTime" type="time" />
-          </div>
-
-          <div class="form-row">
             <input name="DepartureAirport" placeholder="Departure airport" />
-            <input name="DepartureFlightNumber" placeholder="Departure flight number" />
           </div>
 
           <div class="form-row">
+            <input name="DepartureFlightNumber" placeholder="Departure flight number" />
             <input name="DepartureDate" type="date" />
-            <input name="DepartureTime" type="time" />
           </div>
 
-          <select name="NeedAirportPickup">
-            <option value="">Need airport pickup?</option>
-            <option>Yes</option>
-            <option>No</option>
-            <option>Not sure yet</option>
-          </select>
+          <div class="form-row">
+            <input name="DepartureTime" type="time" />
+
+            <select name="NeedAirportPickup">
+              <option value="">Need airport pickup?</option>
+              <option>Yes</option>
+              <option>No</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
 
           <textarea name="Notes" placeholder="Dietary restrictions, travel notes, anything we should know"></textarea>
 
@@ -344,20 +339,24 @@
 
           <div class="form-row">
             <input name="FullName" placeholder="Full name" required />
-            <input name="NumberOfGuests" type="number" placeholder="Number of guests" />
+            <input name="InvitationCode" placeholder="Invitation code" />
           </div>
 
           <div class="form-row">
+            <input name="NumberOfGuests" type="number" placeholder="Number of guests" />
             <input name="CheckInDate" type="date" />
-            <input name="CheckOutDate" type="date" />
           </div>
 
-          <select name="InterestedInSaiPriya">
-            <option value="">Interested in Sai Priya Resort?</option>
-            <option>Yes</option>
-            <option>No</option>
-            <option>Maybe</option>
-          </select>
+          <div class="form-row">
+            <input name="CheckOutDate" type="date" />
+
+            <select name="InterestedInSaiPriya">
+              <option value="">Interested in Sai Priya Resort?</option>
+              <option>Yes</option>
+              <option>No</option>
+              <option>Maybe</option>
+            </select>
+          </div>
 
           <textarea name="Notes" placeholder="Room preferences / other hotels / special needs"></textarea>
 
@@ -396,17 +395,21 @@
         <form class="lux-form reveal" data-form="Outfits">
           <div class="form-row">
             <input name="FullName" placeholder="Full name" required />
-            <input name="WhatsApp" placeholder="WhatsApp number" />
+            <input name="InvitationCode" placeholder="Invitation code" />
           </div>
 
           <div class="form-row">
+            <input name="WhatsApp" placeholder="WhatsApp number" />
+
             <select name="Event">
               <option value="">Event</option>
               <option>Haldi</option>
               <option>Sangeeth</option>
               <option>Wedding</option>
             </select>
+          </div>
 
+          <div class="form-row">
             <select name="PreferredStyle">
               <option value="">Preferred style</option>
               <option>Saree</option>
@@ -414,16 +417,17 @@
               <option>Indo-western</option>
               <option>Not sure, please suggest</option>
             </select>
+            <input name="Height" placeholder="Height" />
           </div>
 
           <div class="form-row four">
-            <input name="Height" placeholder="Height" />
             <input name="Bust" placeholder="Bust" />
             <input name="Waist" placeholder="Waist" />
             <input name="Hip" placeholder="Hip" />
+            <input name="NotesShort" placeholder="Sleeve/blouse note" />
           </div>
 
-          <textarea name="Notes" placeholder="Colour preferences, comfort level, sleeve/blouse notes"></textarea>
+          <textarea name="Notes" placeholder="Colour preferences, comfort level, blouse notes, anything important"></textarea>
 
           <button type="submit" class="button primary">Submit outfit preference</button>
           <p class="form-message"></p>
@@ -453,6 +457,10 @@
           <p class="eyebrow" data-i18n="rsvp_eyebrow">We cannot wait to celebrate with you</p>
           <h2 data-i18n="rsvp_title">RSVP</h2>
 
+          <p class="rsvp-note">
+            Please share your current postal address so we can send the physical invitation card to the right address.
+          </p>
+
           <form class="lux-form" data-form="RSVP">
             <div class="form-row">
               <input name="FullName" placeholder="Full name" required />
@@ -461,17 +469,36 @@
 
             <div class="form-row">
               <input name="InvitationCode" placeholder="Invitation code" />
-              <input name="NumberOfGuests" type="number" placeholder="Number of guests" />
+              <input name="Phone" placeholder="WhatsApp / phone number" />
             </div>
 
-            <select name="Attendance">
-              <option value="">Will you attend?</option>
-              <option>Yes, all events</option>
-              <option>Only 13 November</option>
-              <option>Only 15 November</option>
-              <option>Not sure yet</option>
-              <option>Sadly cannot attend</option>
-            </select>
+            <div class="form-row">
+              <input name="NumberOfGuests" type="number" placeholder="Number of guests" />
+
+              <select name="Attendance">
+                <option value="">Will you attend?</option>
+                <option>Yes, all events</option>
+                <option>Only 13 November</option>
+                <option>Only 15 November</option>
+                <option>Not sure yet</option>
+                <option>Sadly cannot attend</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <input name="AddressLine1" placeholder="Address line 1" />
+              <input name="AddressLine2" placeholder="Address line 2" />
+            </div>
+
+            <div class="form-row">
+              <input name="City" placeholder="City" />
+              <input name="State" placeholder="State / Region" />
+            </div>
+
+            <div class="form-row">
+              <input name="PostalCode" placeholder="Postal code" />
+              <input name="Country" placeholder="Country" />
+            </div>
 
             <textarea name="Message" placeholder="Message for us"></textarea>
 
