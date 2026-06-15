@@ -52,12 +52,14 @@
       <button class="nav-toggle" id="navToggle" aria-label="Open menu">☰</button>
 
       <div class="nav-links" id="navLinks">
+        <a href="#couple">Bride & Groom</a>
         <a href="#story" data-i18n="nav_story">Story</a>
         <a href="#events" data-i18n="nav_events">Events</a>
         <a href="#guide" data-i18n="nav_guide">Guide</a>
         <a href="#travel" data-i18n="nav_travel">Travel</a>
         <a href="#stay" data-i18n="nav_stay">Stay</a>
         <a href="#outfits" data-i18n="nav_outfits">Outfits</a>
+        <a href="#memories">Upload</a>
         <a href="#gallery" data-i18n="nav_gallery">Gallery</a>
         <a href="#rsvp" data-i18n="nav_rsvp">RSVP</a>
         <a href="#contact">Contact</a>
@@ -98,6 +100,60 @@
     </header>
 
     <main>
+      <section id="couple" class="section couple-section">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Bride & Groom</p>
+          <h2>With love, from us</h2>
+        </div>
+
+        <div class="couple-cards">
+          <article class="couple-card reveal">
+            <img src="assets/images/couple-18.jpg" alt="Jyothsna" />
+            <div class="couple-card-body">
+              <p class="eyebrow">Bride</p>
+              <h3>Jyothsna Boni</h3>
+              <p>
+                I cannot wait to welcome you to my home city and share the colours, rituals, food,
+                music and love of a South Indian wedding with you.
+              </p>
+              <div class="person-links">
+                <a href="https://wa.me/491794391642" target="_blank" rel="noopener">WhatsApp</a>
+                <a href="https://www.instagram.com/bonijyothsna?igsh=enFuYnlvN3FhdHQx" target="_blank" rel="noopener">Instagram</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="couple-card reveal">
+            <img src="assets/images/couple-09.jpg" alt="Tobias" />
+            <div class="couple-card-body">
+              <p class="eyebrow">Groom</p>
+              <h3>Tobias Scholtes</h3>
+              <p>
+                Thank you for joining us in India. I am excited to celebrate with our families and
+                friends across cultures, traditions and many unforgettable moments.
+              </p>
+              <div class="person-links">
+                <a href="https://wa.me/491626393495" target="_blank" rel="noopener">WhatsApp</a>
+                <a href="https://www.instagram.com/tobi.scho.9?igsh=Mmp5dDRyenJ6MGQ2" target="_blank" rel="noopener">Instagram</a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div class="together-card reveal">
+          <img src="assets/images/couple-01.jpg" alt="Jyothsna and Tobias together" />
+          <div>
+            <p class="eyebrow">Together</p>
+            <h3>A message for our guests</h3>
+            <p>
+              Thank you for travelling near and far to celebrate with us. This wedding brings
+              together our families, cultures and favourite people — and we are so happy to share
+              these days with you.
+            </p>
+          </div>
+        </div>
+      </section>
+
       <section id="story" class="section story-section">
         <div class="section-heading reveal">
           <p class="eyebrow" data-i18n="story_eyebrow">A Bumble match, a motorcycle, and a little bit of fate</p>
@@ -106,7 +162,7 @@
 
         <div class="story-grid">
           <div class="story-image reveal">
-            <img src="assets/images/couple-09.jpg" alt="Jyothsna and Tobias motorcycle story" />
+            <img src="assets/images/couple-08.jpg" alt="Jyothsna and Tobias motorcycle story" />
             <div class="ornament-card">Berlin · Budapest · Vizag</div>
           </div>
 
@@ -248,15 +304,14 @@
           <p class="eyebrow" data-i18n="travel_eyebrow">Flights, pickup and India planning</p>
           <h2 data-i18n="travel_title">Travel Planner</h2>
           <p data-i18n="travel_text">
-            Please share your arrival and departure details so we can plan airport pickup and transport. Bhogapuram airport
-            near Vizag is expected to open before the wedding; we will update travel recommendations once schedules are clear.
+            Please share your arrival and departure details so we can plan airport pickup and transport.
           </p>
 
           <ul class="check-list">
             <li>Arrival airport, date, time and flight number</li>
             <li>Departure details</li>
             <li>Airport pickup request</li>
-            <li>Dietary preferences and notes</li>
+            <li>Optional travel visibility for Guest Connect</li>
           </ul>
         </div>
 
@@ -293,7 +348,6 @@
 
           <div class="form-row">
             <input name="DepartureTime" type="time" />
-
             <select name="NeedAirportPickup">
               <option value="">Need airport pickup?</option>
               <option>Yes</option>
@@ -301,6 +355,14 @@
               <option>Not sure yet</option>
             </select>
           </div>
+
+          <input name="CitiesVisitingBeforeWedding" placeholder="Cities you may visit before the wedding" />
+
+          <select name="TravelPrivacyConsent">
+            <option value="">Can we show your travel plans in Guest Connect?</option>
+            <option>Yes</option>
+            <option>No</option>
+          </select>
 
           <textarea name="Notes" placeholder="Dietary restrictions, travel notes, anything we should know"></textarea>
 
@@ -318,7 +380,7 @@
         <div class="stay-grid">
           <article class="stay-card featured reveal">
             <h3>Sai Priya Resort</h3>
-            <p data-i18n="stay_sai">Recommended for Haldi and Sangeeth because both events happen there. Tell us if you want us to reserve rooms in advance.</p>
+            <p data-i18n="stay_sai">Recommended for Haldi and Sangeeth because both events happen there.</p>
             <a href="https://maps.app.goo.gl/Yy9JUMp68j5KTy168" target="_blank" rel="noopener">View location →</a>
           </article>
 
@@ -349,7 +411,6 @@
 
           <div class="form-row">
             <input name="CheckOutDate" type="date" />
-
             <select name="InterestedInSaiPriya">
               <option value="">Interested in Sai Priya Resort?</option>
               <option>Yes</option>
@@ -358,7 +419,9 @@
             </select>
           </div>
 
-          <textarea name="Notes" placeholder="Room preferences / other hotels / special needs"></textarea>
+          <input name="PreferredHotel" placeholder="Preferred hotel if not Sai Priya" />
+          <textarea name="RoomPreferences" placeholder="Room preferences / other hotels / special needs"></textarea>
+          <textarea name="Notes" placeholder="Accommodation notes"></textarea>
 
           <button type="submit" class="button primary">Send accommodation request</button>
           <p class="form-message"></p>
@@ -367,29 +430,9 @@
 
       <section id="outfits" class="section outfits-section">
         <div class="section-heading reveal">
-          <p class="eyebrow" data-i18n="outfits_eyebrow">Sarees, lehengas and festive looks</p>
+          <p class="eyebrow" data-i18n="outfits_eyebrow">Sarees, lehengas, kurtas and festive looks</p>
           <h2 data-i18n="outfits_title">Outfit Selection</h2>
           <p data-i18n="outfits_text">Choose your preferred outfit style and share measurements early so stitching can be arranged in India.</p>
-        </div>
-
-        <div class="outfit-grid">
-          <article class="outfit-card reveal">
-            <div class="outfit-swatch yellow"></div>
-            <h3>Haldi</h3>
-            <p>Yellow saree · yellow lehenga · floral Indo-western</p>
-          </article>
-
-          <article class="outfit-card reveal">
-            <div class="outfit-swatch red"></div>
-            <h3>Sangeeth</h3>
-            <p>Festive saree · lehenga · glam fusion outfit</p>
-          </article>
-
-          <article class="outfit-card reveal">
-            <div class="outfit-swatch gold"></div>
-            <h3>Wedding</h3>
-            <p>Silk saree · Kanjeevaram · elegant Indian formal</p>
-          </article>
         </div>
 
         <form class="lux-form reveal" data-form="Outfits">
@@ -400,56 +443,62 @@
 
           <div class="form-row">
             <input name="WhatsApp" placeholder="WhatsApp number" />
+            <select name="Gender">
+              <option value="">Outfit category</option>
+              <option>Women</option>
+              <option>Men</option>
+            </select>
+          </div>
 
+          <div class="form-row">
             <select name="Event">
               <option value="">Event</option>
               <option>Haldi</option>
               <option>Sangeeth</option>
               <option>Wedding</option>
+              <option>Reception</option>
             </select>
-          </div>
 
-          <div class="form-row">
             <select name="PreferredStyle">
               <option value="">Preferred style</option>
               <option>Saree</option>
               <option>Lehenga</option>
               <option>Indo-western</option>
+              <option>Kurta</option>
+              <option>Sherwani</option>
+              <option>Suit</option>
               <option>Not sure, please suggest</option>
             </select>
-            <input name="Height" placeholder="Height" />
           </div>
 
+          <input name="SelectedCatalogItem" placeholder="Selected catalogue item / reference" />
+
           <div class="form-row four">
+            <input name="Height" placeholder="Height" />
             <input name="Bust" placeholder="Bust" />
             <input name="Waist" placeholder="Waist" />
             <input name="Hip" placeholder="Hip" />
-            <input name="NotesShort" placeholder="Sleeve/blouse note" />
           </div>
 
-          <textarea name="Notes" placeholder="Colour preferences, comfort level, blouse notes, anything important"></textarea>
+          <div class="form-row four">
+            <input name="Shoulder" placeholder="Shoulder" />
+            <input name="Chest" placeholder="Chest" />
+            <input name="SleeveLength" placeholder="Sleeve length" />
+            <input name="TrouserWaist" placeholder="Trouser waist" />
+          </div>
+
+          <div class="form-row">
+            <input name="Inseam" placeholder="Inseam" />
+            <input name="ShoeSize" placeholder="Shoe size" />
+          </div>
+
+          <input name="ColourPreference" placeholder="Colour preference" />
+          <textarea name="ComfortNotes" placeholder="Comfort level, sleeve/blouse notes, fit preferences"></textarea>
+          <textarea name="Notes" placeholder="Anything else we should know"></textarea>
 
           <button type="submit" class="button primary">Submit outfit preference</button>
           <p class="form-message"></p>
         </form>
-      </section>
-
-      <section id="gallery" class="section gallery-section">
-        <div class="section-heading reveal">
-          <p class="eyebrow" data-i18n="gallery_eyebrow">A little preview of us</p>
-          <h2 data-i18n="gallery_title">Gallery</h2>
-        </div>
-
-        <div class="masonry-gallery reveal">
-          <img src="assets/images/couple-01.jpg" alt="Couple photo" />
-          <img src="assets/images/couple-03.jpg" alt="Proposal ring" />
-          <img src="assets/images/couple-05.jpg" alt="Couple portrait" />
-          <img src="assets/images/couple-08.jpg" alt="Motorcycle" />
-          <img src="assets/images/couple-11.jpg" alt="Beach" />
-          <img src="assets/images/couple-15.jpg" alt="Traditional outfit" />
-          <img src="assets/images/couple-18.jpg" alt="Couple travel" />
-          <img src="assets/images/couple-20.jpg" alt="Couple photo" />
-        </div>
       </section>
 
       <section id="rsvp" class="section rsvp-section">
@@ -474,7 +523,6 @@
 
             <div class="form-row">
               <input name="NumberOfGuests" type="number" placeholder="Number of guests" />
-
               <select name="Attendance">
                 <option value="">Will you attend?</option>
                 <option>Yes, all events</option>
@@ -500,11 +548,114 @@
               <input name="Country" placeholder="Country" />
             </div>
 
+            <div class="form-row">
+              <select name="AllowGuestDirectory">
+                <option value="">Show your name in Guest Connect?</option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+
+              <select name="AllowContactSharing">
+                <option value="">Allow other guests to contact you?</option>
+                <option>Yes</option>
+                <option>No</option>
+              </select>
+            </div>
+
             <textarea name="Message" placeholder="Message for us"></textarea>
 
             <button type="submit" class="button primary">Send RSVP</button>
             <p class="form-message"></p>
           </form>
+        </div>
+      </section>
+
+      <section id="memories" class="section memories-section">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Wedding Memories</p>
+          <h2>Upload Photos & Videos</h2>
+          <p>
+            During and after the wedding, you can upload your favourite photos and videos here.
+            They will be saved for admin review before appearing in the public gallery.
+          </p>
+        </div>
+
+        <form id="mediaUploadForm" class="lux-form reveal">
+          <div class="form-row">
+            <input name="GuestName" placeholder="Your name" />
+            <input name="Email" type="email" placeholder="Email" />
+          </div>
+
+          <div class="form-row">
+            <input name="InvitationCode" placeholder="Invitation code" />
+            <select name="Event">
+              <option value="">Choose event</option>
+              <option>Haldi</option>
+              <option>Sangeeth</option>
+              <option>Wedding</option>
+              <option>Reception</option>
+              <option>Family Moments</option>
+              <option>Guest Uploads</option>
+            </select>
+          </div>
+
+          <input name="mediaFile" type="file" accept="image/*,video/*" />
+          <textarea name="Caption" placeholder="Caption or memory"></textarea>
+
+          <button class="button primary" type="submit">Upload memory</button>
+          <p class="form-message">Upload functionality will activate after Drive folder setup.</p>
+        </form>
+      </section>
+
+      <section id="gallery" class="section gallery-section">
+        <div class="section-heading reveal">
+          <p class="eyebrow" data-i18n="gallery_eyebrow">A little preview of us</p>
+          <h2 data-i18n="gallery_title">Photo Gallery</h2>
+        </div>
+
+        <div class="gallery-tabs">
+          <button type="button" class="active" data-gallery-filter="all">All</button>
+          <button type="button" data-gallery-filter="vacation">Our Vacation</button>
+          <button type="button" data-gallery-filter="haldi">Haldi</button>
+          <button type="button" data-gallery-filter="sangeeth">Sangeeth</button>
+          <button type="button" data-gallery-filter="wedding">Wedding</button>
+          <button type="button" data-gallery-filter="guest">Guest Uploads</button>
+        </div>
+
+        <div class="sliding-gallery reveal">
+          <button class="gallery-arrow gallery-prev" type="button">‹</button>
+
+          <div class="gallery-track">
+            <article class="gallery-slide" data-category="vacation">
+              <img src="assets/images/couple-01.jpg" alt="Couple photo" />
+            </article>
+            <article class="gallery-slide" data-category="vacation">
+              <img src="assets/images/couple-03.jpg" alt="Proposal ring" />
+            </article>
+            <article class="gallery-slide" data-category="vacation">
+              <img src="assets/images/couple-08.jpg" alt="Motorcycle" />
+            </article>
+            <article class="gallery-slide" data-category="wedding">
+              <img src="assets/images/couple-15.jpg" alt="Traditional outfit" />
+            </article>
+            <article class="gallery-slide empty-gallery-card" data-category="haldi">
+              <h3>No Haldi photos yet</h3>
+              <p>Be the first to upload memories from Haldi.</p>
+              <a href="#memories" class="button primary">Upload Photos</a>
+            </article>
+            <article class="gallery-slide empty-gallery-card" data-category="sangeeth">
+              <h3>No Sangeeth photos yet</h3>
+              <p>Be the first to upload memories from Sangeeth.</p>
+              <a href="#memories" class="button primary">Upload Photos</a>
+            </article>
+            <article class="gallery-slide empty-gallery-card" data-category="guest">
+              <h3>No guest uploads yet</h3>
+              <p>Wedding memories will appear here after admin approval.</p>
+              <a href="#memories" class="button primary">Upload Photos</a>
+            </article>
+          </div>
+
+          <button class="gallery-arrow gallery-next" type="button">›</button>
         </div>
       </section>
 
