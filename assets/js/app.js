@@ -141,6 +141,7 @@ function prefillAllForms() {
     });
   });
 
+  hydrateGuestDirectoryTravelDates(document.querySelector('form[data-form="GuestDirectory"]'));
   prefillOutfitByEvent();
 }
 
@@ -161,6 +162,40 @@ function prefillOutfitByEvent() {
       if (field && value !== undefined && value !== null) field.value = value;
     });
   });
+}
+
+function syncGuestDirectoryTravelDates(form) {
+  if (!form || form.dataset.form !== "GuestDirectory") return;
+
+  const start = form.querySelector('[name="TravelStartDate"]')?.value || "";
+  const end = form.querySelector('[name="TravelEndDate"]')?.value || "";
+  const hidden = form.querySelector('[name="TravelDates"]');
+
+  if (!hidden) return;
+
+  if (start && end) {
+    hidden.value = `${start} to ${end}`;
+  } else if (start) {
+    hidden.value = `From ${start}`;
+  } else if (end) {
+    hidden.value = `Until ${end}`;
+  } else {
+    hidden.value = "";
+  }
+}
+
+function hydrateGuestDirectoryTravelDates(form) {
+  if (!form || form.dataset.form !== "GuestDirectory") return;
+
+  const travelDates = form.querySelector('[name="TravelDates"]')?.value || "";
+  const startInput = form.querySelector('[name="TravelStartDate"]');
+  const endInput = form.querySelector('[name="TravelEndDate"]');
+
+  if (!travelDates || !startInput || !endInput) return;
+
+  const dates = travelDates.match(/\d{4}-\d{2}-\d{2}/g) || [];
+  if (dates[0]) startInput.value = dates[0];
+  if (dates[1]) endInput.value = dates[1];
 }
 
 function getActionForForm(formName) {
@@ -190,8 +225,18 @@ function initForms() {
         return;
       }
 
+      syncGuestDirectoryTravelDates(form);
+
       const data = Object.fromEntries(new FormData(form).entries());
       data.InvitationCode = getInvitationCode();
+
+      const referenceImage = form.querySelector("[name='ReferenceImage']")?.files?.[0];
+      if (formName === "Outfits" && referenceImage) {
+        const filePayload = await readFileAsBase64(referenceImage);
+        data.FileName = referenceImage.name;
+        data.MimeType = referenceImage.type;
+        data.fileBase64 = filePayload;
+      }
 
       try {
         setMessage(message, "Saving...");
@@ -249,6 +294,7 @@ function injectGuestDashboard() {
         <a class="button primary" href="#travel">Edit Travel</a>
         <a class="button primary" href="#stay">Edit Stay</a>
         <a class="button primary" href="#outfits">Edit Outfits</a>
+        <a class="button primary" href="#guest-connect">Guest Connect</a>
       </div>
       <button class="button logout-button" type="button" onclick="lockSite()">Log out</button>
     </div>
@@ -257,49 +303,116 @@ function injectGuestDashboard() {
   main.insertBefore(dashboard, firstSection);
 }
 
+
 function renderPublicContent() {
   renderOutfitCatalog();
-  renderSimplePeopleSection("weddingPartyDynamic", "WeddingParty", "Wedding Party", "Best man, bridesmaids, groomsmen and close friends.");
-  renderSimplePeopleSection("familyDynamic", "Family", "Our Families", "The people who raised us, loved us and shaped our story.");
-  renderSimplePeopleSection("indiaContactsDynamic", "IndiaContacts", "Need Help in India?", "Useful family contacts while you are in India.");
+  applyStaySettings();
+  renderFamilySections();
+  renderIndiaContactsSection();
+  preparePagePanels();
+  showPage(getCurrentPageId(), false);
 }
 
-function renderSimplePeopleSection(sectionId, key, title, subtitle) {
-  if ($(`#${sectionId}`)) return;
-
-  const rows = PUBLIC_CONTENT[key] || [];
-  const contactSection = $("#contact");
-
-  if (!contactSection || !rows.length) return;
-
-  const section = document.createElement("section");
-  section.id = sectionId;
-  section.className = "section dynamic-people-section";
-  section.innerHTML = `
-    <div class="section-heading reveal visible">
-      <p class="eyebrow">${escapeHtml(subtitle)}</p>
-      <h2>${escapeHtml(title)}</h2>
-    </div>
-    <div class="people-grid">
-      ${rows.map(row => `
-        <article class="person-card reveal visible">
-          <div class="person-photo">
-            ${row.PhotoUrl ? `<img src="${escapeAttr(row.PhotoUrl)}" alt="${escapeAttr(row.Name)}">` : `<span>${getInitials(row.Name)}</span>`}
-          </div>
-          <h3>${escapeHtml(row.Name || "")}</h3>
-          <p>${escapeHtml(row.Role || row.Relation || row.Group || "")}</p>
-          <div class="person-links">
-            ${row.WhatsApp ? `<a href="${escapeAttr(toWhatsAppLink(row.WhatsApp))}" target="_blank" rel="noopener">WhatsApp</a>` : ""}
-            ${row.Instagram ? `<a href="${escapeAttr(row.Instagram)}" target="_blank" rel="noopener">Instagram</a>` : ""}
-          </div>
-        </article>
-      `).join("")}
-    </div>
-  `;
-
-  contactSection.parentNode.insertBefore(section, contactSection);
+function normalizeText(value = "") {
+  return String(value || "").trim().toLowerCase();
 }
 
+function rowMatches(row, terms) {
+  const haystack = [
+    row.Side,
+    row.FamilySide,
+    row.Group,
+    row.Category,
+    row.Role,
+    row.Relation,
+    row.Title
+  ].map(normalizeText).join(" ");
+
+  return terms.some(term => haystack.includes(term));
+}
+
+function renderCards(containerId, rows, fallbackRows = []) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  const finalRows = rows && rows.length ? rows : fallbackRows;
+
+  container.innerHTML = finalRows.map(row => `
+    <article class="person-card reveal visible">
+      <div class="person-photo">
+        ${row.PhotoUrl ? `<img src="${escapeAttr(row.PhotoUrl)}" alt="${escapeAttr(row.Name)}">` : `<span>${getInitials(row.Name || row.Title || "")}</span>`}
+      </div>
+      <h3>${escapeHtml(row.Name || row.Title || "")}</h3>
+      <p>${escapeHtml(row.Role || row.Relation || row.Group || row.Category || "")}</p>
+      <div class="person-links">
+        ${row.WhatsApp ? `<a href="${escapeAttr(toWhatsAppLink(row.WhatsApp))}" target="_blank" rel="noopener">WhatsApp</a>` : ""}
+        ${row.Instagram ? `<a href="${escapeAttr(row.Instagram)}" target="_blank" rel="noopener">Instagram</a>` : ""}
+      </div>
+    </article>
+  `).join("");
+}
+
+function renderPartySections() {
+  const rows = PUBLIC_CONTENT.WeddingParty || [];
+
+  const bachelorette = rows.filter(row => rowMatches(row, ["bride", "bridesmaid", "maid", "bachelorette"]));
+  const bachelor = rows.filter(row => rowMatches(row, ["groom", "groomsmen", "groomsman", "best man", "bachelor"]));
+
+  renderCards("bachelorettePartyGrid", bachelorette, [
+    { Name: "Supriya", Role: "Maid of Honour" },
+    { Name: "Samira", Role: "Bridesmaid" },
+    { Name: "Lena", Role: "Bridesmaid" },
+    { Name: "Shreya", Role: "Bridesmaid" },
+    { Name: "Marissa", Role: "Bridesmaid" },
+    { Name: "Lilly", Role: "Bridesmaid" }
+  ]);
+
+  renderCards("bachelorPartyGrid", bachelor, [
+    { Name: "Maximilian Grußer", Role: "Best Man" },
+    { Name: "Max", Role: "Groomsman" },
+    { Name: "Frank", Role: "Groomsman" },
+    { Name: "Ruben", Role: "Groomsman" },
+    { Name: "Steven", Role: "Groomsman" }
+  ]);
+}
+
+function renderFamilySections() {
+  const rows = PUBLIC_CONTENT.Family || [];
+
+  const brideFamily = rows.filter(row => rowMatches(row, ["bride", "jyo", "jyothsna"]));
+  const groomFamily = rows.filter(row => rowMatches(row, ["groom", "tobi", "tobias"]));
+
+  renderCards("brideFamilyGrid", brideFamily, [
+    { Name: "Demudamma", Relation: "Mother" },
+    { Name: "Aditya", Relation: "Brother" },
+    { Name: "Bharathi", Relation: "Cousin / like own sibling" },
+    { Name: "Jyothi", Relation: "Cousin / like own sibling" },
+    { Name: "Sowjanya", Relation: "Cousin / like own sibling" },
+    { Name: "Chaitanya", Relation: "Cousin / like own sibling" }
+  ]);
+
+  renderCards("groomFamilyGrid", groomFamily, [
+    { Name: "Roland Scholtes", Relation: "Father" },
+    { Name: "Claudia Scholtes", Relation: "Mother" },
+    { Name: "Daniel", Relation: "Brother" },
+    { Name: "Manuel", Relation: "Brother" },
+    { Name: "Celina", Relation: "Sister" },
+    { Name: "Jasmin", Relation: "Sister" },
+     { Name: "Charlie", Relation: "Family Dog" }
+  ]);
+}
+
+function renderIndiaContactsSection() {
+  const rows = PUBLIC_CONTENT.IndiaContacts || [];
+  renderCards("indiaContactsGrid", rows, [
+    { Name: "Demudamma", Role: "Bride's mother" },
+    { Name: "Aditya", Role: "Bride's brother" },
+    { Name: "Bharathi", Role: "Local contact" },
+    { Name: "Jyothi", Role: "Local contact" },
+    { Name: "Sowjanya", Role: "Local contact" },
+    { Name: "Chaitanya", Role: "Local contact" }
+  ]);
+}
 function renderOutfitCatalog() {
   const catalog = PUBLIC_CONTENT.OutfitCatalog || [];
   const outfitsSection = $("#outfits");
@@ -351,84 +464,82 @@ function renderOutfitCatalog() {
 }
 
 async function renderGuestDirectory() {
-  if ($("#guestDirectoryDynamic")) return;
+  const container = document.getElementById("guestDirectoryDynamic");
+  if (!container) return;
 
   const result = await api("getGuestDirectory", { InvitationCode: getInvitationCode() });
   if (!result.success) return;
 
   const rows = result.data || [];
-  const travelSection = $("#travel");
-  if (!travelSection) return;
+  container.innerHTML = rows.length ? rows.map(row => `
+    <article class="directory-card reveal visible">
+      <h3>${escapeHtml(row.DisplayName || "")}</h3>
+      <p>${escapeHtml([row.City, row.Country].filter(Boolean).join(", "))}</p>
+      <p>${escapeHtml(row.TravelDates || "")}</p>
+      <p>${escapeHtml(row.CitiesVisiting || "")}</p>
+      ${row.AttendingEvents ? `<p><strong>Events:</strong> ${escapeHtml(row.AttendingEvents)}</p>` : ""}
+      ${row.Notes ? `<p class="guest-note">${escapeHtml(row.Notes)}</p>` : ""}
+      <div class="person-links">
+        ${row.WhatsApp ? `<a href="${escapeAttr(toWhatsAppLink(row.WhatsApp))}" target="_blank" rel="noopener">WhatsApp</a>` : ""}
+        ${row.Email ? `<a href="mailto:${escapeAttr(row.Email)}">Email</a>` : ""}
+      </div>
+    </article>
+  `).join("") : `<p class="empty-note">No guests have chosen to appear here yet.</p>`;
+}
 
-  const section = document.createElement("section");
-  section.id = "guestDirectoryDynamic";
-  section.className = "section guest-directory-section";
-  section.innerHTML = `
-    <div class="section-heading reveal visible">
-      <p class="eyebrow">Guest Connect</p>
-      <h2>Who’s Coming?</h2>
-      <p>Guests who opt in can connect here for flights, India travel plans and wedding coordination.</p>
-    </div>
+function getSettingsMap() {
+  const rows = PUBLIC_CONTENT.Settings || [];
+  const map = {};
+  rows.forEach(row => {
+    if (row.Key) map[row.Key] = row.Value || "";
+  });
+  return map;
+}
 
-    <div class="directory-grid">
-      ${rows.length ? rows.map(row => `
-        <article class="directory-card">
-          <h3>${escapeHtml(row.DisplayName || "")}</h3>
-          <p>${escapeHtml([row.City, row.Country].filter(Boolean).join(", "))}</p>
-          <p>${escapeHtml(row.CitiesVisiting || "")}</p>
-          <div class="person-links">
-            ${row.WhatsApp ? `<a href="${escapeAttr(toWhatsAppLink(row.WhatsApp))}" target="_blank" rel="noopener">WhatsApp</a>` : ""}
-            ${row.Email ? `<a href="mailto:${escapeAttr(row.Email)}">Email</a>` : ""}
-          </div>
-        </article>
-      `).join("") : `<p class="empty-note">No guests have chosen to appear here yet.</p>`}
-    </div>
+function applyStaySettings() {
+  const settings = getSettingsMap();
 
-    <form class="lux-form compact" data-form="GuestDirectory">
-      <h3>Join Guest Connect</h3>
-      <div class="form-row">
-        <input name="DisplayName" placeholder="Display name" />
-        <input name="GuestGroup" placeholder="Guest group, e.g. Germany friends" />
-      </div>
-      <div class="form-row">
-        <input name="City" placeholder="City" />
-        <input name="Country" placeholder="Country" />
-      </div>
-      <div class="form-row">
-        <input name="TravelDates" placeholder="Travel dates" />
-        <input name="CitiesVisiting" placeholder="Cities visiting in India" />
-      </div>
-      <div class="form-row">
-        <select name="ShowInDirectory">
-          <option value="">Show me in guest directory?</option>
-          <option>Yes</option>
-          <option>No</option>
-        </select>
-        <select name="ShareWhatsApp">
-          <option value="">Share WhatsApp?</option>
-          <option>Yes</option>
-          <option>No</option>
-        </select>
-      </div>
-      <div class="form-row">
-        <select name="ShareEmail">
-          <option value="">Share email?</option>
-          <option>Yes</option>
-          <option>No</option>
-        </select>
-        <input name="AttendingEvents" placeholder="Events attending" />
-      </div>
-      <input name="InvitationCode" type="hidden" />
-      <input name="WhatsApp" placeholder="WhatsApp number" />
-      <input name="Email" type="email" placeholder="Email" />
-      <button class="button primary" type="submit">Save Guest Connect Preferences</button>
+  document.querySelectorAll("[data-setting]").forEach(el => {
+    const key = el.dataset.setting;
+    if (settings[key]) el.textContent = settings[key];
+  });
+
+  document.querySelectorAll("[data-setting-href]").forEach(el => {
+    const key = el.dataset.settingHref;
+    if (settings[key]) el.href = settings[key];
+  });
+}
+
+function renderAdminStayEditor() {
+  if (!CURRENT_USER) return "";
+
+  const settings = getSettingsMap();
+  const fields = [
+    ["SaiPriyaTitle", "Sai Priya title"],
+    ["SaiPriyaText", "Sai Priya description"],
+    ["SaiPriyaLink", "Sai Priya map/link"],
+    ["SimbaTitle", "Simba title"],
+    ["SimbaText", "Simba description"],
+    ["SimbaLink", "Simba map/link"],
+    ["MarriottLink", "Marriott link"],
+    ["NovotelLink", "Novotel link"],
+    ["PalmBeachLink", "Palm Beach link"],
+    ["RadissonLink", "Radisson link"]
+  ];
+
+  return `
+    <form id="adminStayForm" class="lux-form compact admin-edit-form">
+      <h3>Edit Stay Page</h3>
+      <p class="form-helper">Admin only. This saves text and links into the existing Settings sheet.</p>
+      ${fields.map(([key, label]) => `
+        <label class="admin-field-label">${escapeHtml(label)}
+          <input name="${escapeAttr(key)}" value="${escapeAttr(settings[key] || "")}" placeholder="${escapeAttr(label)}" />
+        </label>
+      `).join("")}
+      <button class="button primary" type="submit">Save stay information</button>
       <p class="form-message"></p>
     </form>
   `;
-
-  travelSection.parentNode.insertBefore(section, travelSection);
-  initForms();
-  prefillAllForms();
 }
 
 function setupAdminMode(isAdmin) {
@@ -444,17 +555,96 @@ function setupAdminMode(isAdmin) {
     <div class="section-heading reveal visible">
       <p class="eyebrow">Admin Only</p>
       <h2>Jyothsna Admin Panel</h2>
-      <p>Manage catalogue, wedding party, family contacts and gallery approvals from Google Sheets for now.</p>
+      <p>Manage stay information and outfit suggestions from the front end. More detailed edits can still be done in Google Sheets.</p>
     </div>
     <div class="admin-grid">
-      <div class="admin-card"><h3>Outfit Catalogue</h3><p>Edit OutfitCatalog in Google Sheets.</p></div>
-      <div class="admin-card"><h3>Wedding Party</h3><p>Edit WeddingParty tab.</p></div>
-      <div class="admin-card"><h3>Family & Contacts</h3><p>Edit Family and IndiaContacts tabs.</p></div>
+      <div class="admin-card"><h3>Outfit Catalogue</h3><p>Edit OutfitCatalog in Google Sheets, or use the quick-add form below.</p></div>
+      <div class="admin-card"><h3>Stay Page</h3><p>Edit accommodation text and hotel links from this admin page.</p></div>
       <div class="admin-card"><h3>Gallery Approval</h3><p>Approve uploads in GalleryUploads.</p></div>
     </div>
+    ${renderAdminStayEditor()}
+    <form id="adminOutfitForm" class="lux-form compact admin-edit-form">
+      <h3>Add / Update Outfit Suggestion</h3>
+      <p class="form-helper">Saves to the existing OutfitCatalog sheet. Use a unique title to update an existing item.</p>
+      <div class="form-row">
+        <input name="Title" placeholder="Title, e.g. Haldi yellow kurta" required />
+        <select name="Gender"><option>Women</option><option>Men</option></select>
+      </div>
+      <div class="form-row">
+        <select name="Event"><option>Haldi</option><option>Sangeeth</option><option>Wedding</option><option>Reception</option></select>
+        <input name="PriceRange" placeholder="Budget / mid-range / premium" />
+      </div>
+      <input name="ReferenceLink" placeholder="Shopping link" />
+      <input name="ImageUrl" placeholder="Image URL" />
+      <textarea name="Description" placeholder="Description and styling advice"></textarea>
+      <button class="button primary" type="submit">Save outfit suggestion</button>
+      <p class="form-message"></p>
+    </form>
   `;
 
   main.insertBefore(section, contact);
+  bindAdminForms();
+  preparePagePanels();
+}
+
+function bindAdminForms() {
+  const stayForm = document.getElementById("adminStayForm");
+  if (stayForm && stayForm.dataset.bound !== "true") {
+    stayForm.dataset.bound = "true";
+    stayForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const message = stayForm.querySelector(".form-message");
+      const values = Object.fromEntries(new FormData(stayForm).entries());
+      try {
+        setMessage(message, "Saving...");
+        for (const [key, value] of Object.entries(values)) {
+          await api("adminSaveRow", {
+            InvitationCode: getInvitationCode(),
+            targetSheet: "Settings",
+            lookupColumn: "Key",
+            lookupValue: key,
+            rowData: { Key: key, Value: value }
+          });
+        }
+        setMessage(message, "Stay information saved.");
+        await refreshGuestData();
+      } catch (error) {
+        console.error(error);
+        setMessage(message, "Could not save stay information.", true);
+      }
+    });
+  }
+
+  const outfitForm = document.getElementById("adminOutfitForm");
+  if (outfitForm && outfitForm.dataset.bound !== "true") {
+    outfitForm.dataset.bound = "true";
+    outfitForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const message = outfitForm.querySelector(".form-message");
+      const data = Object.fromEntries(new FormData(outfitForm).entries());
+      try {
+        setMessage(message, "Saving...");
+        await api("adminSaveRow", {
+          InvitationCode: getInvitationCode(),
+          targetSheet: "OutfitCatalog",
+          lookupColumn: "Title",
+          lookupValue: data.Title,
+          rowData: {
+            ...data,
+            Available: "Yes",
+            Visible: "Yes",
+            SortOrder: 999
+          }
+        });
+        setMessage(message, "Outfit suggestion saved.");
+        outfitForm.reset();
+        await refreshGuestData();
+      } catch (error) {
+        console.error(error);
+        setMessage(message, "Could not save outfit suggestion.", true);
+      }
+    });
+  }
 }
 
 function initCountdown() {
@@ -630,6 +820,92 @@ function initMediaUploadForm() {
   });
 }
 
+
+function preparePagePanels() {
+  const panels = document.querySelectorAll("#site > .hero, main > section");
+  panels.forEach(panel => panel.classList.add("page-panel"));
+}
+
+function getCurrentPageId() {
+  const hash = (location.hash || "").replace("#", "");
+  return hash || "home";
+}
+
+function showPage(pageId = "home", updateHash = true) {
+  preparePagePanels();
+
+  const target = document.getElementById(pageId) || document.getElementById("home");
+  if (!target) return;
+
+  document.querySelectorAll(".page-panel").forEach(panel => {
+    panel.classList.remove("active-page");
+  });
+
+  target.classList.add("active-page");
+
+  document.querySelectorAll(".nav-links a, .dashboard-actions a, .hero-actions a, .empty-gallery-card a").forEach(link => {
+    const id = link.getAttribute("href")?.replace("#", "");
+    link.classList.toggle("active-link", id === target.id);
+  });
+
+  if (updateHash && location.hash !== `#${target.id}`) {
+    history.pushState(null, "", `#${target.id}`);
+  }
+
+  window.scrollTo({ top: 0, behavior: "auto" });
+  updateNavbarState();
+}
+
+function initPageNavigation() {
+  preparePagePanels();
+
+  document.addEventListener("click", event => {
+    const link = event.target.closest('a[href^="#"]');
+    if (!link) return;
+
+    const pageId = link.getAttribute("href").replace("#", "");
+    const target = document.getElementById(pageId);
+
+    if (!target) return;
+
+    event.preventDefault();
+    showPage(pageId, true);
+    document.querySelector("#navLinks")?.classList.remove("open");
+  });
+
+  window.addEventListener("popstate", () => {
+    showPage(getCurrentPageId(), false);
+  });
+
+  showPage(getCurrentPageId(), false);
+}
+
+
+function updateNavbarState() {
+  const nav = document.querySelector(".nav");
+  if (!nav) return;
+
+  const currentPage = document.querySelector(".page-panel.active-page");
+  const isHome = currentPage?.id === "home";
+  const shouldBeSolid = window.scrollY > 160;
+
+  nav.classList.toggle("scrolled", shouldBeSolid);
+}
+
+function initTransparentNavbar() {
+  updateNavbarState();
+  window.addEventListener("scroll", updateNavbarState, { passive: true });
+}
+
+function readFileAsBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result).split(",")[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
 function toWhatsAppLink(value) {
   if (!value) return "";
   if (String(value).startsWith("http")) return value;
@@ -654,7 +930,6 @@ function escapeAttr(value = "") {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  initLogin();
   initCountdown();
   initRevealAnimations();
   initLanguage();
@@ -662,4 +937,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initForms();
   initGallery();
   initMediaUploadForm();
+  initPageNavigation();
+  initTransparentNavbar();
+  initLogin();
 });

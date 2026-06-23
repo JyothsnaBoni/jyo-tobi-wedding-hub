@@ -1,0 +1,44 @@
+Image files referenced by the current website
+
+Core couple/gallery images already referenced in index.html:
+- assets/images/couple-01.jpg
+- assets/images/couple-03.jpg
+- assets/images/couple-08.jpg
+- assets/images/couple-09.jpg
+- assets/images/couple-15.jpg
+- assets/images/couple-18.jpg
+
+Indian illustration / decorative image:
+- assets/images/indian-couple-illustration.png
+
+General fallback backgrounds:
+- assets/images/bg-gold-pattern.jpg
+- assets/images/form-background.jpg
+
+Optional page background placeholders. You can add Indian traditional / wedding / coastal photos with these exact names:
+- assets/images/bg-couple.jpg
+- assets/images/bg-story.jpg
+- assets/images/bg-events.jpg
+- assets/images/bg-guide.jpg
+- assets/images/bg-travel.jpg
+- assets/images/bg-stay.jpg
+- assets/images/bg-outfits.jpg
+- assets/images/bg-rsvp.jpg
+- assets/images/bg-memories.jpg
+- assets/images/bg-gallery.jpg
+- assets/images/bg-guest-connect.jpg
+- assets/images/bg-family.jpg
+- assets/images/bg-help-contact.jpg
+
+Optional form background placeholders:
+- assets/images/form-bg-travel.jpg
+- assets/images/form-bg-stay.jpg
+- assets/images/form-bg-outfits.jpg
+- assets/images/form-bg-rsvp.jpg
+- assets/images/form-bg-gallery-upload.jpg
+- assets/images/form-bg-guest-connect.jpg
+
+Recommended style for placeholders:
+- Keep images bright, soft, and not too busy.
+- Good choices: gold silk fabric, jasmine flowers, temple decor, peacock-feather detail, wedding invitation texture, beach/resort detail, blurred mandap/floral decor.
+- Avoid dark or cluttered full-face images behind forms.

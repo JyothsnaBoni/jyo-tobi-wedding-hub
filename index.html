@@ -29,7 +29,7 @@
     <div class="login-card reveal">
       <div class="mini-kolam">❋</div>
       <p class="eyebrow">Private Wedding Portal</p>
-      <h1>Jyothsna <span>&</span> Tobias</h1>
+      <h1 class="hero-names">Jyothsna <span class="heart">♥</span> Tobias</h1>
       <p class="login-copy">Enter your invitation code to open the wedding hub.</p>
 
       <div class="login-row">
@@ -38,7 +38,7 @@
       </div>
 
       <p id="loginError" class="form-message error hidden">Please enter the correct invitation code.</p>
-      <p class="tiny-note">Preview code for testing: <strong>JYOTOBI</strong></p>
+      <p class="tiny-note">Hint: Invitation code is the first 3 letters of your first name followed by first 3 letters of your last name. <strong>Eg. for name 'Jyothsna Boni' the code would be 'JYOBON'</strong></p>
     </div>
   </section>
 
@@ -52,6 +52,7 @@
       <button class="nav-toggle" id="navToggle" aria-label="Open menu">☰</button>
 
       <div class="nav-links" id="navLinks">
+        <a href="#home">Home</a>
         <a href="#couple">Bride & Groom</a>
         <a href="#story" data-i18n="nav_story">Story</a>
         <a href="#events" data-i18n="nav_events">Events</a>
@@ -59,10 +60,12 @@
         <a href="#travel" data-i18n="nav_travel">Travel</a>
         <a href="#stay" data-i18n="nav_stay">Stay</a>
         <a href="#outfits" data-i18n="nav_outfits">Outfits</a>
+        <a href="#guest-connect">Guest Connect</a>
+        <a href="#families">Families</a>
         <a href="#memories">Upload</a>
         <a href="#gallery" data-i18n="nav_gallery">Gallery</a>
         <a href="#rsvp" data-i18n="nav_rsvp">RSVP</a>
-        <a href="#contact">Contact</a>
+        <a href="#contact">Help & Contact</a>
 
         <select id="languageSelect" aria-label="Language switcher">
           <option value="en">🇬🇧 English</option>
@@ -80,7 +83,7 @@
 
       <div class="hero-content reveal">
         <p class="eyebrow" data-i18n="hero_eyebrow">A South Indian Wedding Celebration</p>
-        <h1>Jyothsna <span>&</span> Tobias</h1>
+        <h1 class="hero-names">Jyothsna <span class="heart">♥</span> Tobias</h1>
         <p class="hero-subtitle" data-i18n="hero_subtitle">13–15 November 2026 · Visakhapatnam, India</p>
 
         <div class="countdown" id="countdown">
@@ -163,7 +166,7 @@
         <div class="story-grid">
           <div class="story-image reveal">
             <img src="assets/images/couple-08.jpg" alt="Jyothsna and Tobias motorcycle story" />
-            <div class="ornament-card">Berlin · Budapest · Vizag</div>
+            <div class="ornament-card">Berlin · Vizag</div>
           </div>
 
           <div class="timeline reveal">
@@ -265,36 +268,63 @@
             <div class="icon">🪷</div>
             <h3>Haldi</h3>
             <p data-i18n="guide_haldi">Wear yellow or gold. Expect turmeric, music, photos and a very cheerful atmosphere.</p>
+            <div class="guide-links">
+              <a href="https://www.theknot.com/content/haldi-ceremony" target="_blank" rel="noopener">Read: Haldi ceremony guide</a>
+              <a href="https://www.youtube.com/results?search_query=haldi+ceremony+explained+indian+wedding" target="_blank" rel="noopener">Watch: Haldi videos</a>
+              <a href="https://www.instagram.com/explore/tags/haldiceremony/" target="_blank" rel="noopener">Instagram: Haldi inspiration</a>
+            </div>
           </div>
 
           <div class="guide-card reveal">
             <div class="icon">💃</div>
             <h3>Sangeeth</h3>
             <p data-i18n="guide_sangeeth">Think of it as a family dance party. Participation is welcome but never forced.</p>
+            <div class="guide-links">
+              <a href="https://www.theknot.com/content/sangeet-ceremony" target="_blank" rel="noopener">Read: Sangeet ceremony guide</a>
+              <a href="https://www.youtube.com/results?search_query=indian+wedding+sangeet+explained" target="_blank" rel="noopener">Watch: Sangeet videos</a>
+              <a href="https://www.instagram.com/explore/tags/sangeetnight/" target="_blank" rel="noopener">Instagram: Sangeet inspiration</a>
+            </div>
           </div>
 
           <div class="guide-card reveal">
             <div class="icon">🔥</div>
             <h3 data-i18n="guide_wedding_title">Wedding Rituals</h3>
             <p data-i18n="guide_wedding">The ceremony may feel different from a German wedding. The most sacred moment is the Muhurtham at 10:12 PM.</p>
+            <div class="guide-links">
+              <a href="https://www.weddingbazaar.com/blog/telugu-wedding-rituals" target="_blank" rel="noopener">Read: Telugu wedding rituals</a>
+              <a href="https://www.theknot.com/content/hindu-wedding-traditions" target="_blank" rel="noopener">Read: Hindu wedding traditions</a>
+              <a href="https://www.youtube.com/results?search_query=telugu+wedding+rituals+explained" target="_blank" rel="noopener">Watch: Telugu wedding videos</a>
+            </div>
           </div>
 
           <div class="guide-card reveal">
             <div class="icon">🍛</div>
             <h3 data-i18n="guide_food_title">Food</h3>
             <p data-i18n="guide_food">There will be plenty of food. Some dishes may be spicy, but we will try to include mild options too.</p>
+            <div class="guide-links">
+              <a href="https://www.youtube.com/results?search_query=south+indian+wedding+food+guests" target="_blank" rel="noopener">Watch: South Indian wedding food</a>
+              <a href="https://www.instagram.com/explore/tags/southindianweddingfood/" target="_blank" rel="noopener">Instagram: Wedding food</a>
+            </div>
           </div>
 
           <div class="guide-card reveal">
             <div class="icon">👣</div>
             <h3 data-i18n="guide_culture_title">Cultural Tips</h3>
             <p data-i18n="guide_culture">You may be asked to remove shoes for some rituals. If unsure, just ask us or follow the family.</p>
+            <div class="guide-links">
+              <a href="https://www.theknot.com/content/hindu-wedding-guest-qa" target="_blank" rel="noopener">Read: Guest etiquette</a>
+              <a href="https://www.youtube.com/results?search_query=what+to+expect+at+an+indian+wedding+as+a+guest" target="_blank" rel="noopener">Watch: Guest tips</a>
+            </div>
           </div>
 
           <div class="guide-card reveal">
             <div class="icon">📸</div>
             <h3 data-i18n="guide_photos_title">Photos</h3>
             <p data-i18n="guide_photos">Expect many photos, bright colours, flowers, jewellery and lots of joyful chaos.</p>
+            <div class="guide-links">
+              <a href="https://www.instagram.com/explore/tags/southindianwedding/" target="_blank" rel="noopener">Instagram: South Indian weddings</a>
+              <a href="https://www.youtube.com/results?search_query=south+indian+wedding+highlights" target="_blank" rel="noopener">Watch: Wedding highlights</a>
+            </div>
           </div>
         </div>
       </section>
@@ -375,29 +405,37 @@
         <div class="section-heading reveal">
           <p class="eyebrow" data-i18n="stay_eyebrow">Where to stay in Vizag</p>
           <h2 data-i18n="stay_title">Accommodation</h2>
+          <p>We will help guests coordinate accommodation. On the wedding day, resting space and night accommodation are included at the venue for those who need it. Guests who prefer a higher-comfort hotel after the ceremony can also book one of the suggested hotels below.</p>
         </div>
 
-        <div class="stay-grid">
-          <article class="stay-card featured reveal">
-            <h3>Sai Priya Resort</h3>
-            <p data-i18n="stay_sai">Recommended for Haldi and Sangeeth because both events happen there.</p>
-            <a href="https://maps.app.goo.gl/Yy9JUMp68j5KTy168" target="_blank" rel="noopener">View location →</a>
+        <div class="stay-grid" id="stayCards">
+          <article class="stay-card featured reveal" data-setting-card="SaiPriya">
+            <h3 data-setting="SaiPriyaTitle">Sai Priya Resort</h3>
+            <p data-setting="SaiPriyaText">Recommended for Haldi and Sangeeth because both events happen here. Tell us if you want us to help reserve rooms in advance.</p>
+            <a data-setting-href="SaiPriyaLink" href="https://maps.app.goo.gl/Yy9JUMp68j5KTy168" target="_blank" rel="noopener">View location →</a>
           </article>
 
-          <article class="stay-card reveal">
-            <h3>Simba Resort</h3>
-            <p data-i18n="stay_simba">All 16 rooms are reserved for the wedding day, mainly for relaxing and getting ready between ceremonies.</p>
-            <a href="https://maps.app.goo.gl/w5ynK7D8EfTR8NUX8" target="_blank" rel="noopener">View location →</a>
+          <article class="stay-card reveal" data-setting-card="Simba">
+            <h3 data-setting="SimbaTitle">Simba Resort</h3>
+            <p data-setting="SimbaText">For the wedding day, food and accommodation/resting space are included during ceremonies and for the night. If you prefer to move to a hotel afterwards, you can choose one of the alternatives.</p>
+            <a data-setting-href="SimbaLink" href="https://maps.app.goo.gl/w5ynK7D8EfTR8NUX8" target="_blank" rel="noopener">View location →</a>
           </article>
 
-          <article class="stay-card reveal">
+          <article class="stay-card reveal alternative-hotels">
             <h3>Alternative Hotels</h3>
-            <p data-i18n="stay_alt">Marriott, Novotel, Palm Beach and Radisson Blu are good alternatives depending on comfort and budget.</p>
+            <p>Good options if you want a hotel stay before/after the ceremony or prefer more comfort.</p>
+            <ul class="hotel-links">
+              <li><a data-setting-href="MarriottLink" href="https://www.marriott.com/" target="_blank" rel="noopener">Marriott Vizag</a></li>
+              <li><a data-setting-href="NovotelLink" href="https://all.accor.com/" target="_blank" rel="noopener">Novotel Vizag</a></li>
+              <li><a data-setting-href="PalmBeachLink" href="https://www.palmbeachhotelvizag.com/" target="_blank" rel="noopener">Palm Beach Hotel</a></li>
+              <li><a data-setting-href="RadissonLink" href="https://www.radissonhotels.com/" target="_blank" rel="noopener">Radisson Blu</a></li>
+            </ul>
           </article>
         </div>
 
         <form class="lux-form compact reveal" data-form="Accommodation">
           <h3>Accommodation Request</h3>
+          <p class="form-helper">This request helps us understand who needs help booking rooms. Wedding-day rest/night accommodation is provided, but you can also tell us if you prefer a hotel.</p>
 
           <div class="form-row">
             <input name="FullName" placeholder="Full name" required />
@@ -412,15 +450,16 @@
           <div class="form-row">
             <input name="CheckOutDate" type="date" />
             <select name="InterestedInSaiPriya">
-              <option value="">Interested in Sai Priya Resort?</option>
-              <option>Yes</option>
-              <option>No</option>
-              <option>Maybe</option>
+              <option value="">Accommodation preference</option>
+              <option>Use wedding-day accommodation/resting space</option>
+              <option>Need help booking Sai Priya Resort</option>
+              <option>Prefer alternative hotel after ceremony</option>
+              <option>Not sure yet</option>
             </select>
           </div>
 
-          <input name="PreferredHotel" placeholder="Preferred hotel if not Sai Priya" />
-          <textarea name="RoomPreferences" placeholder="Room preferences / other hotels / special needs"></textarea>
+          <input name="PreferredHotel" placeholder="Preferred hotel if you already know it" />
+          <textarea name="RoomPreferences" placeholder="Room preferences / budget / hotel preference / special needs"></textarea>
           <textarea name="Notes" placeholder="Accommodation notes"></textarea>
 
           <button type="submit" class="button primary">Send accommodation request</button>
@@ -432,10 +471,48 @@
         <div class="section-heading reveal">
           <p class="eyebrow" data-i18n="outfits_eyebrow">Sarees, lehengas, kurtas and festive looks</p>
           <h2 data-i18n="outfits_title">Outfit Selection</h2>
-          <p data-i18n="outfits_text">Choose your preferred outfit style and share measurements early so stitching can be arranged in India.</p>
+          <p data-i18n="outfits_text">Choose a style or paste a link from an Indian shopping website. If you want us to buy the exact outfit in India, add the link and size notes. You can pay later after we confirm availability.</p>
         </div>
 
-        <form class="lux-form reveal" data-form="Outfits">
+        <div class="outfit-help-grid reveal">
+          <article class="outfit-help-card">
+            <p class="eyebrow">Haldi</p>
+            <h3>Yellow, gold, floral, light fabrics</h3>
+            <p>Easy options: yellow kurta, saree, lehenga, floral dress, or Indo-western. Keep it comfortable because turmeric may touch clothes.</p>
+            <div class="shop-links">
+              <a href="https://www.myntra.com/ethnic-wear" target="_blank" rel="noopener">Myntra budget options</a>
+              <a href="https://www.ajio.com/shop/women-ethnic-wear" target="_blank" rel="noopener">AJIO ethnic wear</a>
+              <a href="https://www.amazon.in/s?k=haldi+outfit" target="_blank" rel="noopener">Amazon India Haldi</a>
+            </div>
+          </article>
+
+          <article class="outfit-help-card">
+            <p class="eyebrow">Sangeeth</p>
+            <h3>Festive, colourful, dance-friendly</h3>
+            <p>Choose something festive but comfortable for dancing: lehenga, festive saree, kurta set, Indo-western, Nehru jacket or sherwani-style kurta.</p>
+            <div class="shop-links">
+              <a href="https://www.myntra.com/lehengas" target="_blank" rel="noopener">Myntra lehengas</a>
+              <a href="https://www.manyavar.com/" target="_blank" rel="noopener">Manyavar men</a>
+              <a href="https://www.ajio.com/search/?text=sangeet%20outfit" target="_blank" rel="noopener">AJIO Sangeeth</a>
+            </div>
+          </article>
+
+          <article class="outfit-help-card">
+            <p class="eyebrow">Wedding</p>
+            <h3>Elegant Indian formal</h3>
+            <p>Women: silk saree, Kanjeevaram, lehenga. Men: kurta, sherwani, dhoti set or formal Indian wear. Choose richer fabrics and elegant colours.</p>
+            <div class="shop-links">
+              <a href="https://www.kalkifashion.com/" target="_blank" rel="noopener">Kalki premium</a>
+              <a href="https://www.perniaspopupshop.com/" target="_blank" rel="noopener">Pernia's luxury</a>
+              <a href="https://www.manyavar.com/" target="_blank" rel="noopener">Manyavar wedding</a>
+            </div>
+          </article>
+        </div>
+
+        <form class="lux-form reveal outfit-request-form" data-form="Outfits" enctype="multipart/form-data">
+          <h3>Your outfit request</h3>
+          <p class="form-helper">Paste links to outfits you like, upload a screenshot/reference image, and add measurements. We will help you understand options before buying.</p>
+
           <div class="form-row">
             <input name="FullName" placeholder="Full name" required />
             <input name="InvitationCode" placeholder="Invitation code" />
@@ -472,6 +549,8 @@
           </div>
 
           <input name="SelectedCatalogItem" placeholder="Selected catalogue item / reference" />
+          <input name="ReferenceLink" type="url" placeholder="Paste outfit link from Myntra, AJIO, Manyavar, Kalki, etc." />
+          <input name="ReferenceImage" type="file" accept="image/*" />
 
           <div class="form-row four">
             <input name="Height" placeholder="Height" />
@@ -494,7 +573,7 @@
 
           <input name="ColourPreference" placeholder="Colour preference" />
           <textarea name="ComfortNotes" placeholder="Comfort level, sleeve/blouse notes, fit preferences"></textarea>
-          <textarea name="Notes" placeholder="Anything else we should know"></textarea>
+          <textarea name="Notes" placeholder="Paste extra links, screenshots description, budget range, and anything else we should know"></textarea>
 
           <button type="submit" class="button primary">Submit outfit preference</button>
           <p class="form-message"></p>
@@ -659,15 +738,139 @@
         </div>
       </section>
 
+
+      <section id="guest-connect" class="section guest-connect-section">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Guest Connect</p>
+          <h2>Who is coming to India?</h2>
+          <p>Guests who opt in can appear here so everyone can coordinate flights, India travel plans and shared transport. Only the contact details they choose to share will be visible.</p>
+        </div>
+
+        <div id="guestDirectoryDynamic" class="directory-grid"></div>
+
+        <form class="lux-form compact reveal" data-form="GuestDirectory">
+          <h3>Share your travel visibility</h3>
+          <p class="form-helper">This is optional. Use it if you want other invited guests to connect with you for flights or India travel.</p>
+          <div class="form-row">
+            <input name="DisplayName" placeholder="Display name" />
+            <input name="GuestGroup" placeholder="Guest group, e.g. Germany friends" />
+          </div>
+          <div class="form-row">
+            <input name="City" placeholder="City" />
+            <input name="Country" placeholder="Country" />
+          </div>
+          <div class="form-row">
+            <div class="field-group">
+              <label for="guestTravelStart">In India from</label>
+              <input id="guestTravelStart" name="TravelStartDate" type="date" />
+            </div>
+            <div class="field-group">
+              <label for="guestTravelEnd">In India until</label>
+              <input id="guestTravelEnd" name="TravelEndDate" type="date" />
+            </div>
+          </div>
+          <input name="TravelDates" type="hidden" />
+          <p class="form-helper small-helper">Select the date range when you will be in India. If your plans are flexible, add details in the notes below.</p>
+          <input name="CitiesVisiting" placeholder="Cities you plan to visit in India" />
+          <div class="form-row">
+            <select name="ShowInDirectory">
+              <option value="">Show me in Guest Connect?</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+            <select name="ShareWhatsApp">
+              <option value="">Share WhatsApp?</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <select name="ShareEmail">
+              <option value="">Share email?</option>
+              <option>Yes</option>
+              <option>No</option>
+            </select>
+            <input name="AttendingEvents" placeholder="Events attending" />
+          </div>
+          <input name="InvitationCode" type="hidden" />
+          <input name="WhatsApp" placeholder="WhatsApp number" />
+          <input name="Email" type="email" placeholder="Email" />
+          <textarea name="Notes" placeholder="Optional message for other guests, e.g. looking for travel partners"></textarea>
+          <button class="button primary" type="submit">Save Guest Connect Preferences</button>
+          <p class="form-message"></p>
+        </form>
+      </section>
+
+      <section id="families" class="section families-section">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Families</p>
+          <h2>Our Families</h2>
+          <p>The people who raised us, loved us, and shaped the story we are celebrating.</p>
+        </div>
+
+ <!--        <p class="family-photo-note reveal">Family photos can be added from the <strong>Family</strong> sheet using the <strong>PhotoUrl</strong> column. Upload the photo to <code>assets/images/</code> and paste the relative path, for example <code>assets/images/family-demudamma.jpg</code>.</p>
+ -->
+        <div class="family-split">
+          <div>
+            <div class="mini-heading">
+              <p class="eyebrow">Bride Side</p>
+              <h3>Bride’s Family</h3>
+            </div>
+            <div id="brideFamilyGrid" class="people-grid"></div>
+          </div>
+
+          <div>
+            <div class="mini-heading">
+              <p class="eyebrow">Groom Side</p>
+              <h3>Groom’s Family</h3>
+            </div>
+            <div id="groomFamilyGrid" class="people-grid"></div>
+          </div>
+        </div>
+      </section>
+
       <section id="contact" class="section contact-section">
         <div class="section-heading reveal">
-          <p class="eyebrow">Questions?</p>
-          <h2>Contact Us</h2>
+          <p class="eyebrow">Help & Contact</p>
+          <h2>Questions, help in India & FAQs</h2>
+          <p>If you cannot reach the bride or groom during the wedding days, please contact the bride’s family emergency contacts below.</p>
         </div>
 
         <div class="contact-buttons reveal">
           <a class="button primary" href="https://wa.me/491794391642" target="_blank" rel="noopener">WhatsApp Jyothsna</a>
           <a class="button primary" href="https://wa.me/491626393495" target="_blank" rel="noopener">WhatsApp Tobias</a>
+        </div>
+
+        <div class="help-layout reveal">
+          <div>
+            <h3>Emergency contacts in India</h3>
+            <p class="form-helper">Bride’s family contacts will be shown here from the IndiaContacts sheet. Please contact them if you need urgent local help and cannot reach us.</p>
+            <div id="indiaContactsGrid" class="people-grid compact-people"></div>
+          </div>
+
+          <div class="faq-list">
+            <h3>Frequently asked questions</h3>
+            <details open>
+              <summary>What should I wear?</summary>
+              <p>For Haldi, yellow/gold is perfect. For Sangeeth, wear festive and dance-friendly clothes. For the wedding, elegant Indian formal is best.</p>
+            </details>
+            <details>
+              <summary>Is accommodation provided on the wedding day?</summary>
+              <p>Yes, resting space and night accommodation are arranged for the wedding day. Guests who prefer a hotel after the ceremony can book alternatives.</p>
+            </details>
+            <details>
+              <summary>Can I coordinate travel with other guests?</summary>
+              <p>Yes. Use Guest Connect and opt in to share your travel dates and contact details.</p>
+            </details>
+            <details>
+              <summary>Can I upload wedding photos?</summary>
+              <p>Yes. Use the Upload page. Photos and videos appear in the gallery after admin approval.</p>
+            </details>
+            <details>
+              <summary>Will food be spicy?</summary>
+              <p>Some dishes may be spicy, but we will try to include mild options too.</p>
+            </details>
+          </div>
         </div>
       </section>
     </main>
