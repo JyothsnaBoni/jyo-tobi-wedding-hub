@@ -345,6 +345,7 @@ function injectGuestDashboard() {
         <a class="button primary" href="#stay">Edit Stay</a>
         <a class="button primary" href="#outfits">Edit Outfits</a>
         <a class="button primary" href="#guest-connect">Guest Connect</a>
+        ${CURRENT_IS_ADMIN ? `<a class="button primary" href="#admin">Admin Gallery Review</a>` : ""}
       </div>
       <button class="button logout-button" type="button" onclick="lockSite()">Log out</button>
     </div>
@@ -737,14 +738,41 @@ function renderAdminStayEditor() {
   `;
 }
 
+function ensureAdminNavLink() {
+  const navLinks = document.getElementById("navLinks");
+  if (!navLinks || document.querySelector('[data-admin-nav-link="true"]')) return;
+
+  const languageSelect = document.getElementById("languageSelect");
+  const adminLink = document.createElement("a");
+  adminLink.href = "#admin";
+  adminLink.textContent = "Admin";
+  adminLink.dataset.adminNavLink = "true";
+
+  if (languageSelect) {
+    navLinks.insertBefore(adminLink, languageSelect);
+  } else {
+    navLinks.appendChild(adminLink);
+  }
+}
+
 function setupAdminMode(isAdmin) {
-  if (!isAdmin || $("#adminPanel")) return;
+  CURRENT_IS_ADMIN = !!isAdmin;
+  if (!CURRENT_IS_ADMIN) return;
+
+  ensureAdminNavLink();
+
+  if ($("#admin")) {
+    bindAdminGalleryReview();
+    loadAdminGalleryReview();
+    preparePagePanels();
+    return;
+  }
 
   const main = document.querySelector("main");
   const contact = $("#contact");
 
   const section = document.createElement("section");
-  section.id = "adminPanel";
+  section.id = "admin";
   section.className = "section admin-section";
   section.innerHTML = `
     <div class="section-heading reveal visible">
@@ -789,11 +817,17 @@ function setupAdminMode(isAdmin) {
     </form>
   `;
 
-  main.insertBefore(section, contact);
+  if (main) {
+    main.insertBefore(section, contact || null);
+  }
   bindAdminForms();
   bindAdminGalleryReview();
   loadAdminGalleryReview();
   preparePagePanels();
+
+  if (getCurrentPageId() === "admin") {
+    showPage("admin", false);
+  }
 }
 
 
@@ -1168,6 +1202,8 @@ let GALLERY_VIEWER_INDEX = 0;
 let GALLERY_VIEWER_SCALE = 1;
 let GALLERY_VIEWER_X = 0;
 let GALLERY_VIEWER_Y = 0;
+let GALLERY_IS_PANNING = false;
+let GALLERY_PAN_START = { x: 0, y: 0 };
 let GALLERY_POINTERS = new Map();
 let GALLERY_LAST_PINCH_DISTANCE = 0;
 
@@ -1177,7 +1213,7 @@ function refreshGalleryViewerItems() {
       type: button.dataset.viewerType || "image",
       src: button.dataset.viewerSrc || "",
       title: button.dataset.viewerTitle || "Wedding memory",
-      download: button.closest(".gallery-media-wrap")?.querySelector(".gallery-download-icon")?.href || ""
+      download: button.closest(".gallery-media-wrap")?.querySelector(".gallery-download-icon")?.href || button.dataset.viewerSrc || ""
     }))
     .filter(item => item.src);
 }
@@ -1191,45 +1227,86 @@ function ensureGalleryViewer() {
   viewer.className = "gallery-viewer hidden";
   viewer.innerHTML = `
     <div class="gallery-viewer-backdrop" data-viewer-close></div>
-    <div class="gallery-viewer-toolbar">
-      <button type="button" class="gallery-viewer-control" data-viewer-zoom-out aria-label="Zoom out">−</button>
-      <button type="button" class="gallery-viewer-control" data-viewer-zoom-in aria-label="Zoom in">+</button>
-      <a class="gallery-viewer-control gallery-viewer-download" target="_blank" rel="noopener" download aria-label="Download">↓</a>
-      <button type="button" class="gallery-viewer-control" data-viewer-close aria-label="Close">×</button>
+
+    <div class="gallery-viewer-topbar">
+      <div class="gallery-viewer-title">
+        <span class="gallery-viewer-kicker">Wedding memory</span>
+        <strong data-viewer-title></strong>
+      </div>
+      <div class="gallery-viewer-toolbar" aria-label="Gallery controls">
+        <button type="button" class="gallery-viewer-control" data-viewer-zoom-out aria-label="Zoom out">−</button>
+        <button type="button" class="gallery-viewer-control" data-viewer-zoom-in aria-label="Zoom in">+</button>
+        <a class="gallery-viewer-control gallery-viewer-download" target="_blank" rel="noopener" download aria-label="Download">↓</a>
+        <button type="button" class="gallery-viewer-control" data-viewer-close aria-label="Close">×</button>
+      </div>
     </div>
+
     <button type="button" class="gallery-viewer-nav gallery-viewer-prev" data-viewer-prev aria-label="Previous image">‹</button>
     <figure class="gallery-viewer-stage">
       <div class="gallery-viewer-media"></div>
-      <figcaption></figcaption>
+      <figcaption>
+        <span data-viewer-caption></span>
+        <small data-viewer-counter></small>
+      </figcaption>
     </figure>
     <button type="button" class="gallery-viewer-nav gallery-viewer-next" data-viewer-next aria-label="Next image">›</button>
   `;
   document.body.appendChild(viewer);
 
-  viewer.addEventListener("click", event => {
-    if (event.target.closest("[data-viewer-close]")) closeGalleryViewer();
-    if (event.target.closest("[data-viewer-prev]")) showGalleryViewerItem(GALLERY_VIEWER_INDEX - 1);
-    if (event.target.closest("[data-viewer-next]")) showGalleryViewerItem(GALLERY_VIEWER_INDEX + 1);
-    if (event.target.closest("[data-viewer-zoom-in]")) setGalleryViewerScale(GALLERY_VIEWER_SCALE + 0.25);
-    if (event.target.closest("[data-viewer-zoom-out]")) setGalleryViewerScale(GALLERY_VIEWER_SCALE - 0.25);
+  viewer.querySelectorAll("[data-viewer-close]").forEach(control => {
+    control.addEventListener("click", event => {
+      event.preventDefault();
+      event.stopPropagation();
+      closeGalleryViewer();
+    });
+  });
+
+  viewer.querySelector("[data-viewer-prev]")?.addEventListener("click", event => {
+    event.preventDefault();
+    event.stopPropagation();
+    showGalleryViewerItem(GALLERY_VIEWER_INDEX - 1);
+  });
+
+  viewer.querySelector("[data-viewer-next]")?.addEventListener("click", event => {
+    event.preventDefault();
+    event.stopPropagation();
+    showGalleryViewerItem(GALLERY_VIEWER_INDEX + 1);
+  });
+
+  viewer.querySelector("[data-viewer-zoom-in]")?.addEventListener("click", event => {
+    event.preventDefault();
+    event.stopPropagation();
+    setGalleryViewerScale(GALLERY_VIEWER_SCALE + 0.25);
+  });
+
+  viewer.querySelector("[data-viewer-zoom-out]")?.addEventListener("click", event => {
+    event.preventDefault();
+    event.stopPropagation();
+    setGalleryViewerScale(GALLERY_VIEWER_SCALE - 0.25);
   });
 
   viewer.addEventListener("wheel", event => {
     if (viewer.classList.contains("hidden")) return;
+    const current = viewer.querySelector(".gallery-viewer-media img");
+    if (!current) return;
     event.preventDefault();
-    setGalleryViewerScale(GALLERY_VIEWER_SCALE + (event.deltaY < 0 ? 0.15 : -0.15));
+    setGalleryViewerScale(GALLERY_VIEWER_SCALE + (event.deltaY < 0 ? 0.16 : -0.16));
   }, { passive: false });
 
   viewer.addEventListener("pointerdown", event => {
-    const media = viewer.querySelector(".gallery-viewer-media img");
-    if (!media) return;
+    const img = viewer.querySelector(".gallery-viewer-media img");
+    if (!img || event.target.closest("button, a")) return;
+
     GALLERY_POINTERS.set(event.pointerId, { x: event.clientX, y: event.clientY });
-    media.setPointerCapture?.(event.pointerId);
+    GALLERY_IS_PANNING = true;
+    GALLERY_PAN_START = { x: event.clientX, y: event.clientY };
+    img.classList.add("is-dragging");
+    try { viewer.setPointerCapture(event.pointerId); } catch (err) {}
   });
 
   viewer.addEventListener("pointermove", event => {
-    const media = viewer.querySelector(".gallery-viewer-media img");
-    if (!media || !GALLERY_POINTERS.has(event.pointerId)) return;
+    const img = viewer.querySelector(".gallery-viewer-media img");
+    if (!img || !GALLERY_POINTERS.has(event.pointerId)) return;
 
     const previous = GALLERY_POINTERS.get(event.pointerId);
     GALLERY_POINTERS.set(event.pointerId, { x: event.clientX, y: event.clientY });
@@ -1238,7 +1315,7 @@ function ensureGalleryViewer() {
     if (points.length >= 2) {
       const distance = Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y);
       if (GALLERY_LAST_PINCH_DISTANCE) {
-        setGalleryViewerScale(GALLERY_VIEWER_SCALE + (distance - GALLERY_LAST_PINCH_DISTANCE) / 260);
+        setGalleryViewerScale(GALLERY_VIEWER_SCALE + (distance - GALLERY_LAST_PINCH_DISTANCE) / 240);
       }
       GALLERY_LAST_PINCH_DISTANCE = distance;
       return;
@@ -1251,10 +1328,14 @@ function ensureGalleryViewer() {
     }
   });
 
-  ["pointerup", "pointercancel", "pointerleave"].forEach(type => {
+  ["pointerup", "pointercancel", "lostpointercapture"].forEach(type => {
     viewer.addEventListener(type, event => {
       GALLERY_POINTERS.delete(event.pointerId);
       if (GALLERY_POINTERS.size < 2) GALLERY_LAST_PINCH_DISTANCE = 0;
+      if (!GALLERY_POINTERS.size) {
+        GALLERY_IS_PANNING = false;
+        viewer.querySelector(".gallery-viewer-media img")?.classList.remove("is-dragging");
+      }
     });
   });
 
@@ -1263,6 +1344,8 @@ function ensureGalleryViewer() {
     if (event.key === "Escape") closeGalleryViewer();
     if (event.key === "ArrowLeft") showGalleryViewerItem(GALLERY_VIEWER_INDEX - 1);
     if (event.key === "ArrowRight") showGalleryViewerItem(GALLERY_VIEWER_INDEX + 1);
+    if (event.key === "+" || event.key === "=") setGalleryViewerScale(GALLERY_VIEWER_SCALE + 0.25);
+    if (event.key === "-" || event.key === "_") setGalleryViewerScale(GALLERY_VIEWER_SCALE - 0.25);
   });
 
   return viewer;
@@ -1271,7 +1354,8 @@ function ensureGalleryViewer() {
 function openGalleryViewer(src) {
   refreshGalleryViewerItems();
   const index = Math.max(0, GALLERY_VIEWER_ITEMS.findIndex(item => item.src === src));
-  ensureGalleryViewer().classList.remove("hidden");
+  const viewer = ensureGalleryViewer();
+  viewer.classList.remove("hidden");
   document.body.classList.add("viewer-open");
   showGalleryViewerItem(index);
 }
@@ -1281,6 +1365,9 @@ function closeGalleryViewer() {
   viewer?.classList.add("hidden");
   document.body.classList.remove("viewer-open");
   GALLERY_POINTERS.clear();
+  GALLERY_LAST_PINCH_DISTANCE = 0;
+  const video = viewer?.querySelector("video");
+  if (video) video.pause();
 }
 
 function showGalleryViewerItem(index) {
@@ -1290,23 +1377,35 @@ function showGalleryViewerItem(index) {
   GALLERY_VIEWER_INDEX = (index + GALLERY_VIEWER_ITEMS.length) % GALLERY_VIEWER_ITEMS.length;
   const item = GALLERY_VIEWER_ITEMS[GALLERY_VIEWER_INDEX];
   const media = viewer.querySelector(".gallery-viewer-media");
-  const caption = viewer.querySelector("figcaption");
+  const title = viewer.querySelector("[data-viewer-title]");
+  const caption = viewer.querySelector("[data-viewer-caption]");
+  const counter = viewer.querySelector("[data-viewer-counter]");
   const download = viewer.querySelector(".gallery-viewer-download");
 
-  GALLERY_VIEWER_SCALE = 1;
-  GALLERY_VIEWER_X = 0;
-  GALLERY_VIEWER_Y = 0;
+  resetGalleryViewerTransform();
 
   media.innerHTML = item.type === "video"
-    ? `<video controls autoplay src="${escapeAttr(item.src)}"></video>`
+    ? `<video controls playsinline src="${escapeAttr(item.src)}"></video>`
     : `<img src="${escapeAttr(item.src)}" alt="${escapeAttr(item.title)}" draggable="false" />`;
 
-  caption.textContent = item.title || "";
+  if (title) title.textContent = item.title || "Wedding memory";
+  if (caption) caption.textContent = item.title || "";
+  if (counter) counter.textContent = `${GALLERY_VIEWER_INDEX + 1} / ${GALLERY_VIEWER_ITEMS.length}`;
   if (download) {
     download.href = item.download || item.src;
     download.classList.toggle("hidden", !(item.download || item.src));
   }
 
+  viewer.querySelector("[data-viewer-zoom-in]")?.toggleAttribute("disabled", item.type === "video");
+  viewer.querySelector("[data-viewer-zoom-out]")?.toggleAttribute("disabled", item.type === "video");
+}
+
+function resetGalleryViewerTransform() {
+  GALLERY_VIEWER_SCALE = 1;
+  GALLERY_VIEWER_X = 0;
+  GALLERY_VIEWER_Y = 0;
+  GALLERY_POINTERS.clear();
+  GALLERY_LAST_PINCH_DISTANCE = 0;
   applyGalleryViewerTransform();
 }
 
@@ -1322,7 +1421,7 @@ function setGalleryViewerScale(scale) {
 function applyGalleryViewerTransform() {
   const img = document.querySelector("#galleryViewer .gallery-viewer-media img");
   if (!img) return;
-  img.style.transform = `translate(${GALLERY_VIEWER_X}px, ${GALLERY_VIEWER_Y}px) scale(${GALLERY_VIEWER_SCALE})`;
+  img.style.transform = `translate3d(${GALLERY_VIEWER_X}px, ${GALLERY_VIEWER_Y}px, 0) scale(${GALLERY_VIEWER_SCALE})`;
 }
 
 function initGalleryViewer() {
@@ -1330,6 +1429,7 @@ function initGalleryViewer() {
     const button = event.target.closest(".gallery-view-button");
     if (!button) return;
     event.preventDefault();
+    event.stopPropagation();
     openGalleryViewer(button.dataset.viewerSrc);
   });
 }
