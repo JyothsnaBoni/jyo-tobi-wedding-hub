@@ -72,12 +72,6 @@ function handleRequest(e) {
       case "syncApprovedGalleryUploads":
         return jsonResponse(syncApprovedGalleryUploadsToGallery());
 
-      case "getGalleryUploads":
-        return jsonResponse(getGalleryUploadsForAdmin(payload));
-
-      case "adminDeleteGalleryUpload":
-        return jsonResponse(adminDeleteGalleryUpload(payload));
-
       default:
         return jsonResponse({ success: false, error: "Unknown action: " + action });
     }
@@ -838,83 +832,6 @@ function syncApprovedGalleryUploadsToGallery() {
   };
 }
 
-
-function getGalleryUploadsForAdmin(payload) {
-  requireAdmin(payload);
-
-  const uploads = getRows("GalleryUploads").map(row => {
-    const fileId = row.DriveFileId || getDriveFileIdFromUrl(row.DirectFileUrl || row.DriveLink || "");
-    const mimeType = row.MimeType || "";
-    return {
-      ...row,
-      DriveFileId: fileId,
-      DirectFileUrl: row.DirectFileUrl || getDriveDisplayUrl(fileId, mimeType),
-      DownloadUrl: fileId ? "https://drive.google.com/uc?export=download&id=" + fileId : (row.DriveLink || "")
-    };
-  });
-
-  uploads.sort((a, b) => new Date(b.Timestamp || b.LastUpdated || 0) - new Date(a.Timestamp || a.LastUpdated || 0));
-
-  return {
-    success: true,
-    data: uploads
-  };
-}
-
-function deleteGalleryRowsForUpload(uploadId) {
-  const galleryId = "GAL-" + uploadId;
-  let deleted = 0;
-
-  while (true) {
-    const row = findRowBy("Gallery", "GalleryId", galleryId);
-    if (!row) break;
-    sheet("Gallery").deleteRow(row._rowNumber);
-    deleted++;
-  }
-
-  return deleted;
-}
-
-function adminDeleteGalleryUpload(payload) {
-  requireAdmin(payload);
-
-  const uploadId = payload.UploadId || payload.uploadId;
-  const deleteDriveFile = String(payload.deleteDriveFile || "true").toLowerCase() !== "false";
-
-  if (!uploadId) {
-    return { success: false, error: "Missing UploadId" };
-  }
-
-  const upload = findRowBy("GalleryUploads", "UploadId", uploadId);
-  if (!upload) {
-    // Still remove gallery row if it exists.
-    const deletedGalleryRows = deleteGalleryRowsForUpload(uploadId);
-    return { success: true, deletedUpload: false, deletedGalleryRows, deletedDriveFile: false };
-  }
-
-  let deletedDriveFile = false;
-  const fileId = upload.DriveFileId || getDriveFileIdFromUrl(upload.DirectFileUrl || upload.DriveLink || "");
-
-  if (deleteDriveFile && fileId) {
-    try {
-      DriveApp.getFileById(fileId).setTrashed(true);
-      deletedDriveFile = true;
-    } catch (err) {
-      // Keep going: sheet cleanup is still useful even if Drive file is already missing.
-    }
-  }
-
-  const deletedGalleryRows = deleteGalleryRowsForUpload(uploadId);
-  sheet("GalleryUploads").deleteRow(upload._rowNumber);
-
-  return {
-    success: true,
-    deletedUpload: true,
-    deletedGalleryRows,
-    deletedDriveFile
-  };
-}
-
 function adminApproveGallery(payload) {
   requireAdmin(payload);
 
@@ -931,18 +848,15 @@ function adminApproveGallery(payload) {
     return { success: false, error: "Upload not found" };
   }
 
-  const updatedUpload = {
+  upsertRow("GalleryUploads", { UploadId: uploadId }, {
     ...upload,
     Approved: approved
-  };
-
-  upsertRow("GalleryUploads", { UploadId: uploadId }, updatedUpload);
+  });
 
   if (String(approved).toLowerCase() === "yes") {
     const galleryId = "GAL-" + uploadId;
-    upsertRow("Gallery", { GalleryId: galleryId }, buildGalleryRowFromUpload(updatedUpload));
-  } else {
-    deleteGalleryRowsForUpload(uploadId);
+
+    upsertRow("Gallery", { GalleryId: galleryId }, buildGalleryRowFromUpload(upload));
   }
 
   return {

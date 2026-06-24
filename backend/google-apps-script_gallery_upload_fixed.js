@@ -72,12 +72,6 @@ function handleRequest(e) {
       case "syncApprovedGalleryUploads":
         return jsonResponse(syncApprovedGalleryUploadsToGallery());
 
-      case "getGalleryUploads":
-        return jsonResponse(getGalleryUploadsForAdmin(payload));
-
-      case "adminDeleteGalleryUpload":
-        return jsonResponse(adminDeleteGalleryUpload(payload));
-
       default:
         return jsonResponse({ success: false, error: "Unknown action: " + action });
     }
@@ -551,12 +545,8 @@ function uploadMedia(payload) {
   const blob = Utilities.newBlob(bytes, mimeType, fileName);
   const file = folder.createFile(blob);
 
-  // Required for GitHub Pages: otherwise Drive saves the file, but the website shows a broken image.
-  file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
-
   const uploadId = "UPLOAD-" + Date.now();
   const now = new Date();
-  const fileId = file.getId();
 
   upsertRow("GalleryUploads", { UploadId: uploadId }, {
     Timestamp: now,
@@ -568,9 +558,8 @@ function uploadMedia(payload) {
     Caption: payload.Caption || "",
     FileName: fileName,
     MimeType: mimeType,
-    DriveFileId: fileId,
+    DriveFileId: file.getId(),
     DriveLink: file.getUrl(),
-    DirectFileUrl: getDriveDisplayUrl(fileId, mimeType),
     Approved: "No",
     LastUpdated: now
   });
@@ -583,28 +572,6 @@ function uploadMedia(payload) {
   };
 }
 
-
-function getDriveThumbnailUrl(fileId) {
-  return fileId ? "https://drive.google.com/thumbnail?id=" + fileId + "&sz=w1600" : "";
-}
-
-function getDriveDirectUrl(fileId) {
-  return fileId ? "https://drive.google.com/uc?export=view&id=" + fileId : "";
-}
-
-function getDriveDisplayUrl(fileId, mimeType) {
-  if (!fileId) return "";
-  return isImage(mimeType) ? getDriveThumbnailUrl(fileId) : getDriveDirectUrl(fileId);
-}
-
-function getDriveFileIdFromUrl(url) {
-  const text = String(url || "");
-  let match = text.match(/[?&]id=([^&]+)/);
-  if (match) return match[1];
-  match = text.match(/\/d\/([^/]+)/);
-  if (match) return match[1];
-  return "";
-}
 
 /**
  * Run this manually once from the Apps Script editor to copy existing RSVP rows
@@ -778,9 +745,9 @@ function buildGalleryRowFromUpload(upload) {
   const uploadId = upload.UploadId || ("UPLOAD-" + Date.now());
   const galleryId = "GAL-" + uploadId;
   const mimeType = upload.MimeType || "";
-  const fileId = upload.DriveFileId || getDriveFileIdFromUrl(upload.DirectFileUrl || upload.DriveLink || "");
-  const driveLink = upload.DriveLink || (fileId ? "https://drive.google.com/file/d/" + fileId + "/view" : "");
-  const usableUrl = fileId ? getDriveDisplayUrl(fileId, mimeType) : (upload.DirectFileUrl || driveLink);
+  const directUrl = upload.DirectFileUrl || (upload.DriveFileId ? ("https://drive.google.com/uc?export=view&id=" + upload.DriveFileId) : "");
+  const driveLink = upload.DriveLink || "";
+  const usableUrl = directUrl || driveLink;
 
   return {
     Timestamp: upload.Timestamp || new Date(),
@@ -798,9 +765,7 @@ function buildGalleryRowFromUpload(upload) {
     Featured: "No",
     SortOrder: 999,
     LastUpdated: new Date(),
-    DriveLink: driveLink,
-    DriveFileId: fileId,
-    DirectFileUrl: usableUrl
+    DriveLink: driveLink
   };
 }
 
@@ -838,83 +803,6 @@ function syncApprovedGalleryUploadsToGallery() {
   };
 }
 
-
-function getGalleryUploadsForAdmin(payload) {
-  requireAdmin(payload);
-
-  const uploads = getRows("GalleryUploads").map(row => {
-    const fileId = row.DriveFileId || getDriveFileIdFromUrl(row.DirectFileUrl || row.DriveLink || "");
-    const mimeType = row.MimeType || "";
-    return {
-      ...row,
-      DriveFileId: fileId,
-      DirectFileUrl: row.DirectFileUrl || getDriveDisplayUrl(fileId, mimeType),
-      DownloadUrl: fileId ? "https://drive.google.com/uc?export=download&id=" + fileId : (row.DriveLink || "")
-    };
-  });
-
-  uploads.sort((a, b) => new Date(b.Timestamp || b.LastUpdated || 0) - new Date(a.Timestamp || a.LastUpdated || 0));
-
-  return {
-    success: true,
-    data: uploads
-  };
-}
-
-function deleteGalleryRowsForUpload(uploadId) {
-  const galleryId = "GAL-" + uploadId;
-  let deleted = 0;
-
-  while (true) {
-    const row = findRowBy("Gallery", "GalleryId", galleryId);
-    if (!row) break;
-    sheet("Gallery").deleteRow(row._rowNumber);
-    deleted++;
-  }
-
-  return deleted;
-}
-
-function adminDeleteGalleryUpload(payload) {
-  requireAdmin(payload);
-
-  const uploadId = payload.UploadId || payload.uploadId;
-  const deleteDriveFile = String(payload.deleteDriveFile || "true").toLowerCase() !== "false";
-
-  if (!uploadId) {
-    return { success: false, error: "Missing UploadId" };
-  }
-
-  const upload = findRowBy("GalleryUploads", "UploadId", uploadId);
-  if (!upload) {
-    // Still remove gallery row if it exists.
-    const deletedGalleryRows = deleteGalleryRowsForUpload(uploadId);
-    return { success: true, deletedUpload: false, deletedGalleryRows, deletedDriveFile: false };
-  }
-
-  let deletedDriveFile = false;
-  const fileId = upload.DriveFileId || getDriveFileIdFromUrl(upload.DirectFileUrl || upload.DriveLink || "");
-
-  if (deleteDriveFile && fileId) {
-    try {
-      DriveApp.getFileById(fileId).setTrashed(true);
-      deletedDriveFile = true;
-    } catch (err) {
-      // Keep going: sheet cleanup is still useful even if Drive file is already missing.
-    }
-  }
-
-  const deletedGalleryRows = deleteGalleryRowsForUpload(uploadId);
-  sheet("GalleryUploads").deleteRow(upload._rowNumber);
-
-  return {
-    success: true,
-    deletedUpload: true,
-    deletedGalleryRows,
-    deletedDriveFile
-  };
-}
-
 function adminApproveGallery(payload) {
   requireAdmin(payload);
 
@@ -931,18 +819,15 @@ function adminApproveGallery(payload) {
     return { success: false, error: "Upload not found" };
   }
 
-  const updatedUpload = {
+  upsertRow("GalleryUploads", { UploadId: uploadId }, {
     ...upload,
     Approved: approved
-  };
-
-  upsertRow("GalleryUploads", { UploadId: uploadId }, updatedUpload);
+  });
 
   if (String(approved).toLowerCase() === "yes") {
     const galleryId = "GAL-" + uploadId;
-    upsertRow("Gallery", { GalleryId: galleryId }, buildGalleryRowFromUpload(updatedUpload));
-  } else {
-    deleteGalleryRowsForUpload(uploadId);
+
+    upsertRow("Gallery", { GalleryId: galleryId }, buildGalleryRowFromUpload(upload));
   }
 
   return {
@@ -986,49 +871,6 @@ function repairGuestPrimaryKeysAndTextColumns() {
   return {
     success: true,
     message: "Guest primary-key columns checked and text columns formatted."
-  };
-}
-
-
-/**
- * Run this once after this update. It fixes already-uploaded Drive files:
- * - makes them viewable by anyone with the link
- * - rewrites DirectFileUrl/ImageUrl/ImageURL to an embeddable thumbnail URL
- * - copies approved uploads into Gallery again
- */
-function repairExistingGalleryDriveLinksAndSharing() {
-  const uploads = getRows("GalleryUploads");
-  let repaired = 0;
-  let failed = 0;
-
-  uploads.forEach(upload => {
-    const fileId = upload.DriveFileId || getDriveFileIdFromUrl(upload.DirectFileUrl || upload.DriveLink || "");
-    if (!fileId) return;
-
-    try {
-      const file = DriveApp.getFileById(fileId);
-      file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
-
-      upsertRow("GalleryUploads", { UploadId: upload.UploadId }, {
-        ...upload,
-        DriveFileId: fileId,
-        DriveLink: upload.DriveLink || file.getUrl(),
-        DirectFileUrl: getDriveDisplayUrl(fileId, upload.MimeType || file.getMimeType())
-      });
-
-      repaired++;
-    } catch (err) {
-      failed++;
-    }
-  });
-
-  const sync = syncApprovedGalleryUploadsToGallery();
-
-  return {
-    success: true,
-    repaired,
-    failed,
-    sync
   };
 }
 

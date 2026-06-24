@@ -6,7 +6,6 @@ const CONFIG = {
 let CURRENT_USER = null;
 let CURRENT_DATA = {};
 let PUBLIC_CONTENT = {};
-let CURRENT_IS_ADMIN = false;
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => Array.from(document.querySelectorAll(selector));
@@ -88,7 +87,6 @@ async function loginWithCode(code, silent = false) {
     CURRENT_USER = result.guest;
     CURRENT_DATA = result.data || {};
     PUBLIC_CONTENT = result.publicContent || {};
-    CURRENT_IS_ADMIN = !!result.isAdmin;
 
     localStorage.setItem("jyoTobiInvitationCode", result.invitationCode);
     localStorage.setItem("jyoTobiGuestName", result.guest?.GuestName || "");
@@ -99,7 +97,6 @@ async function loginWithCode(code, silent = false) {
     renderPublicContent();
     renderGuestDirectory();
     setupAdminMode(result.isAdmin);
-    if (result.isAdmin) loadAdminGalleryReview();
   } catch (error) {
     console.error(error);
     setMessage(loginError, "Could not connect to the wedding database.", true);
@@ -313,12 +310,10 @@ async function refreshGuestData() {
   if (result.success) {
     CURRENT_DATA = result.data || {};
     PUBLIC_CONTENT = result.publicContent || {};
-    CURRENT_IS_ADMIN = !!result.isAdmin;
     prefillAllForms();
     injectGuestDashboard();
     renderPublicContent();
     renderGuestDirectory();
-    if (CURRENT_IS_ADMIN) loadAdminGalleryReview();
   }
 }
 
@@ -475,40 +470,6 @@ function normalizeGalleryCategory(value = "") {
   return text || "guest";
 }
 
-function extractDriveFileId(url = "") {
-  const text = String(url || "");
-  let match = text.match(/[?&]id=([^&]+)/);
-  if (match) return match[1];
-  match = text.match(/\/d\/([^/]+)/);
-  if (match) return match[1];
-  return "";
-}
-
-function toEmbeddableDriveImageUrl(url = "") {
-  const text = String(url || "").trim();
-  if (!text) return "";
-  const fileId = extractDriveFileId(text);
-  if (fileId && text.includes("drive.google.com")) {
-    return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1600`;
-  }
-  return text;
-}
-
-function toDriveDownloadUrl(url = "") {
-  const text = String(url || "").trim();
-  if (!text) return "";
-  const fileId = extractDriveFileId(text);
-  if (fileId && text.includes("drive.google.com")) {
-    return `https://drive.google.com/uc?export=download&id=${fileId}`;
-  }
-  return text;
-}
-
-function getBestMediaUrl(row = {}) {
-  return row.DirectFileUrl || row.ImageUrl || row.ImageURL || row.VideoUrl || row.VideoURL || row.DriveLink || "";
-}
-
-
 function renderApprovedGalleryUploads() {
   const track = document.querySelector(".gallery-track");
   if (!track) return;
@@ -516,30 +477,20 @@ function renderApprovedGalleryUploads() {
   track.querySelectorAll(".dynamic-gallery-slide").forEach(slide => slide.remove());
 
   const galleryRows = PUBLIC_CONTENT.Gallery || [];
-  if (!galleryRows.length) {
-    refreshGalleryViewerItems();
-    return;
-  }
+  if (!galleryRows.length) return;
 
   const html = galleryRows.map(row => {
     const category = normalizeGalleryCategory(row.Category || row.Event || "Guest Uploads");
     const title = row.Title || row.Event || "Wedding Memory";
     const caption = row.Caption || "";
+    const imageUrl = row.ImageUrl || row.ImageURL || row.DirectFileUrl || row.DriveLink || "";
+    const videoUrl = row.VideoUrl || row.VideoURL || "";
     const uploadedBy = row.UploadedBy || row.GuestName || "";
-    const mimeType = row.MimeType || "";
-    const rawUrl = getBestMediaUrl(row);
-    const imageUrl = toEmbeddableDriveImageUrl(row.DirectFileUrl || row.ImageUrl || row.ImageURL || row.DriveLink || "");
-    const videoUrl = row.VideoUrl || row.VideoURL || (String(mimeType).startsWith("video/") ? rawUrl : "");
-    const downloadUrl = toDriveDownloadUrl(row.DriveLink || row.DirectFileUrl || rawUrl);
 
     if (videoUrl) {
       return `
         <article class="gallery-slide dynamic-gallery-slide" data-category="${escapeAttr(category)}">
-          <div class="gallery-media-wrap">
-            <button class="gallery-view-button" type="button" data-viewer-type="video" data-viewer-src="${escapeAttr(videoUrl)}" data-viewer-title="${escapeAttr(title)}" aria-label="Open video viewer"></button>
-            ${downloadUrl ? `<a class="gallery-download-icon" href="${escapeAttr(downloadUrl)}" target="_blank" rel="noopener" download aria-label="Download video">↓</a>` : ""}
-            <video controls preload="metadata" src="${escapeAttr(videoUrl)}"></video>
-          </div>
+          <video controls preload="metadata" src="${escapeAttr(videoUrl)}"></video>
           <div class="gallery-caption">
             <h3>${escapeHtml(title)}</h3>
             ${caption ? `<p>${escapeHtml(caption)}</p>` : ""}
@@ -552,11 +503,7 @@ function renderApprovedGalleryUploads() {
     if (imageUrl) {
       return `
         <article class="gallery-slide dynamic-gallery-slide" data-category="${escapeAttr(category)}">
-          <div class="gallery-media-wrap">
-            <button class="gallery-view-button" type="button" data-viewer-type="image" data-viewer-src="${escapeAttr(imageUrl)}" data-viewer-title="${escapeAttr(title)}" aria-label="Open photo viewer"></button>
-            ${downloadUrl ? `<a class="gallery-download-icon" href="${escapeAttr(downloadUrl)}" target="_blank" rel="noopener" download aria-label="Download photo">↓</a>` : ""}
-            <img src="${escapeAttr(imageUrl)}" alt="${escapeAttr(title)}" loading="lazy" />
-          </div>
+          <img src="${escapeAttr(imageUrl)}" alt="${escapeAttr(title)}" loading="lazy" />
           <div class="gallery-caption">
             <h3>${escapeHtml(title)}</h3>
             ${caption ? `<p>${escapeHtml(caption)}</p>` : ""}
@@ -572,7 +519,6 @@ function renderApprovedGalleryUploads() {
   track.insertAdjacentHTML("afterbegin", html);
   const activeFilter = document.querySelector("[data-gallery-filter].active")?.dataset.galleryFilter || "all";
   applyGalleryFilter(activeFilter);
-  refreshGalleryViewerItems();
 }
 
 function applyGalleryFilter(filter = "all") {
@@ -605,7 +551,6 @@ function applyGalleryFilter(filter = "all") {
 
   empty.classList.toggle("is-hidden", visibleCount > 0);
   track.scrollTo({ left: 0, behavior: "smooth" });
-  refreshGalleryViewerItems();
 }
 
 function renderOutfitCatalog() {
@@ -755,20 +700,8 @@ function setupAdminMode(isAdmin) {
     <div class="admin-grid">
       <div class="admin-card"><h3>Outfit Catalogue</h3><p>Edit OutfitCatalog in Google Sheets, or use the quick-add form below.</p></div>
       <div class="admin-card"><h3>Stay Page</h3><p>Edit accommodation text and hotel links from this admin page.</p></div>
-      <div class="admin-card"><h3>Gallery Approval</h3><p>Approve, delete and download guest uploads from the website.</p></div>
+      <div class="admin-card"><h3>Gallery Approval</h3><p>Approve uploads in GalleryUploads.</p></div>
     </div>
-    <section class="admin-gallery-review" id="adminGalleryReview">
-      <div class="admin-gallery-review-header">
-        <div>
-          <p class="eyebrow">Gallery Review</p>
-          <h3>Approve guest photos & videos</h3>
-          <p class="form-helper">Admin only. New uploads stay hidden until approved. You can also delete files from Drive and Sheets.</p>
-        </div>
-        <button class="button primary small-button" type="button" id="refreshAdminGalleryUploads">Refresh uploads</button>
-      </div>
-      <div id="adminGalleryUploadsGrid" class="admin-gallery-grid"></div>
-      <p class="form-message" id="adminGalleryMessage"></p>
-    </section>
     ${renderAdminStayEditor()}
     <form id="adminOutfitForm" class="lux-form compact admin-edit-form">
       <h3>Add / Update Outfit Suggestion</h3>
@@ -791,157 +724,7 @@ function setupAdminMode(isAdmin) {
 
   main.insertBefore(section, contact);
   bindAdminForms();
-  bindAdminGalleryReview();
-  loadAdminGalleryReview();
   preparePagePanels();
-}
-
-
-function getUploadPreviewUrl(row = {}) {
-  const mimeType = row.MimeType || "";
-  const rawUrl = row.DirectFileUrl || row.ImageUrl || row.ImageURL || row.VideoUrl || row.VideoURL || row.DriveLink || "";
-  if (String(mimeType).startsWith("image/")) return toEmbeddableDriveImageUrl(rawUrl);
-  return rawUrl;
-}
-
-async function loadAdminGalleryReview() {
-  if (!CURRENT_IS_ADMIN) return;
-
-  const grid = document.getElementById("adminGalleryUploadsGrid");
-  const message = document.getElementById("adminGalleryMessage");
-  if (!grid) return;
-
-  try {
-    setMessage(message, "Loading uploads...");
-    const result = await api("getGalleryUploads", { InvitationCode: getInvitationCode() });
-
-    if (!result.success) {
-      setMessage(message, result.error || "Could not load uploads.", true);
-      return;
-    }
-
-    const rows = result.data || [];
-    if (!rows.length) {
-      grid.innerHTML = `<p class="empty-note">No guest uploads yet.</p>`;
-      setMessage(message, "");
-      return;
-    }
-
-    grid.innerHTML = rows.map(row => {
-      const uploadId = row.UploadId || "";
-      const title = row.FileName || row.Title || row.Event || "Guest upload";
-      const event = row.Event || "Guest Uploads";
-      const guest = row.GuestName || "Guest";
-      const caption = row.Caption || "";
-      const mimeType = row.MimeType || "";
-      const approved = normalizeText(row.Approved) === "yes";
-      const previewUrl = getUploadPreviewUrl(row);
-      const downloadUrl = toDriveDownloadUrl(row.DriveLink || row.DirectFileUrl || previewUrl);
-
-      const media = String(mimeType).startsWith("video/")
-        ? `<video controls preload="metadata" src="${escapeAttr(previewUrl)}"></video>`
-        : `<img src="${escapeAttr(previewUrl)}" alt="${escapeAttr(title)}" loading="lazy">`;
-
-      return `
-        <article class="admin-upload-card" data-upload-id="${escapeAttr(uploadId)}">
-          <div class="admin-upload-media">
-            ${previewUrl ? media : `<div class="admin-upload-missing">No preview</div>`}
-            ${downloadUrl ? `<a class="gallery-download-icon admin-download-icon" href="${escapeAttr(downloadUrl)}" target="_blank" rel="noopener" download aria-label="Download">↓</a>` : ""}
-          </div>
-          <div class="admin-upload-body">
-            <p class="eyebrow">${escapeHtml(event)}</p>
-            <h4>${escapeHtml(title)}</h4>
-            <p>${escapeHtml(caption)}</p>
-            <small>Uploaded by ${escapeHtml(guest)} ${approved ? "· Approved" : "· Pending"}</small>
-            <div class="admin-upload-actions">
-              <button class="button primary small-button" type="button" data-admin-approve="${escapeAttr(uploadId)}" ${approved ? "disabled" : ""}>${approved ? "Approved" : "Approve"}</button>
-              <button class="button ghost small-button danger-button" type="button" data-admin-delete="${escapeAttr(uploadId)}">Delete</button>
-            </div>
-          </div>
-        </article>
-      `;
-    }).join("");
-
-    setMessage(message, "");
-  } catch (error) {
-    console.error(error);
-    setMessage(message, "Could not load uploads.", true);
-  }
-}
-
-async function approveGalleryUpload(uploadId) {
-  const message = document.getElementById("adminGalleryMessage");
-  if (!uploadId) return;
-
-  try {
-    setMessage(message, "Approving upload...");
-    const result = await api("adminApproveGallery", {
-      InvitationCode: getInvitationCode(),
-      UploadId: uploadId,
-      Approved: "Yes"
-    });
-
-    if (!result.success) {
-      setMessage(message, result.error || "Could not approve upload.", true);
-      return;
-    }
-
-    setMessage(message, "Upload approved and added to gallery.");
-    await refreshGuestData();
-    await loadAdminGalleryReview();
-  } catch (error) {
-    console.error(error);
-    setMessage(message, "Could not approve upload.", true);
-  }
-}
-
-async function deleteGalleryUpload(uploadId) {
-  const message = document.getElementById("adminGalleryMessage");
-  if (!uploadId) return;
-
-  const confirmed = window.confirm("Delete this upload from the website, sheets and Google Drive? This cannot be undone.");
-  if (!confirmed) return;
-
-  try {
-    setMessage(message, "Deleting upload...");
-    const result = await api("adminDeleteGalleryUpload", {
-      InvitationCode: getInvitationCode(),
-      UploadId: uploadId,
-      deleteDriveFile: true
-    });
-
-    if (!result.success) {
-      setMessage(message, result.error || "Could not delete upload.", true);
-      return;
-    }
-
-    setMessage(message, "Upload deleted.");
-    await refreshGuestData();
-    await loadAdminGalleryReview();
-  } catch (error) {
-    console.error(error);
-    setMessage(message, "Could not delete upload.", true);
-  }
-}
-
-function bindAdminGalleryReview() {
-  const refreshButton = document.getElementById("refreshAdminGalleryUploads");
-  if (refreshButton && refreshButton.dataset.bound !== "true") {
-    refreshButton.dataset.bound = "true";
-    refreshButton.addEventListener("click", loadAdminGalleryReview);
-  }
-
-  const grid = document.getElementById("adminGalleryUploadsGrid");
-  if (grid && grid.dataset.bound !== "true") {
-    grid.dataset.bound = "true";
-    grid.addEventListener("click", event => {
-      const approveButton = event.target.closest("[data-admin-approve]");
-      const deleteButton = event.target.closest("[data-admin-delete]");
-
-      if (approveButton) approveGalleryUpload(approveButton.dataset.adminApprove);
-      if (deleteButton) deleteGalleryUpload(deleteButton.dataset.adminDelete);
-    });
-  }
 }
 
 function bindAdminForms() {
@@ -1114,223 +897,45 @@ function initMediaUploadForm() {
 
     const message = form.querySelector(".form-message");
     const fileInput = form.querySelector("[name='mediaFile']");
-    const files = Array.from(fileInput?.files || []);
+    const file = fileInput?.files?.[0];
 
-    if (!files.length) {
-      setMessage(message, "Please choose at least one photo or video.", true);
+    if (!file) {
+      setMessage(message, "Please choose a photo or video.", true);
       return;
     }
 
-    const baseData = Object.fromEntries(new FormData(form).entries());
-    baseData.InvitationCode = getInvitationCode();
+    const data = Object.fromEntries(new FormData(form).entries());
+    data.InvitationCode = getInvitationCode();
 
-    const uploaded = [];
-    const failed = [];
+    const reader = new FileReader();
 
-    for (let index = 0; index < files.length; index++) {
-      const file = files[index];
-
+    reader.onload = async () => {
       try {
-        setMessage(message, `Uploading ${index + 1} of ${files.length}: ${file.name}`);
-        const base64 = await readFileAsBase64(file);
+        setMessage(message, "Uploading...");
+
+        const base64 = String(reader.result).split(",")[1];
 
         const result = await api("uploadMedia", {
-          ...baseData,
+          ...data,
           FileName: file.name,
-          MimeType: file.type || "application/octet-stream",
+          MimeType: file.type,
           fileBase64: base64
         });
 
         if (!result.success) {
-          failed.push(`${file.name}: ${result.error || "Upload failed"}`);
-        } else {
-          uploaded.push(file.name);
+          setMessage(message, result.error || "Upload failed.", true);
+          return;
         }
+
+        setMessage(message, "Uploaded successfully. It will appear after admin approval.");
+        form.reset();
       } catch (error) {
         console.error(error);
-        failed.push(`${file.name}: Upload failed`);
+        setMessage(message, "Upload failed. Please try again.", true);
       }
-    }
+    };
 
-    if (failed.length) {
-      setMessage(message, `${uploaded.length} uploaded, ${failed.length} failed. ${failed.join(" | ")}`, true);
-      return;
-    }
-
-    setMessage(message, `${uploaded.length} file${uploaded.length === 1 ? "" : "s"} uploaded successfully. They will appear after admin approval.`);
-    form.reset();
-  });
-}
-
-
-let GALLERY_VIEWER_ITEMS = [];
-let GALLERY_VIEWER_INDEX = 0;
-let GALLERY_VIEWER_SCALE = 1;
-let GALLERY_VIEWER_X = 0;
-let GALLERY_VIEWER_Y = 0;
-let GALLERY_POINTERS = new Map();
-let GALLERY_LAST_PINCH_DISTANCE = 0;
-
-function refreshGalleryViewerItems() {
-  GALLERY_VIEWER_ITEMS = Array.from(document.querySelectorAll(".gallery-slide:not(.is-hidden) .gallery-view-button"))
-    .map(button => ({
-      type: button.dataset.viewerType || "image",
-      src: button.dataset.viewerSrc || "",
-      title: button.dataset.viewerTitle || "Wedding memory",
-      download: button.closest(".gallery-media-wrap")?.querySelector(".gallery-download-icon")?.href || ""
-    }))
-    .filter(item => item.src);
-}
-
-function ensureGalleryViewer() {
-  let viewer = document.getElementById("galleryViewer");
-  if (viewer) return viewer;
-
-  viewer = document.createElement("div");
-  viewer.id = "galleryViewer";
-  viewer.className = "gallery-viewer hidden";
-  viewer.innerHTML = `
-    <div class="gallery-viewer-backdrop" data-viewer-close></div>
-    <div class="gallery-viewer-toolbar">
-      <button type="button" class="gallery-viewer-control" data-viewer-zoom-out aria-label="Zoom out">−</button>
-      <button type="button" class="gallery-viewer-control" data-viewer-zoom-in aria-label="Zoom in">+</button>
-      <a class="gallery-viewer-control gallery-viewer-download" target="_blank" rel="noopener" download aria-label="Download">↓</a>
-      <button type="button" class="gallery-viewer-control" data-viewer-close aria-label="Close">×</button>
-    </div>
-    <button type="button" class="gallery-viewer-nav gallery-viewer-prev" data-viewer-prev aria-label="Previous image">‹</button>
-    <figure class="gallery-viewer-stage">
-      <div class="gallery-viewer-media"></div>
-      <figcaption></figcaption>
-    </figure>
-    <button type="button" class="gallery-viewer-nav gallery-viewer-next" data-viewer-next aria-label="Next image">›</button>
-  `;
-  document.body.appendChild(viewer);
-
-  viewer.addEventListener("click", event => {
-    if (event.target.closest("[data-viewer-close]")) closeGalleryViewer();
-    if (event.target.closest("[data-viewer-prev]")) showGalleryViewerItem(GALLERY_VIEWER_INDEX - 1);
-    if (event.target.closest("[data-viewer-next]")) showGalleryViewerItem(GALLERY_VIEWER_INDEX + 1);
-    if (event.target.closest("[data-viewer-zoom-in]")) setGalleryViewerScale(GALLERY_VIEWER_SCALE + 0.25);
-    if (event.target.closest("[data-viewer-zoom-out]")) setGalleryViewerScale(GALLERY_VIEWER_SCALE - 0.25);
-  });
-
-  viewer.addEventListener("wheel", event => {
-    if (viewer.classList.contains("hidden")) return;
-    event.preventDefault();
-    setGalleryViewerScale(GALLERY_VIEWER_SCALE + (event.deltaY < 0 ? 0.15 : -0.15));
-  }, { passive: false });
-
-  viewer.addEventListener("pointerdown", event => {
-    const media = viewer.querySelector(".gallery-viewer-media img");
-    if (!media) return;
-    GALLERY_POINTERS.set(event.pointerId, { x: event.clientX, y: event.clientY });
-    media.setPointerCapture?.(event.pointerId);
-  });
-
-  viewer.addEventListener("pointermove", event => {
-    const media = viewer.querySelector(".gallery-viewer-media img");
-    if (!media || !GALLERY_POINTERS.has(event.pointerId)) return;
-
-    const previous = GALLERY_POINTERS.get(event.pointerId);
-    GALLERY_POINTERS.set(event.pointerId, { x: event.clientX, y: event.clientY });
-
-    const points = Array.from(GALLERY_POINTERS.values());
-    if (points.length >= 2) {
-      const distance = Math.hypot(points[0].x - points[1].x, points[0].y - points[1].y);
-      if (GALLERY_LAST_PINCH_DISTANCE) {
-        setGalleryViewerScale(GALLERY_VIEWER_SCALE + (distance - GALLERY_LAST_PINCH_DISTANCE) / 260);
-      }
-      GALLERY_LAST_PINCH_DISTANCE = distance;
-      return;
-    }
-
-    if (GALLERY_VIEWER_SCALE > 1) {
-      GALLERY_VIEWER_X += event.clientX - previous.x;
-      GALLERY_VIEWER_Y += event.clientY - previous.y;
-      applyGalleryViewerTransform();
-    }
-  });
-
-  ["pointerup", "pointercancel", "pointerleave"].forEach(type => {
-    viewer.addEventListener(type, event => {
-      GALLERY_POINTERS.delete(event.pointerId);
-      if (GALLERY_POINTERS.size < 2) GALLERY_LAST_PINCH_DISTANCE = 0;
-    });
-  });
-
-  document.addEventListener("keydown", event => {
-    if (viewer.classList.contains("hidden")) return;
-    if (event.key === "Escape") closeGalleryViewer();
-    if (event.key === "ArrowLeft") showGalleryViewerItem(GALLERY_VIEWER_INDEX - 1);
-    if (event.key === "ArrowRight") showGalleryViewerItem(GALLERY_VIEWER_INDEX + 1);
-  });
-
-  return viewer;
-}
-
-function openGalleryViewer(src) {
-  refreshGalleryViewerItems();
-  const index = Math.max(0, GALLERY_VIEWER_ITEMS.findIndex(item => item.src === src));
-  ensureGalleryViewer().classList.remove("hidden");
-  document.body.classList.add("viewer-open");
-  showGalleryViewerItem(index);
-}
-
-function closeGalleryViewer() {
-  const viewer = document.getElementById("galleryViewer");
-  viewer?.classList.add("hidden");
-  document.body.classList.remove("viewer-open");
-  GALLERY_POINTERS.clear();
-}
-
-function showGalleryViewerItem(index) {
-  const viewer = ensureGalleryViewer();
-  if (!GALLERY_VIEWER_ITEMS.length) return;
-
-  GALLERY_VIEWER_INDEX = (index + GALLERY_VIEWER_ITEMS.length) % GALLERY_VIEWER_ITEMS.length;
-  const item = GALLERY_VIEWER_ITEMS[GALLERY_VIEWER_INDEX];
-  const media = viewer.querySelector(".gallery-viewer-media");
-  const caption = viewer.querySelector("figcaption");
-  const download = viewer.querySelector(".gallery-viewer-download");
-
-  GALLERY_VIEWER_SCALE = 1;
-  GALLERY_VIEWER_X = 0;
-  GALLERY_VIEWER_Y = 0;
-
-  media.innerHTML = item.type === "video"
-    ? `<video controls autoplay src="${escapeAttr(item.src)}"></video>`
-    : `<img src="${escapeAttr(item.src)}" alt="${escapeAttr(item.title)}" draggable="false" />`;
-
-  caption.textContent = item.title || "";
-  if (download) {
-    download.href = item.download || item.src;
-    download.classList.toggle("hidden", !(item.download || item.src));
-  }
-
-  applyGalleryViewerTransform();
-}
-
-function setGalleryViewerScale(scale) {
-  GALLERY_VIEWER_SCALE = Math.min(4, Math.max(1, scale));
-  if (GALLERY_VIEWER_SCALE === 1) {
-    GALLERY_VIEWER_X = 0;
-    GALLERY_VIEWER_Y = 0;
-  }
-  applyGalleryViewerTransform();
-}
-
-function applyGalleryViewerTransform() {
-  const img = document.querySelector("#galleryViewer .gallery-viewer-media img");
-  if (!img) return;
-  img.style.transform = `translate(${GALLERY_VIEWER_X}px, ${GALLERY_VIEWER_Y}px) scale(${GALLERY_VIEWER_SCALE})`;
-}
-
-function initGalleryViewer() {
-  document.addEventListener("click", event => {
-    const button = event.target.closest(".gallery-view-button");
-    if (!button) return;
-    event.preventDefault();
-    openGalleryViewer(button.dataset.viewerSrc);
+    reader.readAsDataURL(file);
   });
 }
 
@@ -1450,7 +1055,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initMobileNav();
   initForms();
   initGallery();
-  initGalleryViewer();
   initMediaUploadForm();
   initPageNavigation();
   initTransparentNavbar();
