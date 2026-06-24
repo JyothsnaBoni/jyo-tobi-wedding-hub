@@ -1,223 +1,453 @@
 const translations = {
   en: {
+    nav_home: "Home",
+    nav_couple: "Bride & Groom",
     nav_story: "Story",
     nav_events: "Events",
     nav_guide: "Guide",
     nav_travel: "Travel",
     nav_stay: "Stay",
     nav_outfits: "Outfits",
+    nav_guest_connect: "Guest Connect",
+    nav_families: "Families",
+    nav_upload: "Upload",
     nav_gallery: "Gallery",
     nav_rsvp: "RSVP",
+    nav_contact: "Help & Contact",
+
+    login_eyebrow: "Private Wedding Portal",
+    login_title: "Jyothsna ♥ Tobias",
+    login_copy: "Enter your invitation code to open the wedding hub.",
+    login_button: "Enter",
+    login_error: "Please enter the correct invitation code.",
+    login_hint: "Hint: Invitation code is the first 3 letters of your first name followed by first 3 letters of your last name. Eg. for name 'Jyothsna Boni' the code would be 'JYOBON'",
 
     hero_eyebrow: "A South Indian Wedding Celebration",
+    hero_title: "Jyothsna ♥ Tobias",
     hero_subtitle: "13–15 November 2026 · Visakhapatnam, India",
     hero_rsvp: "RSVP",
     hero_schedule: "View Schedule",
-
     days: "Days",
     hours: "Hours",
     minutes: "Minutes",
     seconds: "Seconds",
 
+    couple_eyebrow: "Bride & Groom",
+    couple_title: "With love, from us",
+    bride_label: "Bride",
+    bride_name: "Jyothsna Boni",
+    bride_text: "I cannot wait to welcome you to my home city and share the colours, rituals, food, music and love of a South Indian wedding with you.",
+    groom_label: "Groom",
+    groom_name: "Tobias Scholtes",
+    groom_text: "Thank you for joining us in India. I am excited to celebrate with our families and friends across cultures, traditions and many unforgettable moments.",
+    together_label: "Together",
+    together_title: "A message for our guests",
+    together_text: "Thank you for travelling near and far to celebrate with us. This wedding brings together our families, cultures and favourite people — and we are so happy to share these days with you.",
+    whatsapp: "WhatsApp",
+    instagram: "Instagram",
+
     story_eyebrow: "A Bumble match, a motorcycle, and a little bit of fate",
     story_title: "Our Story",
-
+    story_location: "Berlin · Vizag",
     story_1_title: "The Swipe That Almost Never Happened",
-    story_1_text:
-      "Jyothsna had set Bumble to Leipzig only. Tobias lived in Berlin, but visited Leipzig on a motorcycle tour. On the same weekend, Jyothsna tried Bumble Premium for one day — and out of hundreds of likes, Tobias stood out.",
-
+    story_1_text: "Jyothsna had set Bumble to Leipzig only. Tobias lived in Berlin, but visited Leipzig on a motorcycle tour. On the same weekend, Jyothsna tried Bumble Premium for one day — and out of hundreds of likes, Tobias stood out.",
     story_2_title: "Berlin",
-    story_2_text:
-      "They spoke on the phone for two weeks before meeting in Berlin. The plan was a motorcycle ride if they vibed. Instead, they spent the whole weekend together.",
-
+    story_2_text: "They spoke on the phone for two weeks before meeting in Berlin. The plan was a motorcycle ride if they vibed. Instead, they spent the whole weekend together.",
     story_3_title: "Budapest Proposal",
-    story_3_text:
-      "On an island in the Danube, Tobias proposed with a diamond ring. When Jyothsna asked about their “diamonds are overrated” conversation, he said: “I think you are worth the diamonds.”",
-
+    story_3_text: "On an island in the Danube, Tobias proposed with a diamond ring. When Jyothsna asked about their “diamonds are overrated” conversation, he said: “I think you are worth the diamonds.”",
     story_4_title: "Visakhapatnam",
-    story_4_text:
-      "Now their story continues in Jyothsna’s home city, surrounded by family, friends, Telugu wedding traditions, music, food, colours and the Bay of Bengal.",
+    story_4_text: "Now their story continues in Jyothsna’s home city, surrounded by family, friends, Telugu wedding traditions, music, food, colours and the Bay of Bengal.",
 
     events_eyebrow: "Three days of rituals, music, food, and family",
     events_title: "Wedding Events",
-
-    haldi_text:
-      "A joyful turmeric ceremony with music, laughter and yellow outfits.",
-
-    sangeeth_text:
-      "Music, dancing, performances and a festive evening together.",
-
+    event_haldi_title: "Haldi",
+    event_sangeeth_title: "Sangeeth",
     prep_title: "Getting Ready Day",
-    prep_time: "Bride & groom preparations",
-    prep_text:
-      "A smaller family day for traditional preparations. Tobias will get ready at Sai Priya Resort.",
-
     wedding_title: "Wedding Ceremony",
-    wedding_text:
-      "A Telugu wedding evening at Simba Resort with reception, rituals and the sacred knot-tying moment.",
+    haldi_time: "1:00 PM · Sai Priya Resort",
+    sangeeth_time: "6:00 PM · Sai Priya Resort",
+    prep_time: "Bride & groom preparations",
+    wedding_time: "7:00 PM Reception · 10:12 PM Muhurtham",
+    haldi_text: "A joyful turmeric ceremony with music, laughter and yellow outfits.",
+    sangeeth_text: "Music, dancing, performances and a festive evening together.",
+    prep_text: "A smaller family day for traditional preparations. Tobias will get ready at Sai Priya Resort.",
+    wedding_text: "A Telugu wedding evening at Simba Resort with reception, rituals and the sacred knot-tying moment.",
+    open_map: "Open map →",
 
     guide_eyebrow: "For our German guests",
     guide_title: "First Time at a South Indian Wedding?",
-
-    guide_haldi:
-      "Wear yellow or gold. Expect turmeric, music, photos and a very cheerful atmosphere.",
-
-    guide_sangeeth:
-      "Think of it as a family dance party. Participation is welcome but never forced.",
-
+    guide_haldi_title: "Haldi",
+    guide_haldi: "Wear yellow or gold. Expect turmeric, music, photos and a very cheerful atmosphere.",
+    guide_sangeeth_title: "Sangeeth",
+    guide_sangeeth: "Think of it as a family dance party. Participation is welcome but never forced.",
     guide_wedding_title: "Wedding Rituals",
-    guide_wedding:
-      "The ceremony may feel different from a German wedding. The most sacred moment is the Muhurtham at 10:12 PM.",
-
+    guide_wedding: "The ceremony may feel different from a German wedding. The most sacred moment is the Muhurtham at 10:12 PM.",
     guide_food_title: "Food",
-    guide_food:
-      "There will be plenty of food. Some dishes may be spicy, but we will try to include mild options too.",
-
+    guide_food: "There will be plenty of food. Some dishes may be spicy, but we will try to include mild options too.",
     guide_culture_title: "Cultural Tips",
-    guide_culture:
-      "You may be asked to remove shoes for some rituals. If unsure, just ask us or follow the family.",
-
+    guide_culture: "You may be asked to remove shoes for some rituals. If unsure, just ask us or follow the family.",
     guide_photos_title: "Photos",
-    guide_photos:
-      "Expect many photos, bright colours, flowers, jewellery and lots of joyful chaos.",
+    guide_photos: "Expect many photos, bright colours, flowers, jewellery and lots of joyful chaos.",
+    guide_haldi_read: "Read: Haldi ceremony guide",
+    guide_haldi_watch: "Watch: Haldi videos",
+    guide_haldi_instagram: "Instagram: Haldi inspiration",
+    guide_sangeeth_read: "Read: Sangeet ceremony guide",
+    guide_sangeeth_watch: "Watch: Sangeet videos",
+    guide_sangeeth_instagram: "Instagram: Sangeet inspiration",
+    guide_wedding_read_telugu: "Read: Telugu wedding rituals",
+    guide_wedding_read_hindu: "Read: Hindu wedding traditions",
+    guide_wedding_watch: "Watch: Telugu wedding videos",
+    guide_food_watch: "Watch: South Indian wedding food",
+    guide_food_instagram: "Instagram: Wedding food",
+    guide_culture_read: "Read: Guest etiquette",
+    guide_culture_watch: "Watch: Guest tips",
+    guide_photos_instagram: "Instagram: South Indian weddings",
+    guide_photos_watch: "Watch: Wedding highlights",
 
     travel_eyebrow: "Flights, pickup and India planning",
     travel_title: "Travel Planner",
-    travel_text:
-      "Please share your arrival and departure details so we can plan airport pickup and transport. Bhogapuram airport near Vizag is expected to open before the wedding; we will update travel recommendations once schedules are clear.",
+    travel_text: "Please share your arrival and departure details so we can plan airport pickup and transport.",
+    travel_check_arrival: "Arrival airport, date, time and flight number",
+    travel_check_departure: "Departure details",
+    travel_check_pickup: "Airport pickup request",
+    travel_check_visibility: "Optional travel visibility for Guest Connect",
+    travel_save: "Save travel details",
 
     stay_eyebrow: "Where to stay in Vizag",
     stay_title: "Accommodation",
+    stay_intro: "We will help guests coordinate accommodation. On the wedding day, resting space and night accommodation are included at the venue for those who need it. Guests who prefer a higher-comfort hotel after the ceremony can also book one of the suggested hotels below.",
+    stay_sai_title: "Sai Priya Resort",
+    stay_sai: "Recommended for Haldi and Sangeeth because both events happen here. Tell us if you want us to help reserve rooms in advance.",
+    stay_simba_title: "Simba Resort",
+    stay_simba: "For the wedding day, food and accommodation/resting space are included during ceremonies and for the night. If you prefer to move to a hotel afterwards, you can choose one of the alternatives.",
+    stay_alt_title: "Alternative Hotels",
+    stay_alt: "Good options if you want a hotel stay before/after the ceremony or prefer more comfort.",
+    stay_view_location: "View location →",
+    accommodation_request_title: "Accommodation Request",
+    accommodation_request_helper: "This request helps us understand who needs help booking rooms. Wedding-day rest/night accommodation is provided, but you can also tell us if you prefer a hotel.",
+    accommodation_send: "Send accommodation request",
 
-    stay_sai:
-      "Recommended for Haldi and Sangeeth because both events happen there. Tell us if you want us to reserve rooms in advance.",
-
-    stay_simba:
-      "All 16 rooms are reserved for the wedding day, mainly for relaxing and getting ready between ceremonies.",
-
-    stay_alt:
-      "Marriott, Novotel, Palm Beach and Radisson Blu are good alternatives depending on comfort and budget.",
-
-    outfits_eyebrow: "Sarees, lehengas and festive looks",
+    outfits_eyebrow: "Sarees, lehengas, kurtas and festive looks",
     outfits_title: "Outfit Selection",
-    outfits_text:
-      "Choose your preferred outfit style and share measurements early so stitching can be arranged in India.",
+    outfits_text: "Choose a style or paste a link from an Indian shopping website. If you want us to buy the exact outfit in India, add the link and size notes. You can pay later after we confirm availability.",
+    outfit_haldi_label: "Haldi",
+    outfit_haldi_title: "Yellow, gold, floral, light fabrics",
+    outfit_haldi_text: "Easy options: yellow kurta, saree, lehenga, floral dress, or Indo-western. Keep it comfortable because turmeric may touch clothes.",
+    outfit_sangeeth_label: "Sangeeth",
+    outfit_sangeeth_title: "Festive, colourful, dance-friendly",
+    outfit_sangeeth_text: "Choose something festive but comfortable for dancing: lehenga, festive saree, kurta set, Indo-western, Nehru jacket or sherwani-style kurta.",
+    outfit_wedding_label: "Wedding",
+    outfit_wedding_title: "Elegant Indian formal",
+    outfit_wedding_text: "Women: silk saree, Kanjeevaram, lehenga. Men: kurta, sherwani, dhoti set or formal Indian wear. Choose richer fabrics and elegant colours.",
+    outfit_request_title: "Your outfit request",
+    outfit_request_helper: "Paste links to outfits you like, upload a screenshot/reference image, and add measurements. We will help you understand options before buying.",
+    outfit_submit: "Submit outfit preference",
 
-    gallery_eyebrow: "A little preview of us",
-    gallery_title: "Gallery",
+    guest_connect_eyebrow: "Guest Connect",
+    guest_connect_title: "Who is coming to India?",
+    guest_connect_text: "Guests who opt in can appear here so everyone can coordinate flights, India travel plans and shared transport. Only the contact details they choose to share will be visible.",
+    guest_connect_form_title: "Share your travel visibility",
+    guest_connect_form_helper: "This is optional. Use it if you want other invited guests to connect with you for flights or India travel.",
+    guest_connect_start: "In India from",
+    guest_connect_end: "In India until",
+    guest_connect_date_helper: "Select the date range when you will be in India. If your plans are flexible, add details in the notes below.",
+    guest_connect_save: "Save Guest Connect Preferences",
+    guest_connect_empty: "No guests have chosen to appear here yet.",
 
     rsvp_eyebrow: "We cannot wait to celebrate with you",
-    rsvp_title: "RSVP"
+    rsvp_title: "RSVP",
+    rsvp_note: "Please share your current postal address so we can send the physical invitation card to the right address.",
+    rsvp_submit: "Send RSVP",
+
+    memories_eyebrow: "Wedding Memories",
+    memories_title: "Upload Photos & Videos",
+    memories_text: "During and after the wedding, you can upload your favourite photos and videos here. They will be saved for admin review before appearing in the public gallery.",
+    memories_upload: "Upload memory",
+    memories_note: "Upload functionality will activate after Drive folder setup.",
+
+    gallery_eyebrow: "A little preview of us",
+    gallery_title: "Photo Gallery",
+    gallery_all: "All",
+    gallery_vacation: "Our Vacation",
+    gallery_haldi: "Haldi",
+    gallery_sangeeth: "Sangeeth",
+    gallery_wedding: "Wedding",
+    gallery_guest: "Guest Uploads",
+    no_haldi_photos_title: "No Haldi photos yet",
+    no_haldi_photos_text: "Be the first to upload memories from Haldi.",
+    no_sangeeth_photos_title: "No Sangeeth photos yet",
+    no_sangeeth_photos_text: "Be the first to upload memories from Sangeeth.",
+    no_guest_uploads_title: "No guest uploads yet",
+    no_guest_uploads_text: "Wedding memories will appear here after admin approval.",
+    upload_photos: "Upload Photos",
+
+    families_eyebrow: "Families",
+    families_title: "Our Families",
+    families_text: "The people who raised us, loved us, and shaped the story we are celebrating.",
+    bride_side: "Bride Side",
+    bride_family: "Bride’s Family",
+    groom_side: "Groom Side",
+    groom_family: "Groom’s Family",
+
+    contact_eyebrow: "Help & Contact",
+    contact_title: "Questions, help in India & FAQs",
+    contact_text: "If you cannot reach the bride or groom during the wedding days, please contact the bride’s family emergency contacts below.",
+    contact_jyothsna: "WhatsApp Jyothsna",
+    contact_tobias: "WhatsApp Tobias",
+    emergency_contacts_title: "Emergency contacts in India",
+    emergency_contacts_text: "Bride’s family contacts will be shown here from the IndiaContacts sheet. Please contact them if you need urgent local help and cannot reach us.",
+    faq_title: "Frequently asked questions",
+    faq_wear_q: "What should I wear?",
+    faq_wear_a: "For Haldi, yellow/gold is perfect. For Sangeeth, wear festive and dance-friendly clothes. For the wedding, elegant Indian formal is best.",
+    faq_accommodation_q: "Is accommodation provided on the wedding day?",
+    faq_accommodation_a: "Yes, resting space and night accommodation are arranged for the wedding day. Guests who prefer a hotel after the ceremony can book alternatives.",
+    faq_travel_q: "Can I coordinate travel with other guests?",
+    faq_travel_a: "Yes. Use Guest Connect and opt in to share your travel dates and contact details.",
+    faq_upload_q: "Can I upload wedding photos?",
+    faq_upload_a: "Yes. Use the Upload page. Photos and videos appear in the gallery after admin approval.",
+    faq_food_q: "Will food be spicy?",
+    faq_food_a: "Some dishes may be spicy, but we will try to include mild options too.",
+
+    form_full_name: "Full name",
+    form_email: "Email",
+    form_invitation_code: "Invitation code",
+    form_phone: "WhatsApp / phone number",
+    form_whatsapp: "WhatsApp number",
+    form_number_guests: "Number of guests",
+    form_notes: "Notes",
+    form_message: "Message for us",
+    form_postal_code: "Postal code",
+    form_country: "Country",
+    form_city: "City",
+    form_state: "State / Region",
+    form_address1: "Address line 1",
+    form_address2: "Address line 2"
   },
 
   de: {
+    nav_home: "Startseite",
+    nav_couple: "Braut & Bräutigam",
     nav_story: "Geschichte",
     nav_events: "Events",
     nav_guide: "Guide",
     nav_travel: "Reise",
     nav_stay: "Unterkunft",
     nav_outfits: "Outfits",
+    nav_guest_connect: "Gäste vernetzen",
+    nav_families: "Familien",
+    nav_upload: "Upload",
     nav_gallery: "Galerie",
     nav_rsvp: "RSVP",
+    nav_contact: "Hilfe & Kontakt",
+
+    login_eyebrow: "Privates Hochzeitsportal",
+    login_title: "Jyothsna ♥ Tobias",
+    login_copy: "Gib deinen Einladungscode ein, um das Hochzeitsportal zu öffnen.",
+    login_button: "Öffnen",
+    login_error: "Bitte gib den richtigen Einladungscode ein.",
+    login_hint: "Hinweis: Der Einladungscode besteht aus den ersten 3 Buchstaben deines Vornamens plus den ersten 3 Buchstaben deines Nachnamens, alles in Großbuchstaben. Beispiel: 'Jyothsna Boni' wird zu 'JYOBON'",
 
     hero_eyebrow: "Eine südindische Hochzeitsfeier",
+    hero_title: "Jyothsna ♥ Tobias",
     hero_subtitle: "13.–15. November 2026 · Visakhapatnam, Indien",
-    hero_rsvp: "Zusage senden",
+    hero_rsvp: "RSVP",
     hero_schedule: "Zeitplan ansehen",
-
     days: "Tage",
     hours: "Stunden",
     minutes: "Minuten",
     seconds: "Sekunden",
 
+    couple_eyebrow: "Braut & Bräutigam",
+    couple_title: "Mit Liebe von uns",
+    bride_label: "Braut",
+    bride_name: "Jyothsna Boni",
+    bride_text: "Ich freue mich sehr darauf, euch in meiner Heimatstadt willkommen zu heißen und die Farben, Rituale, das Essen, die Musik und die Liebe einer südindischen Hochzeit mit euch zu teilen.",
+    groom_label: "Bräutigam",
+    groom_name: "Tobias Scholtes",
+    groom_text: "Danke, dass ihr mit uns in Indien feiert. Ich freue mich darauf, mit unseren Familien und Freunden über Kulturen und Traditionen hinweg unvergessliche Momente zu erleben.",
+    together_label: "Gemeinsam",
+    together_title: "Eine Nachricht an unsere Gäste",
+    together_text: "Danke, dass ihr von nah und fern anreist, um mit uns zu feiern. Diese Hochzeit bringt unsere Familien, Kulturen und Lieblingsmenschen zusammen — und wir freuen uns sehr, diese Tage mit euch zu teilen.",
+    whatsapp: "WhatsApp",
+    instagram: "Instagram",
+
     story_eyebrow: "Ein Bumble-Match, ein Motorrad und ein bisschen Schicksal",
     story_title: "Unsere Geschichte",
-
+    story_location: "Berlin · Vizag",
     story_1_title: "Der Swipe, der fast nie passiert wäre",
-    story_1_text:
-      "Jyothsna hatte Bumble nur auf Leipzig eingestellt. Tobias lebte in Berlin, war aber an diesem Wochenende mit dem Motorrad in Leipzig. Gleichzeitig testete Jyothsna Bumble Premium für einen Tag — und unter Hunderten Likes fiel Tobias sofort auf.",
-
+    story_1_text: "Jyothsna hatte Bumble nur auf Leipzig eingestellt. Tobias lebte in Berlin, war aber an diesem Wochenende mit dem Motorrad in Leipzig. Gleichzeitig testete Jyothsna Bumble Premium für einen Tag — und unter Hunderten Likes fiel Tobias sofort auf.",
     story_2_title: "Berlin",
-    story_2_text:
-      "Sie telefonierten zwei Wochen lang, bevor sie sich in Berlin trafen. Eigentlich war eine Motorradtour geplant, falls die Chemie stimmt. Stattdessen verbrachten sie das ganze Wochenende zusammen.",
-
+    story_2_text: "Sie telefonierten zwei Wochen lang, bevor sie sich in Berlin trafen. Eigentlich war eine Motorradtour geplant, falls die Chemie stimmt. Stattdessen verbrachten sie das ganze Wochenende zusammen.",
     story_3_title: "Der Antrag in Budapest",
-    story_3_text:
-      "Auf einer Insel in der Donau machte Tobias ihr mit einem Diamantring einen Antrag. Als Jyothsna fragte, ob Diamanten nicht überbewertet seien, sagte er: „Ich finde, du bist die Diamanten wert.“",
-
+    story_3_text: "Auf einer Insel in der Donau machte Tobias ihr mit einem Diamantring einen Antrag. Als Jyothsna fragte, ob Diamanten nicht überbewertet seien, sagte er: „Ich finde, du bist die Diamanten wert.“",
     story_4_title: "Visakhapatnam",
-    story_4_text:
-      "Jetzt geht ihre Geschichte in Jyothsnas Heimatstadt weiter — mit Familie, Freunden, Telugu-Traditionen, Musik, Essen, Farben und dem Golf von Bengalen.",
+    story_4_text: "Jetzt geht ihre Geschichte in Jyothsnas Heimatstadt weiter — mit Familie, Freunden, Telugu-Traditionen, Musik, Essen, Farben und dem Golf von Bengalen.",
 
     events_eyebrow: "Drei Tage Rituale, Musik, Essen und Familie",
     events_title: "Hochzeitsprogramm",
-
-    haldi_text:
-      "Eine fröhliche Zeremonie mit Kurkuma, Musik, Lachen und gelben Outfits.",
-
-    sangeeth_text:
-      "Musik, Tanz, Auftritte und ein festlicher Abend zusammen.",
-
+    event_haldi_title: "Haldi",
+    event_sangeeth_title: "Sangeeth",
     prep_title: "Vorbereitungstag",
-    prep_time: "Vorbereitungen von Braut & Bräutigam",
-    prep_text:
-      "Ein kleinerer Familientag mit traditionellen Vorbereitungen. Tobias wird sich im Sai Priya Resort vorbereiten.",
-
     wedding_title: "Hochzeitszeremonie",
-    wedding_text:
-      "Ein Telugu-Hochzeitsabend im Simba Resort mit Empfang, Ritualen und dem heiligen Muhurtham-Moment.",
+    haldi_time: "13:00 Uhr · Sai Priya Resort",
+    sangeeth_time: "18:00 Uhr · Sai Priya Resort",
+    prep_time: "Vorbereitungen von Braut & Bräutigam",
+    wedding_time: "19:00 Uhr Empfang · 22:12 Uhr Muhurtham",
+    haldi_text: "Eine fröhliche Zeremonie mit Kurkuma, Musik, Lachen und gelben Outfits.",
+    sangeeth_text: "Musik, Tanz, Auftritte und ein festlicher Abend zusammen.",
+    prep_text: "Ein kleinerer Familientag mit traditionellen Vorbereitungen. Tobias wird sich im Sai Priya Resort vorbereiten.",
+    wedding_text: "Ein Telugu-Hochzeitsabend im Simba Resort mit Empfang, Ritualen und dem heiligen Moment des Knotens.",
+    open_map: "Karte öffnen →",
 
     guide_eyebrow: "Für unsere deutschen Gäste",
     guide_title: "Zum ersten Mal auf einer südindischen Hochzeit?",
-
-    guide_haldi:
-      "Tragt Gelb oder Gold. Erwartet Kurkuma, Musik, Fotos und eine sehr fröhliche Atmosphäre.",
-
-    guide_sangeeth:
-      "Stellt euch eine Familien-Tanzparty vor. Mitmachen ist willkommen, aber niemals Pflicht.",
-
+    guide_haldi_title: "Haldi",
+    guide_haldi: "Tragt Gelb oder Gold. Erwartet Kurkuma, Musik, Fotos und eine sehr fröhliche Atmosphäre.",
+    guide_sangeeth_title: "Sangeeth",
+    guide_sangeeth: "Stellt euch eine Familien-Tanzparty vor. Mitmachen ist willkommen, aber niemals Pflicht.",
     guide_wedding_title: "Hochzeitsrituale",
-    guide_wedding:
-      "Die Zeremonie kann sich anders anfühlen als eine deutsche Hochzeit. Der wichtigste Moment ist das Muhurtham um 22:12 Uhr.",
-
+    guide_wedding: "Die Zeremonie kann sich anders anfühlen als eine deutsche Hochzeit. Der wichtigste Moment ist das Muhurtham um 22:12 Uhr.",
     guide_food_title: "Essen",
-    guide_food:
-      "Es wird reichlich Essen geben. Manche Gerichte können scharf sein, aber wir versuchen auch milde Optionen anzubieten.",
-
+    guide_food: "Es wird reichlich Essen geben. Manche Gerichte können scharf sein, aber wir versuchen auch milde Optionen anzubieten.",
     guide_culture_title: "Kulturelle Hinweise",
-    guide_culture:
-      "Bei manchen Ritualen kann es sein, dass ihr die Schuhe ausziehen sollt. Wenn ihr unsicher seid, fragt uns einfach oder folgt der Familie.",
-
+    guide_culture: "Bei manchen Ritualen kann es sein, dass ihr die Schuhe ausziehen sollt. Wenn ihr unsicher seid, fragt uns einfach oder folgt der Familie.",
     guide_photos_title: "Fotos",
-    guide_photos:
-      "Rechnet mit vielen Fotos, leuchtenden Farben, Blumen, Schmuck und fröhlichem Chaos.",
+    guide_photos: "Rechnet mit vielen Fotos, leuchtenden Farben, Blumen, Schmuck und fröhlichem Chaos.",
+    guide_haldi_read: "Lesen: Haldi-Zeremonie erklärt",
+    guide_haldi_watch: "Ansehen: Haldi-Videos",
+    guide_haldi_instagram: "Instagram: Haldi-Inspiration",
+    guide_sangeeth_read: "Lesen: Sangeet-Zeremonie erklärt",
+    guide_sangeeth_watch: "Ansehen: Sangeet-Videos",
+    guide_sangeeth_instagram: "Instagram: Sangeet-Inspiration",
+    guide_wedding_read_telugu: "Lesen: Telugu-Hochzeitsrituale",
+    guide_wedding_read_hindu: "Lesen: Hindu-Hochzeitstraditionen",
+    guide_wedding_watch: "Ansehen: Telugu-Hochzeitsvideos",
+    guide_food_watch: "Ansehen: südindisches Hochzeitsessen",
+    guide_food_instagram: "Instagram: Hochzeitsessen",
+    guide_culture_read: "Lesen: Etikette für Gäste",
+    guide_culture_watch: "Ansehen: Tipps für Gäste",
+    guide_photos_instagram: "Instagram: südindische Hochzeiten",
+    guide_photos_watch: "Ansehen: Hochzeits-Highlights",
 
     travel_eyebrow: "Flüge, Abholung und Indienplanung",
     travel_title: "Reiseplanung",
-    travel_text:
-      "Bitte teilt uns eure Ankunfts- und Abreisedaten mit, damit wir Abholung und Transport planen können. Der neue Flughafen Bhogapuram bei Vizag soll vor der Hochzeit eröffnen; wir aktualisieren die Reiseinfos, sobald Flugpläne klar sind.",
+    travel_text: "Bitte teilt uns eure Ankunfts- und Abreisedaten mit, damit wir Abholung und Transport planen können.",
+    travel_check_arrival: "Ankunftsflughafen, Datum, Uhrzeit und Flugnummer",
+    travel_check_departure: "Abreisedaten",
+    travel_check_pickup: "Abholung vom Flughafen",
+    travel_check_visibility: "Optionale Sichtbarkeit für Guest Connect",
+    travel_save: "Reisedaten speichern",
 
     stay_eyebrow: "Unterkunft in Vizag",
     stay_title: "Unterkunft",
+    stay_intro: "Wir helfen Gästen bei der Unterkunftsplanung. Am Hochzeitstag sind Ruheräume und Übernachtung am Veranstaltungsort für diejenigen vorgesehen, die sie benötigen. Wer nach der Zeremonie lieber in ein komfortableres Hotel möchte, kann eines der vorgeschlagenen Hotels buchen.",
+    stay_sai_title: "Sai Priya Resort",
+    stay_sai: "Empfohlen für Haldi und Sangeeth, da beide Events dort stattfinden. Sagt uns Bescheid, wenn wir bei der Zimmerreservierung helfen sollen.",
+    stay_simba_title: "Simba Resort",
+    stay_simba: "Am Hochzeitstag sind Essen und Unterkunft/Ruheräume während der Zeremonien und für die Nacht enthalten. Wenn ihr danach lieber in ein Hotel wechseln möchtet, könnt ihr eine Alternative wählen.",
+    stay_alt_title: "Alternative Hotels",
+    stay_alt: "Gute Optionen, wenn ihr vor/nach der Zeremonie ein Hotel möchtet oder mehr Komfort bevorzugt.",
+    stay_view_location: "Standort ansehen →",
+    accommodation_request_title: "Unterkunftsanfrage",
+    accommodation_request_helper: "Diese Anfrage hilft uns zu verstehen, wer Unterstützung bei der Buchung benötigt. Am Hochzeitstag ist Unterkunft/Ruhemöglichkeit vorgesehen, aber ihr könnt uns auch sagen, wenn ihr ein Hotel bevorzugt.",
+    accommodation_send: "Unterkunftsanfrage senden",
 
-    stay_sai:
-      "Empfohlen für Haldi und Sangeeth, da beide Events dort stattfinden. Sagt uns Bescheid, wenn wir Zimmer reservieren sollen.",
-
-    stay_simba:
-      "Alle 16 Zimmer sind für den Hochzeitstag reserviert, hauptsächlich zum Ausruhen und Fertigmachen zwischen den Zeremonien.",
-
-    stay_alt:
-      "Marriott, Novotel, Palm Beach und Radisson Blu sind gute Alternativen je nach Komfort und Budget.",
-
-    outfits_eyebrow: "Sarees, Lehengas und festliche Looks",
+    outfits_eyebrow: "Sarees, Lehengas, Kurtas und festliche Looks",
     outfits_title: "Outfit-Auswahl",
-    outfits_text:
-      "Wählt euren bevorzugten Stil und sendet frühzeitig Maße, damit das Schneidern in Indien organisiert werden kann.",
+    outfits_text: "Wählt einen Stil oder fügt einen Link von einer indischen Shopping-Webseite ein. Wenn wir das genaue Outfit in Indien für euch kaufen sollen, fügt den Link und Größenhinweise hinzu. Bezahlen könnt ihr später, nachdem wir die Verfügbarkeit bestätigt haben.",
+    outfit_haldi_label: "Haldi",
+    outfit_haldi_title: "Gelb, Gold, Blumenmuster, leichte Stoffe",
+    outfit_haldi_text: "Einfache Optionen: gelber Kurta, Saree, Lehenga, geblümtes Kleid oder Indo-Western. Wählt etwas Bequemes, da Kurkuma auf die Kleidung kommen kann.",
+    outfit_sangeeth_label: "Sangeeth",
+    outfit_sangeeth_title: "Festlich, farbenfroh, tanzfreundlich",
+    outfit_sangeeth_text: "Wählt etwas Festliches, aber Bequemes zum Tanzen: Lehenga, festlicher Saree, Kurta-Set, Indo-Western, Nehru-Jacke oder Sherwani-ähnlicher Kurta.",
+    outfit_wedding_label: "Hochzeit",
+    outfit_wedding_title: "Elegante indische Festkleidung",
+    outfit_wedding_text: "Frauen: Seidensaree, Kanjeevaram, Lehenga. Männer: Kurta, Sherwani, Dhoti-Set oder formelle indische Kleidung. Wählt edlere Stoffe und elegante Farben.",
+    outfit_request_title: "Deine Outfit-Anfrage",
+    outfit_request_helper: "Füge Links zu Outfits ein, die dir gefallen, lade einen Screenshot/ein Referenzbild hoch und ergänze Maße. Wir helfen euch, die Optionen vor dem Kauf zu verstehen.",
+    outfit_submit: "Outfit-Wunsch senden",
 
-    gallery_eyebrow: "Ein kleiner Vorgeschmack auf uns",
-    gallery_title: "Galerie",
+    guest_connect_eyebrow: "Guest Connect",
+    guest_connect_title: "Wer kommt nach Indien?",
+    guest_connect_text: "Gäste, die zustimmen, können hier erscheinen, damit alle Flüge, Reisepläne in Indien und gemeinsame Transporte koordinieren können. Nur die Kontaktdaten, die sie freigeben, werden sichtbar sein.",
+    guest_connect_form_title: "Reisesichtbarkeit teilen",
+    guest_connect_form_helper: "Optional: Nutze dies, wenn du dich mit anderen eingeladenen Gästen für Flüge oder Indienreisen vernetzen möchtest.",
+    guest_connect_start: "In Indien ab",
+    guest_connect_end: "In Indien bis",
+    guest_connect_date_helper: "Wähle den Zeitraum aus, in dem du in Indien bist. Wenn deine Pläne flexibel sind, ergänze Details in den Notizen.",
+    guest_connect_save: "Guest-Connect-Einstellungen speichern",
+    guest_connect_empty: "Noch keine Gäste haben sich entschieden, hier zu erscheinen.",
 
     rsvp_eyebrow: "Wir freuen uns sehr darauf, mit euch zu feiern",
-    rsvp_title: "Zusage"
+    rsvp_title: "RSVP",
+    rsvp_note: "Bitte teilt uns eure aktuelle Postadresse mit, damit wir die physische Einladungskarte an die richtige Adresse senden können.",
+    rsvp_submit: "RSVP senden",
+
+    memories_eyebrow: "Hochzeitserinnerungen",
+    memories_title: "Fotos & Videos hochladen",
+    memories_text: "Während und nach der Hochzeit könnt ihr hier eure Lieblingsfotos und -videos hochladen. Sie werden zur Admin-Prüfung gespeichert, bevor sie in der öffentlichen Galerie erscheinen.",
+    memories_upload: "Erinnerung hochladen",
+    memories_note: "Die Upload-Funktion wird nach der Einrichtung des Drive-Ordners aktiviert.",
+
+    gallery_eyebrow: "Ein kleiner Vorgeschmack auf uns",
+    gallery_title: "Fotogalerie",
+    gallery_all: "Alle",
+    gallery_vacation: "Unsere Reise",
+    gallery_haldi: "Haldi",
+    gallery_sangeeth: "Sangeeth",
+    gallery_wedding: "Hochzeit",
+    gallery_guest: "Uploads von Gästen",
+    no_haldi_photos_title: "Noch keine Haldi-Fotos",
+    no_haldi_photos_text: "Sei die erste Person, die Erinnerungen vom Haldi hochlädt.",
+    no_sangeeth_photos_title: "Noch keine Sangeeth-Fotos",
+    no_sangeeth_photos_text: "Sei die erste Person, die Erinnerungen vom Sangeeth hochlädt.",
+    no_guest_uploads_title: "Noch keine Gäste-Uploads",
+    no_guest_uploads_text: "Hochzeitserinnerungen erscheinen hier nach Admin-Freigabe.",
+    upload_photos: "Fotos hochladen",
+
+    families_eyebrow: "Familien",
+    families_title: "Unsere Familien",
+    families_text: "Die Menschen, die uns großgezogen, geliebt und unsere Geschichte geprägt haben.",
+    bride_side: "Brautseite",
+    bride_family: "Familie der Braut",
+    groom_side: "Bräutigamseite",
+    groom_family: "Familie des Bräutigams",
+
+    contact_eyebrow: "Hilfe & Kontakt",
+    contact_title: "Fragen, Hilfe in Indien & FAQs",
+    contact_text: "Wenn ihr Braut oder Bräutigam während der Hochzeitstage nicht erreicht, kontaktiert bitte die Notfallkontakte der Familie der Braut unten.",
+    contact_jyothsna: "WhatsApp Jyothsna",
+    contact_tobias: "WhatsApp Tobias",
+    emergency_contacts_title: "Notfallkontakte in Indien",
+    emergency_contacts_text: "Kontakte der Familie der Braut werden hier aus dem IndiaContacts-Sheet angezeigt. Bitte kontaktiert sie, wenn ihr dringend lokale Hilfe benötigt und uns nicht erreicht.",
+    faq_title: "Häufig gestellte Fragen",
+    faq_wear_q: "Was soll ich anziehen?",
+    faq_wear_a: "Für Haldi ist Gelb/Gold perfekt. Für Sangeeth tragt festliche, tanzfreundliche Kleidung. Für die Hochzeit ist elegante indische Festkleidung am besten.",
+    faq_accommodation_q: "Ist am Hochzeitstag Unterkunft vorgesehen?",
+    faq_accommodation_a: "Ja, Ruheräume und Übernachtung sind für den Hochzeitstag organisiert. Gäste, die nach der Zeremonie lieber ein Hotel möchten, können Alternativen buchen.",
+    faq_travel_q: "Kann ich Reisen mit anderen Gästen koordinieren?",
+    faq_travel_a: "Ja. Nutzt Guest Connect und stimmt zu, eure Reisedaten und Kontaktdaten zu teilen.",
+    faq_upload_q: "Kann ich Hochzeitsfotos hochladen?",
+    faq_upload_a: "Ja. Nutzt die Upload-Seite. Fotos und Videos erscheinen nach Admin-Freigabe in der Galerie.",
+    faq_food_q: "Wird das Essen scharf sein?",
+    faq_food_a: "Einige Gerichte können scharf sein, aber wir versuchen auch milde Optionen anzubieten.",
+
+    form_full_name: "Vollständiger Name",
+    form_email: "E-Mail",
+    form_invitation_code: "Einladungscode",
+    form_phone: "WhatsApp / Telefonnummer",
+    form_whatsapp: "WhatsApp-Nummer",
+    form_number_guests: "Anzahl der Gäste",
+    form_notes: "Notizen",
+    form_message: "Nachricht an uns",
+    form_postal_code: "Postleitzahl",
+    form_country: "Land",
+    form_city: "Stadt",
+    form_state: "Bundesland / Region",
+    form_address1: "Adresszeile 1",
+    form_address2: "Adresszeile 2"
   }
 };
+
+window.translations = translations;

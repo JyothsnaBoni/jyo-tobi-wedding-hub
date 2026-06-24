@@ -329,23 +329,61 @@
         </div>
       </section>
 
-      <section id="travel" class="section split-section">
-        <div class="split-copy reveal">
-          <p class="eyebrow" data-i18n="travel_eyebrow">Flights, pickup and India planning</p>
-          <h2 data-i18n="travel_title">Travel Planner</h2>
-          <p data-i18n="travel_text">
-            Please share your arrival and departure details so we can plan airport pickup and transport.
-          </p>
+      <section id="travel" class="section travel-section">
+        <div class="travel-shell">
+          <div class="travel-copy reveal">
+            <p class="eyebrow" data-i18n="travel_eyebrow">Flights, pickup and India planning</p>
+            <h2 data-i18n="travel_title">Travel Planner</h2>
+            <p data-i18n="travel_text">
+              Please share your arrival and departure details so we can plan airport pickup and transport.
+            </p>
 
-          <ul class="check-list">
-            <li>Arrival airport, date, time and flight number</li>
-            <li>Departure details</li>
-            <li>Airport pickup request</li>
-            <li>Optional travel visibility for Guest Connect</li>
-          </ul>
-        </div>
+            <div class="travel-info-grid" aria-label="Travel information checklist">
+              <article class="travel-info-card">
+                <span class="travel-icon">✈</span>
+                <div>
+                  <h3>Arrival Airport, Date & Flight</h3>
+                  <p>Share your arrival airport, date, time and flight number.</p>
+                </div>
+              </article>
 
-        <form class="lux-form reveal" data-form="Travel">
+              <article class="travel-info-card">
+                <span class="travel-icon">▣</span>
+                <div>
+                  <h3>Departure Details</h3>
+                  <p>Let us know your departure date, time and flight number.</p>
+                </div>
+              </article>
+
+              <article class="travel-info-card">
+                <span class="travel-icon">🚕</span>
+                <div>
+                  <h3>Airport Pickup Request</h3>
+                  <p>Request airport pickup for a smooth and comfortable arrival.</p>
+                </div>
+              </article>
+
+              <article class="travel-info-card">
+                <span class="travel-icon">👥</span>
+                <div>
+                  <h3>Guest Connect Visibility</h3>
+                  <p>Choose if your travel details can be visible in Guest Connect.</p>
+                </div>
+              </article>
+
+              <article class="travel-info-card travel-help-card">
+                <span class="travel-icon">📍</span>
+                <div>
+                  <h3>Need Help?</h3>
+                  <p>We are here to assist with travel plans. Contact us if you have questions.</p>
+                  <a class="button primary small-button" href="#contact">Help & Contact →</a>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <div class="travel-form-panel reveal">
+            <form class="lux-form reveal" data-form="Travel">
           <div class="form-row">
             <input name="FullName" placeholder="Full name" required />
             <input name="Email" placeholder="Email" type="email" />
@@ -399,6 +437,8 @@
           <button type="submit" class="button primary">Save travel details</button>
           <p class="form-message"></p>
         </form>
+          </div>
+        </div>
       </section>
 
       <section id="stay" class="section stay-section">

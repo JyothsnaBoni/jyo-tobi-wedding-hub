@@ -247,6 +247,10 @@ function initForms() {
           return;
         }
 
+        if (formName === "RSVP") {
+          await syncGuestDirectoryFromRSVP(data);
+        }
+
         setMessage(message, result.mode === "updated" ? "Updated successfully." : "Saved successfully.");
         await refreshGuestData();
       } catch (error) {
@@ -255,6 +259,46 @@ function initForms() {
       }
     });
   });
+}
+
+async function syncGuestDirectoryFromRSVP(rsvpData = {}) {
+  const invitationCode = rsvpData.InvitationCode || getInvitationCode();
+  if (!invitationCode) return;
+
+  const allowDirectory = normalizeText(rsvpData.AllowGuestDirectory) === "yes";
+  const allowContact = normalizeText(rsvpData.AllowContactSharing) === "yes";
+
+  const guestDirectoryPayload = {
+    InvitationCode: invitationCode,
+    DisplayName: rsvpData.FullName || CURRENT_USER?.GuestName || "",
+    City: rsvpData.City || "",
+    Country: rsvpData.Country || "",
+    GuestGroup: CURRENT_USER?.GuestGroup || "",
+    AttendingEvents: rsvpData.Attendance || "",
+    ShowInDirectory: allowDirectory ? "Yes" : "No",
+    ShareWhatsApp: allowContact ? "Yes" : "No",
+    ShareEmail: allowContact ? "Yes" : "No",
+    WhatsApp: allowContact ? (rsvpData.Phone || CURRENT_USER?.Phone || "") : "",
+    Email: allowContact ? (rsvpData.Email || CURRENT_USER?.Email || "") : "",
+    Notes: ""
+  };
+
+  const existingDirectory = CURRENT_DATA?.GuestDirectory;
+  if (existingDirectory && !Array.isArray(existingDirectory)) {
+    guestDirectoryPayload.TravelDates = existingDirectory.TravelDates || "";
+    guestDirectoryPayload.CitiesVisiting = existingDirectory.CitiesVisiting || "";
+    guestDirectoryPayload.Notes = existingDirectory.Notes || "";
+    guestDirectoryPayload.GuestGroup = existingDirectory.GuestGroup || guestDirectoryPayload.GuestGroup;
+  }
+
+  try {
+    const syncResult = await api("saveGuestDirectory", guestDirectoryPayload);
+    if (!syncResult.success) {
+      console.warn("GuestDirectory sync from RSVP failed:", syncResult.error || syncResult);
+    }
+  } catch (error) {
+    console.warn("GuestDirectory sync from RSVP failed:", error);
+  }
 }
 
 async function refreshGuestData() {
@@ -269,6 +313,7 @@ async function refreshGuestData() {
     prefillAllForms();
     injectGuestDashboard();
     renderPublicContent();
+    renderGuestDirectory();
   }
 }
 
